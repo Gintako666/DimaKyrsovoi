@@ -4,7 +4,7 @@ import Img from '~/components/base/Img/Img';
 
 import handleClassName from '~/utils/className.util';
 
-import { isTouchScreen } from '~/constants/isTouchScreen.const';
+import isTouchScreen from '~/constants/isTouchScreen.const';
 
 import profile from '~/assets/img/profile.jpg';
 import arrow from '~/assets/img/icons/arrow.svg';
