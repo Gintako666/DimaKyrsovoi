@@ -1,0 +1,68 @@
+*,
+*::before,
+*::after {
+  @apply p-0 m-0;
+
+  border: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#__next {
+  @apply h-full;
+
+  min-width: $min-width + px;
+}
+
+body {
+  @apply text-base;
+
+  color: $main-color;
+  background-color: $main-bg;
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background-color: inherit;
+}
+
+input,
+textarea {
+  outline: none;
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+  @apply cursor-pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: inherit;
+  font-size: inherit;
+}

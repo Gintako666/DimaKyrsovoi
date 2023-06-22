@@ -1,0 +1,13 @@
+.add-category {
+  // .add-category__form
+
+  &__form {
+    @apply flex flex-col gap-7;
+  }
+
+  // .add-category__button
+
+  &__button {
+    @apply self-end;
+  }
+}

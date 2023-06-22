@@ -1,0 +1,22 @@
+stages:
+# - build
+#  - test
+#  - review
+  - deploy
+
+deploy-job:
+  only:
+    - main
+  tags:
+    - review
+  stage: deploy
+  variables:
+    FRONT_PORT: 3085
+    CI_COMMIT_SHORT_SHA: $CI_COMMIT_SHORT_SHA
+    CI_COMMIT_TIMESTAMP: $CI_COMMIT_TIMESTAMP
+    CI_COMMIT_TITLE: $CI_COMMIT_TITLE
+  script:
+    - docker image prune -f
+    - docker compose down
+    - docker compose build --no-cache
+    - docker compose up -d

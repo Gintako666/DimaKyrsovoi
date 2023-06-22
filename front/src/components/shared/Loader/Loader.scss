@@ -1,0 +1,10 @@
+.loader {
+  @apply absolute top-1/2 left-1/2;
+
+  transform: translate(-50%, -50%);
+
+  svg path,
+  svg rect {
+    fill: $dark-blue;
+  }
+}

@@ -1,0 +1,25 @@
+.title {
+  h2 {
+    @apply text-lg font-medium;
+
+    margin-bottom: em(4, 18);
+  }
+
+  p {
+    @apply text-sm;
+
+    color: $gray;
+  }
+
+  &_large {
+    h2 {
+      @apply text-2xl;
+    }
+
+    p {
+      @apply text-base;
+
+      color: $main-color;
+    }
+  }
+}

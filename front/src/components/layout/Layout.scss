@@ -1,0 +1,13 @@
+@import "Header/Header";
+
+.wrapper {
+  &_header {
+    main {
+      @apply mt-28;
+    }
+
+    .not-found-page {
+      @apply mt-0;
+    }
+  }
+}

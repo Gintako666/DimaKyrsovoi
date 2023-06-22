@@ -1,0 +1,185 @@
+.menu {
+  @apply flex justify-between items-center;
+
+  @media (width > $mobile) {
+    @apply flex-auto;
+  }
+
+  @media (width < $mobile) {
+    @apply w-full;
+  }
+
+  // .menu__button
+
+  &__button {
+    @apply hidden;
+
+    @media (width < $mobile) {
+      @apply block relative z-40;
+
+      width: rem(30);
+      height: rem(18);
+
+      &::before,
+      &::after,
+      span {
+        @apply absolute left-0 w-full;
+
+        height: 10%;
+        background-color: $main-color;
+        transition: all 0.3s ease 0s;
+      }
+
+      &::before,
+      &::after {
+        content: "";
+      }
+
+      &::before {
+        @apply top-0;
+      }
+
+      &::after {
+        @apply bottom-0;
+      }
+
+      span {
+        @apply top-1/2;
+
+        transform: scale(1) translateY(-50%);
+      }
+
+      // .menu__button_active
+
+      &_active {
+        height: rem(30);
+
+        &::before,
+        &::after {
+          @apply top-1/2;
+
+          height: 5%;
+        }
+
+        &::before {
+          transform: translateY(-50%) rotate(45deg);
+        }
+
+        &::after {
+          transform: translateY(-50%) rotate(-45deg);
+        }
+
+        span {
+          transform: scale(0);
+        }
+      }
+    }
+  }
+
+  // .menu__body
+
+  &__body {
+    @apply flex items-center gap-10;
+
+    @media (width < $mobile) {
+      @apply grow-0 shrink-0 basis-auto items-center flex-col fixed top-0 -left-full w-full h-full overflow-auto;
+
+      padding: rem(100) rem(30) rem(30) rem(30);
+      background-color: #fff;
+      transition: left 0.3s ease 0s;
+
+      &::before {
+        @apply fixed top-0 left-0 z-30 w-full;
+
+        content: "";
+        height: rem(70);
+        background-color: #fff;
+      }
+
+      // .menu__body_active
+
+      &_active {
+        @apply left-0;
+      }
+    }
+  }
+
+  // .menu__list
+
+  &__list {
+    @apply text-2xl font-medium capitalize;
+
+    @media (width > $mobile) {
+      @apply flex items-center text-sm;
+
+      gap: em(20, 14);
+    }
+  }
+
+  // .menu__item
+
+  &__item {
+    @apply flex justify-center relative;
+
+    @media (width < $mobile) {
+      &:not(:last-child) {
+        margin-bottom: em(30, 24);
+      }
+    }
+  }
+
+  // .menu__link
+
+  &__link {
+    @apply flex-initial text-right;
+
+    color: $gray;
+
+    @media (width > $mobile) {
+      padding: em(25, 14) 0;
+    }
+
+    &_active {
+      color: $main-color;
+
+      @media (width > $mobile) {
+        @apply inline-block relative;
+
+        &::after {
+          @apply absolute left-0 w-full;
+
+          content: "";
+          transform: translateY(-250%);
+          bottom: em(-5, 14);
+          height: em(2, 14);
+          border-radius: em(4, 14);
+          background-color: $dark-blue;
+          transition: all 0.3s ease 0s;
+        }
+
+        &:hover {
+          &::after {
+            @apply w-1/2 left-1/4;
+          }
+        }
+      }
+    }
+  }
+
+  &__img {
+    @apply w-10 pb-10;
+
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  a,
+  button {
+    transition: opacity 0.3s ease 0s;
+
+    &:hover {
+      @apply opacity-50;
+    }
+  }
+}
