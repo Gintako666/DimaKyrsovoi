@@ -1,0 +1,17 @@
+.full-screen {
+  @apply relative flex flex-col;
+
+  // .full-screen__body
+
+  &__body {
+    @apply flex justify-center items-center flex-col flex-auto relative z-10 py-5;
+
+    & + * {
+      img,
+      iframe,
+      video {
+        @apply fixed top-0 left-0 z-0 w-full h-full object-cover;
+      }
+    }
+  }
+}

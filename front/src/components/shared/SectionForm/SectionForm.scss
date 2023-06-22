@@ -1,0 +1,14 @@
+.section-form {
+  // .section-form__container
+
+  &__container {
+    @apply py-6 rounded-lg;
+
+    border: rem(1) solid $bd-gray;
+    background-color: #fff;
+
+    > *:not(:last-child) {
+      @apply mb-7;
+    }
+  }
+}

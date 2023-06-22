@@ -1,0 +1,21 @@
+@import "~/components/shared/Loader/Loader";
+@import "~/components/shared/Title/Title";
+@import "~/components/shared/AddForm/AddForm";
+@import "~/components/shared/SectionForm/SectionForm";
+
+.button {
+  padding: em(10) em(20);
+  border-radius: em(5);
+  color: $main-bg;
+  background-color: $dark-blue;
+  transition: opacity 0.3s ease 0s;
+
+  &_transparent {
+    color: $dark-blue;
+    background-color: transparent;
+  }
+
+  &:hover {
+    @apply opacity-50;
+  }
+}

@@ -1,0 +1,13 @@
+version: "2.2"
+
+services:
+  front:
+    build: front/
+    ports:
+      - 127.0.0.1:${FRONT_PORT:-3009}:3000
+    networks:
+      - webappnetwork
+
+networks:
+  webappnetwork:
+    driver: bridge

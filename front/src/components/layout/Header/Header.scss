@@ -1,0 +1,51 @@
+@import "~/components/layout/navigation/Menu/Menu";
+
+.header {
+  @apply fixed top-0 left-0 w-full z-50;
+
+  background-color: #fff;
+  border-bottom: rem(2) solid $bd-gray;
+
+  // .header__container
+
+  &__container {
+    @apply flex gap-8 justify-between items-center;
+
+    @media (width < $mobile) {
+      min-height: rem(70);
+    }
+  }
+
+  // .header__logo
+
+  &__logo {
+    @apply flex items-center relative z-40 text-2xl font-bold;
+
+    gap: em(5, 18);
+    transition: opacity 0.3s ease 0s;
+
+    &:hover {
+      @apply opacity-50;
+    }
+
+    @media (width < $mobile) {
+      @apply absolute top-1/2 left-1/2;
+
+      transform: translate(-50%, -50%);
+    }
+
+    span {
+      @apply relative;
+
+      top: rem(-1);
+    }
+  }
+
+  &__img {
+    width: em(33, 24);
+
+    img {
+      @apply w-full h-full;
+    }
+  }
+}

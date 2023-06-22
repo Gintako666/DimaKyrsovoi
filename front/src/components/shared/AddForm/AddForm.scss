@@ -1,0 +1,71 @@
+.add-form {
+  @apply flex flex-col gap-6;
+
+  // .add-form__field
+
+  &__field {
+    @apply flex flex-col gap-1;
+
+    // add-form__field_name
+
+    // &_name {
+    // }
+
+    // add-form__field_description
+
+    // &_description {
+    // }
+  }
+
+  // .add-form__label
+
+  &__label {
+    @apply text-sm font-medium;
+
+    color: $dark-gray;
+  }
+
+  // .add-form__input
+
+  &__input {
+    border-radius: em(4);
+    border: em(1) solid $light-gray;
+
+    // add-form__input_name
+
+    &_name {
+      @apply flex items-center max-w-3xl h-9;
+
+      span {
+        @apply flex justify-center items-center h-full text-base;
+
+        flex: 0 0 em(25, 14);
+        border-top-left-radius: rem(4);
+        border-bottom-left-radius: rem(4);
+        border-right: em(1) solid $light-gray;
+        background-color: $main-bg;
+      }
+
+      input {
+        @apply w-full h-full;
+
+        padding: 0 em(10);
+      }
+    }
+
+    // add-form__input_description
+
+    &_description {
+      padding: em(10);
+      min-height: em(100);
+    }
+  }
+
+  // .add-form__sub-label
+
+  &__sub-label {
+    @apply text-sm;
+
+    color: $gray;
+  }
+}
