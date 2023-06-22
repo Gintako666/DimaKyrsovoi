@@ -1,22 +1,16 @@
 stages:
-# - build
+ - build
 #  - test
 #  - review
-  - deploy
+#  - deploy
 
-deploy-job:
-  only:
-    - main
+build-job:
   tags:
-    - review
-  stage: deploy
-  variables:
-    FRONT_PORT: 3085
-    CI_COMMIT_SHORT_SHA: $CI_COMMIT_SHORT_SHA
-    CI_COMMIT_TIMESTAMP: $CI_COMMIT_TIMESTAMP
-    CI_COMMIT_TITLE: $CI_COMMIT_TITLE
+    - test
+  stage: build
+  image: node:16-alpine
   script:
-    - docker image prune -f
-    - docker compose down
-    - docker compose build --no-cache
-    - docker compose up -d
+    - cd front
+    - npm ci
+    - npm run build
+    - echo "Project was successfully built."
