@@ -1,0 +1,47 @@
+@import './TransactionsTableItem/TransactionsTableItem';
+
+.transactions {
+  &__title {
+    @apply text-xl font-medium;
+
+    margin-bottom: em(15, 18);
+  }
+
+  &__header {
+    @apply grid lg:grid-cols-[3fr_1fr] lg:gap-12 lg:grid-rows-1
+    grid-cols-1 grid-rows-[auto_auto] gap-3;
+
+    &__filter {
+      @apply mb-6;
+
+      &__select {
+        @apply border border-solid rounded-lg text-lg w-full p-3 ;
+      }
+
+      &__option {
+        @apply text-lg;
+      }
+    }
+  }
+
+  &__table {
+    @apply mb-6;
+    &__header, &__item {
+      @apply grid lg:grid-cols-[3fr_repeat(2,_2fr)_repeat(3,_1fr)]
+      grid-cols-1
+      lg:gap-6 gap-4 items-center 
+      border-b-[1px] border-solid border-slate-400;
+      // grid-template-columns: 3fr repeat(2, 2fr) repeat(3, 1fr);
+    }
+
+    &__header {
+      @apply bg-slate-200 rounded-t-lg hidden lg:grid px-4 py-3;
+
+      &__item {
+        @apply uppercase;
+      }
+    }
+  }
+
+  
+}

@@ -1,0 +1,93 @@
+.transactions {
+
+  &__table {  
+    &__item {
+      @apply bg-slate-100 px-4 py-3;
+
+      &:last-child {
+        @apply rounded-b-lg
+      }
+
+      &__category, &__type, &__status, &__amount {
+        @apply grid grid-cols-[60px_auto] items-center gap-3 lg:grid-cols-1;
+      }
+
+      &__transaction {
+        @apply grid grid-rows-2 grid-cols-[60px_1fr];
+
+        &__img {
+          @apply row-start-1 row-end-3 h-12 w-12
+        }
+
+        &__name {
+          @apply font-bold;
+        }
+
+        &__bank {
+          @apply text-slate-400;
+        }
+      }
+
+      &__category {
+        &__name {
+          @apply font-bold;
+        }
+
+        &__type {
+          @apply text-slate-400;
+        }
+      }
+
+      &__type {  
+        &__info {
+          @apply text-slate-400; 
+        
+        }
+      }
+
+      &__status {
+        &__info {
+          @apply px-3 py-1 w-min h-min rounded-xl;
+          &--paid {
+            @apply bg-green-400 text-green-600;
+          }
+
+          &--pending {
+            @apply bg-yellow-400 text-yellow-600;
+          }
+
+          &--rejected {
+          @apply bg-red-400 text-red-600;
+          }
+        }
+        
+
+        
+      }
+
+      &__amount {
+        &__info {
+          @apply px-3 py-1 w-min h-min rounded-xl bg-blue-300 text-blue-600;
+          &--pending {
+            @apply bg-yellow-300 text-yellow-600
+          }
+
+          &--rejected {
+            @apply bg-red-300 text-red-600
+          }
+        }
+
+        
+      }
+
+      &__media {
+        @apply lg:hidden
+      }
+
+      &__button {
+        @apply lg:bg-transparent
+        text-blue-600 bg-blue-400 p-2 rounded-lg 
+      }
+    }
+  }
+}
