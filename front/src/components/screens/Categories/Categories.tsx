@@ -1,8 +1,11 @@
 import { FC } from 'react';
-import CategoriesCards from './CategoriesCards/CategoriesCards';
+
+import CategoryCards from './CategoryCards/CategoryCards';
+
+import categories from './categories.const';
 
 const Categories: FC = () => (
-  <CategoriesCards />
+  <CategoryCards categories={ categories } />
 );
 
 export default Categories;

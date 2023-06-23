@@ -1,10 +1,16 @@
 .transactions {
+  &__table {
+    @apply rounded-lg;
 
-  &__table {  
+    border: rem(1) solid $light-gray;
+
     &__item {
       @apply px-4 py-3 bg-white;
 
-      &__category, &__type, &__status, &__amount {
+      &__category,
+      &__type,
+      &__status,
+      &__amount {
         @apply grid grid-cols-[60px_auto] items-center gap-3 lg:grid-cols-1;
       }
 
@@ -12,38 +18,40 @@
         @apply grid grid-rows-2 grid-cols-[60px_1fr];
 
         &__img {
-          @apply row-start-1 row-end-3 h-12 w-12
+          @apply row-start-1 row-end-3 h-12 w-12;
         }
 
         &__name {
-          @apply font-bold;
+          @apply font-semibold;
         }
 
         &__bank {
-          @apply text-slate-400;
+          color: $gray;
         }
       }
 
       &__category {
         &__name {
-          @apply font-bold;
+          @apply font-medium;
         }
 
         &__type {
-          @apply text-slate-400;
+          color: $gray;
         }
       }
 
-      &__type {  
-        &__info {
-          @apply text-slate-400; 
-        
+      &__type {
+        p {
+          color: $main-color;
         }
+
+        color: $gray;
       }
 
       &__status {
         &__info {
-          @apply px-3 py-1 w-min h-min rounded-xl;
+          @apply px-3 py-0.5 w-min h-min rounded-full font-medium;
+
           &--paid {
             @apply bg-green-100 text-green-600;
           }
@@ -57,9 +65,6 @@
           @apply bg-red-100 text-red-600;
           }
         }
-        
-
-        
       }
 
       &__amount {
@@ -73,12 +78,10 @@
             @apply bg-red-100 text-red-600
           }
         }
-
-        
       }
 
       &__media {
-        @apply lg:hidden
+        @apply lg:hidden;
       }
 
       &__button {

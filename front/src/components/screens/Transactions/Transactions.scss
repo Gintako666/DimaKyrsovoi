@@ -1,8 +1,8 @@
-@import './TransactionsTableItem/TransactionsTableItem';
+@import "./TransactionsTableItem/TransactionsTableItem";
 
 .transactions {
   &__title {
-    @apply text-xl font-medium mb-4;
+    @apply mb-4;
   }
 
   &__header {
@@ -12,8 +12,17 @@
     &__filter {
       @apply mb-6;
 
+      h4 {
+        @apply text-sm text-right font-medium;
+
+        margin-bottom: rem(5);
+      }
+
       &__select {
-        @apply border border-solid rounded-lg text-lg w-full p-3 ;
+        padding: rem(10) 0;
+        border-color: $light-gray;
+
+        @apply border border-solid rounded-lg text-base w-full px-3;
       }
 
       &__option {
@@ -43,6 +52,4 @@
       }
     }
   }
-
-  
 }

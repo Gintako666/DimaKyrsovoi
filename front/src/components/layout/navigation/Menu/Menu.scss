@@ -1,3 +1,5 @@
+@import "Profile/Profile";
+
 .menu {
   @apply flex justify-between items-center;
 
@@ -153,7 +155,7 @@
           bottom: em(-5, 14);
           height: em(2, 14);
           border-radius: em(4, 14);
-          background-color: $dark-blue;
+          background-color: $blue;
           transition: all 0.3s ease 0s;
         }
 
@@ -163,14 +165,6 @@
           }
         }
       }
-    }
-  }
-
-  &__img {
-    @apply w-10 pb-10;
-
-    img {
-      border-radius: 50%;
     }
   }
 

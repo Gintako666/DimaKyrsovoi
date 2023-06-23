@@ -4,15 +4,18 @@
 @import "~/components/shared/SectionForm/SectionForm";
 
 .button {
+  @apply whitespace-nowrap;
+
   padding: em(10) em(20);
   border-radius: em(5);
   color: $main-bg;
-  background-color: $dark-blue;
+  background-color: $blue;
   transition: opacity 0.3s ease 0s;
 
   &_transparent {
-    color: $dark-blue;
-    background-color: transparent;
+    @apply bg-transparent;
+
+    color: $blue;
   }
 
   &:hover {

@@ -9,7 +9,7 @@ import {
 
 import Img from '~/components/base/Img/Img';
 
-import upload from '~/assets/img/icons/upload.svg';
+import arrow from '~/assets/img/icons/arrow.svg';
 import handleClassName from '~/utils/className.util';
 
 interface FileProps {
@@ -68,7 +68,7 @@ const UploadFile: FC<FileProps> = ({ selectedFile, setSelectedFile }) => {
   const modifiedClassName = handleClassName(isActive, 'upload-file__body');
 
   const img = {
-    src: upload,
+    src: arrow,
     alt: '^',
   };
 
