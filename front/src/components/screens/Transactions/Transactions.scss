@@ -12,8 +12,17 @@
     &__filter {
       @apply mb-6;
 
+      h4 {
+        @apply text-sm text-right font-medium;
+
+        margin-bottom: rem(5);
+      }
+
       &__select {
-        @apply border border-solid rounded-lg text-lg w-full p-3;
+        padding: rem(10) 0;
+        border-color: $light-gray;
+
+        @apply border border-solid rounded-lg text-base w-full px-3;
       }
 
       &__option {
@@ -30,14 +39,18 @@
       @apply grid lg:grid-cols-[3fr_repeat(2,_2fr)_repeat(3,_1fr)]
       grid-cols-1
       lg:gap-6 gap-4 items-center 
-      border-b-[1px] border-solid border-slate-400;
+      border-b-[1px] border-solid;
+
+      border-color: $light-gray;
     }
 
     &__header {
-      @apply bg-slate-200 rounded-t-lg hidden lg:grid px-4 py-3;
+      @apply rounded-t-lg hidden lg:grid px-5 py-3;
 
       &__item {
-        @apply uppercase;
+        @apply uppercase text-sm font-medium;
+
+        color: $dark-gray;
       }
     }
   }
