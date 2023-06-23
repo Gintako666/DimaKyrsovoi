@@ -12,14 +12,47 @@ interface ItemProps {
 const Item: FC<ItemProps> = ({ category: { name, number, type } }) => {
   const imageRef = useRef<HTMLDivElement>(null);
 
-  const getColor = () => {
-    const existingColor = localStorage.getItem(name);
+  interface ColorStorage {
+    [name: string]: string;
+  }
+
+  // Get storage color
+  interface IGetColorStorage {
+    (): ColorStorage
+  }
+  const getStorageColor: IGetColorStorage = () => {
+    const existingColors = localStorage.getItem('colors');
+
+    if (existingColors) {
+      return JSON.parse(existingColors);
+    }
+    return {};
+  };
+
+  // Save color
+  interface ISaveColor {
+    (color: string): void
+  }
+  const saveColor: ISaveColor = (color) => {
+    const colorStorage = getStorageColor();
+    colorStorage[name] = color;
+    localStorage.setItem('colors', JSON.stringify(colorStorage));
+  };
+
+  // Get color
+  interface IGetColor {
+    (): string
+  }
+  const getColor: IGetColor = () => {
+    const colorStorage = getStorageColor();
+
+    const existingColor = colorStorage[name];
     if (existingColor) {
       return existingColor;
     }
 
-    const color = randomColor();
-    localStorage.setItem(name, color);
+    const color = randomColor({ luminosity: 'dark' });
+    saveColor(color);
     return color;
   };
 
