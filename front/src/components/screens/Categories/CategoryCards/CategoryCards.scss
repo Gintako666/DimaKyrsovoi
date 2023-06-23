@@ -116,10 +116,11 @@
   &__sub-list {
     @apply absolute top-full right-0 z-10 invisible opacity-0 capitalize;
 
-    padding: em(10, 14) em(15, 14);
     transform: translate(10%, -10%);
-    background-color: $main-bg;
+    padding: em(10, 14) em(15, 14);
+    border-radius: em(5, 14);
     box-shadow: 0 0 em(2, 14) $gray;
+    background-color: $main-bg;
     transition: all 0.3s ease 0s;
 
     li {
