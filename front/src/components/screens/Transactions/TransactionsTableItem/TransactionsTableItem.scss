@@ -5,11 +5,7 @@
     border: rem(1) solid $light-gray;
 
     &__item {
-      @apply bg-white px-5 py-3;
-
-      &:last-child {
-        @apply rounded-b-lg;
-      }
+      @apply px-4 py-3 bg-white;
 
       &__category,
       &__type,
@@ -57,35 +53,29 @@
           @apply px-3 py-0.5 w-min h-min rounded-full font-medium;
 
           &--paid {
-            color: $dark-green;
-            background-color: $light-green;
+            @apply bg-green-100 text-green-600;
           }
 
           &--pending {
-            color: $dark-yellow;
-            background-color: $light-yellow;
+            @apply bg-yellow-100  text-yellow-600;
+            // background: #CCA879;
           }
 
           &--rejected {
-            color: $dark-red;
-            background-color: $light-red;
+          @apply bg-red-100 text-red-600;
           }
         }
       }
 
       &__amount {
         &__info {
-          @apply px-3 py-1 w-min h-min rounded font-medium;
-
-          color: $dark-blue;
-          background-color: $light-blue;
-
+          @apply px-3 py-1 w-min h-min rounded-xl bg-blue-100 text-blue-600;
           &--pending {
-            background-color: $light-yellow;
+            @apply bg-yellow-100 text-yellow-600
           }
 
           &--rejected {
-            background-color: $light-red;
+            @apply bg-red-100 text-red-600
           }
         }
       }
@@ -95,15 +85,8 @@
       }
 
       &__button {
-        color: $dark-blue;
-        background-color: $light-blue;
-        transition: opacity 0.3s ease 0s;
-
-        @apply lg:bg-transparent p-2 rounded-lg;
-
-        &:hover {
-          @apply opacity-50;
-        }
+        @apply lg:bg-transparent
+        text-blue-600 bg-blue-300 p-2 rounded-lg 
       }
     }
   }
