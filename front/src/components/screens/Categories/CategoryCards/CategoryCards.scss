@@ -81,18 +81,58 @@
   // .category-cards__more
 
   &__more {
+    @apply items-center relative;
+
+    gap: em(5, 18);
+
+    // .category-cards__more_active
+
+    &_active {
+      .category-cards__sub-list {
+        @apply visible opacity-100;
+
+        transform: translate(0);
+        pointer-events: all;
+      }
+    }
+  }
+
+  // .category-cards__img
+
+  &__img {
+    height: em(20, 14);
     transition: opacity 0.3s ease 0s;
 
     &:hover {
       @apply opacity-50;
     }
-  }
-
-  &__img {
-    height: em(20, 14);
 
     img {
       @apply w-full h-full;
+    }
+  }
+
+  // .category-cards__sub-list
+
+  &__sub-list {
+    @apply absolute top-full right-0 z-10 invisible opacity-0 capitalize;
+
+    padding: em(10, 14) em(15, 14);
+    transform: translate(10%, -10%);
+    background-color: $main-bg;
+    box-shadow: 0 0 em(2, 14) $gray;
+    transition: all 0.3s ease 0s;
+
+    li {
+      transition: opacity 0.3s ease 0s;
+
+      &:hover {
+        @apply opacity-50;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: em(5, 14);
+      }
     }
   }
 }

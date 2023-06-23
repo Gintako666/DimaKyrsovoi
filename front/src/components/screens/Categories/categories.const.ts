@@ -24,22 +24,22 @@ const categories: ICategory[] = [
   {
     name: 'Marketing',
     number: 12,
-    type: 'Transactions',
+    type: 'transactions',
   },
   {
     name: 'Marketing',
     number: 12,
-    type: 'Transactions',
+    type: 'transactions',
   },
   {
     name: 'Office expenses',
     number: 2,
-    type: 'Transactions',
+    type: 'transactions',
   },
   {
     name: 'Office expenses',
     number: 2,
-    type: 'Transactions',
+    type: 'transactions',
   },
   {
     name: 'Traveling',

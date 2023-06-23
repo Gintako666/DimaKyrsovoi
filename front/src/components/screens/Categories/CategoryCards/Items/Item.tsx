@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
-import Img from '~/components/base/Img/Img';
-import more from '~/assets/img/icons/more.svg';
+import ButtonMore from './ButtonMore';
 import { ICategory } from '../../category.interface';
 
 interface ItemProps {
@@ -27,11 +26,6 @@ const Item: FC<ItemProps> = ({ category: { name, number, type } }) => {
     return firstLetters.join('');
   };
 
-  const img = {
-    src: more,
-    alt: '...',
-  };
-
   return (
     <div className="category-cards__item">
       <div className="category-cards__image">{getFirstLetters(name)}</div>
@@ -44,9 +38,7 @@ const Item: FC<ItemProps> = ({ category: { name, number, type } }) => {
             <span>{type}</span>
           </div>
         </div>
-        <button type="button" className="category-cards__more">
-          <Img className="category-cards" img={ img } resetStyle />
-        </button>
+        <ButtonMore />
       </div>
     </div>
 
