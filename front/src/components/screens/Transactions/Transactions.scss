@@ -23,19 +23,23 @@
   }
 
   &__table {
-    @apply mb-6;
+    @apply rounded-2xl mb-6 
+    border-[1px] border-solid border-slate-300 
+    overflow-hidden
+    shadow-2xl shadow-slate-300;
+
     &__header, &__item {
       @apply grid lg:grid-cols-[3fr_repeat(2,_2fr)_repeat(3,_1fr)]
       grid-cols-1
       lg:gap-6 gap-4 items-center 
-      border-b-[1px] border-solid border-slate-400;
+      border-b-[1px] border-solid border-slate-300;
     }
 
     &__header {
-      @apply bg-slate-200 rounded-t-lg hidden lg:grid px-4 py-3;
+      @apply hidden lg:grid px-4 py-3 bg-gray-100;
 
       &__item {
-        @apply uppercase;
+        @apply uppercase font-bold text-sm;
       }
     }
   }
