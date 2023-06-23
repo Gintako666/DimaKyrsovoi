@@ -1,7 +1,8 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import randomColor from 'randomcolor';
 
 import ButtonMore from './ButtonMore';
+
 import { ICategory } from '../../category.interface';
 
 interface ItemProps {
@@ -9,6 +10,8 @@ interface ItemProps {
 }
 
 const Item: FC<ItemProps> = ({ category: { name, number, type } }) => {
+  const imageRef = useRef<HTMLDivElement>(null);
+
   const getColor = () => {
     const existingColor = localStorage.getItem(name);
     if (existingColor) {
@@ -19,6 +22,15 @@ const Item: FC<ItemProps> = ({ category: { name, number, type } }) => {
     localStorage.setItem(name, color);
     return color;
   };
+
+  useEffect(() => {
+    const imageElement = imageRef.current;
+    const color = getColor();
+
+    if (imageElement) {
+      imageElement.style.background = color;
+    }
+  }, [ name ]);
 
   // Get first letters
   interface IGetFirstLetters {
@@ -40,7 +52,7 @@ const Item: FC<ItemProps> = ({ category: { name, number, type } }) => {
 
   return (
     <div className="category-cards__item">
-      <div className="category-cards__image" style={ { backgroundColor: getColor() } }>{getFirstLetters(name)}</div>
+      <div className="category-cards__image" ref={ imageRef }>{getFirstLetters(name)}</div>
       <div className="category-cards__main">
         <div className="category-cards__text">
           <h4 className="category-cards__name">{name}</h4>
