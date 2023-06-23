@@ -2,9 +2,7 @@
 
 .transactions {
   &__title {
-    @apply text-xl font-medium;
-
-    margin-bottom: em(15, 18);
+    @apply text-xl font-medium mb-4;
   }
 
   &__header {
@@ -31,7 +29,6 @@
       grid-cols-1
       lg:gap-6 gap-4 items-center 
       border-b-[1px] border-solid border-slate-400;
-      // grid-template-columns: 3fr repeat(2, 2fr) repeat(3, 1fr);
     }
 
     &__header {
