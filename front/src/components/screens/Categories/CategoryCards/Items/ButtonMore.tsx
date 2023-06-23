@@ -1,7 +1,5 @@
 import { FC, useRef } from 'react';
-
 import Img from '~/components/base/Img/Img';
-
 import more from '~/assets/img/icons/more.svg';
 
 const ButtonMore: FC = () => {
@@ -11,16 +9,13 @@ const ButtonMore: FC = () => {
     const buttonElement = buttonRef.current;
 
     if (buttonElement) {
-      if (buttonElement.classList.contains('category-cards__more_active')) {
-        buttonElement.classList.remove('category-cards__more_active');
-      } else {
-        const activeElements = document.querySelectorAll('.category-cards__more_active');
+      const activeElements = document.querySelectorAll('.category-cards__more_active');
 
-        activeElements.forEach((element) => {
-          element.classList.remove('category-cards__more_active');
-        });
-        buttonElement.classList.add('category-cards__more_active');
-      }
+      activeElements.forEach((element) => {
+        element.classList.remove('category-cards__more_active');
+      });
+
+      buttonElement.classList.add('category-cards__more_active');
     }
   };
 
