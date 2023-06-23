@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import randomColor from 'randomcolor';
 
 import ButtonMore from './ButtonMore';
 import { ICategory } from '../../category.interface';
@@ -8,6 +9,17 @@ interface ItemProps {
 }
 
 const Item: FC<ItemProps> = ({ category: { name, number, type } }) => {
+  const getColor = () => {
+    const existingColor = localStorage.getItem(name);
+    if (existingColor) {
+      return existingColor;
+    }
+
+    const color = randomColor();
+    localStorage.setItem(name, color);
+    return color;
+  };
+
   // Get first letters
   interface IGetFirstLetters {
     (string: string): string
@@ -28,7 +40,7 @@ const Item: FC<ItemProps> = ({ category: { name, number, type } }) => {
 
   return (
     <div className="category-cards__item">
-      <div className="category-cards__image">{getFirstLetters(name)}</div>
+      <div className="category-cards__image" style={ { backgroundColor: getColor() } }>{getFirstLetters(name)}</div>
       <div className="category-cards__main">
         <div className="category-cards__text">
           <h4 className="category-cards__name">{name}</h4>
