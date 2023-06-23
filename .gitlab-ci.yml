@@ -2,7 +2,7 @@ stages:
  - build
 #  - test
 #  - review
-#  - deploy
+ - deploy
 
 build-job:
   tags:
@@ -14,3 +14,20 @@ build-job:
     - npm ci
     - npm run build
     - echo "Project was successfully built."
+
+deploy-job:
+  only:
+    - main
+  tags:
+    - review
+  stage: deploy
+  variables:
+    FRONT_PORT: 3086
+    CI_COMMIT_SHORT_SHA: $CI_COMMIT_SHORT_SHA
+    CI_COMMIT_TIMESTAMP: $CI_COMMIT_TIMESTAMP
+    CI_COMMIT_TITLE: $CI_COMMIT_TITLE
+  script:
+    - docker image prune -f
+    - docker compose down
+    - docker compose build --no-cache
+    - docker compose up -d
