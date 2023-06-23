@@ -9,13 +9,13 @@
   padding: em(10) em(20);
   border-radius: em(5);
   color: $main-bg;
-  background-color: $dark-blue;
+  background-color: $blue;
   transition: opacity 0.3s ease 0s;
 
   &_transparent {
     @apply bg-transparent;
 
-    color: $dark-blue;
+    color: $blue;
   }
 
   &:hover {

@@ -1,26 +1,52 @@
-import { FC, useRef } from 'react';
-
+import { FC, useRef, useEffect } from 'react';
 import Img from '~/components/base/Img/Img';
-
 import more from '~/assets/img/icons/more.svg';
 
 const ButtonMore: FC = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const handleButtonClick = () => {
-    const buttonElement = buttonRef.current;
+  useEffect(() => {
+    // Handle outside click
+    interface IHandleOutsideClick {
+      (e: MouseEvent): void
+    }
+    const handleClickOutside: IHandleOutsideClick = (e) => {
+      const buttonElement = buttonRef.current;
+      const target = e.target as HTMLElement;
 
-    if (buttonElement) {
-      if (buttonElement.classList.contains('category-cards__more_active')) {
-        buttonElement.classList.remove('category-cards__more_active');
-      } else {
+      if (buttonElement && !buttonElement.contains(target)) {
         const activeElements = document.querySelectorAll('.category-cards__more_active');
 
         activeElements.forEach((element) => {
           element.classList.remove('category-cards__more_active');
         });
-        buttonElement.classList.add('category-cards__more_active');
       }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  // Handle click button
+  interface IHandleClickButton {
+    (e: React.MouseEvent<HTMLButtonElement>): void
+  }
+  const handleClickButton: IHandleClickButton = (e) => {
+    e.stopPropagation();
+
+    const buttonElement = buttonRef.current;
+
+    if (buttonElement) {
+      const activeElements = document.querySelectorAll('.category-cards__more_active');
+
+      activeElements.forEach((element) => {
+        element.classList.remove('category-cards__more_active');
+      });
+
+      buttonElement.classList.add('category-cards__more_active');
     }
   };
 
@@ -33,7 +59,7 @@ const ButtonMore: FC = () => {
     <button
       type="button"
       className="category-cards__more"
-      onClick={ handleButtonClick }
+      onClick={ handleClickButton }
       ref={ buttonRef }
     >
       <Img className="category-cards" img={ img } resetStyle />

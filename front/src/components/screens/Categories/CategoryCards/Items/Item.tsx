@@ -98,7 +98,6 @@ const Item: FC<ItemProps> = ({ category: { name, number, type } }) => {
         <ButtonMore />
       </div>
     </div>
-
   );
 };
 

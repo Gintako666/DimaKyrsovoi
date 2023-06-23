@@ -1,7 +1,11 @@
 .transactions {
   &__table {
+    @apply rounded-lg;
+
+    border: rem(1) solid $light-gray;
+
     &__item {
-      @apply bg-slate-100 px-4 py-3;
+      @apply bg-white px-5 py-3;
 
       &:last-child {
         @apply rounded-b-lg;
@@ -22,58 +26,66 @@
         }
 
         &__name {
-          @apply font-bold;
+          @apply font-semibold;
         }
 
         &__bank {
-          @apply text-slate-400;
+          color: $gray;
         }
       }
 
       &__category {
         &__name {
-          @apply font-bold;
+          @apply font-medium;
         }
 
         &__type {
-          @apply text-slate-400;
+          color: $gray;
         }
       }
 
       &__type {
-        &__info {
-          @apply text-slate-400;
+        p {
+          color: $main-color;
         }
+
+        color: $gray;
       }
 
       &__status {
         &__info {
-          @apply px-3 py-1 w-min h-min rounded-xl;
+          @apply px-3 py-0.5 w-min h-min rounded-full font-medium;
 
           &--paid {
-            @apply bg-green-400 text-green-600;
+            color: $dark-green;
+            background-color: $light-green;
           }
 
           &--pending {
-            @apply bg-yellow-400 text-yellow-600;
+            color: $dark-yellow;
+            background-color: $light-yellow;
           }
 
           &--rejected {
-            @apply bg-red-400 text-red-600;
+            color: $dark-red;
+            background-color: $light-red;
           }
         }
       }
 
       &__amount {
         &__info {
-          @apply px-3 py-1 w-min h-min rounded-xl bg-blue-300 text-blue-600;
+          @apply px-3 py-1 w-min h-min rounded font-medium;
+
+          color: $dark-blue;
+          background-color: $light-blue;
 
           &--pending {
-            @apply bg-yellow-300 text-yellow-600;
+            background-color: $light-yellow;
           }
 
           &--rejected {
-            @apply bg-red-300 text-red-600;
+            background-color: $light-red;
           }
         }
       }
@@ -83,8 +95,15 @@
       }
 
       &__button {
-        @apply lg:bg-transparent
-        text-blue-600 bg-blue-400 p-2 rounded-lg;
+        color: $dark-blue;
+        background-color: $light-blue;
+        transition: opacity 0.3s ease 0s;
+
+        @apply lg:bg-transparent p-2 rounded-lg;
+
+        &:hover {
+          @apply opacity-50;
+        }
       }
     }
   }

@@ -12,11 +12,11 @@
     transition: border-color 0.3s ease 0s;
 
     &:hover {
-      border-color: $dark-blue;
+      border-color: $blue;
     }
 
     &_active {
-      border-color: $dark-blue;
+      border-color: $blue;
     }
   }
 
@@ -36,7 +36,7 @@
     @apply font-medium;
 
     span {
-      color: $dark-blue;
+      color: $blue;
     }
   }
 

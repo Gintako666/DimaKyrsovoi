@@ -52,10 +52,7 @@ const Transactions: FC = React.memo(() => {
             className="transactions"
             modifier="large"
             title="Latest transactions"
-            text="Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Doloribus eaque a assumenda
-          optio quae vitae ea repellendus cupiditate
-          blanditiis."
+            text="Transaction lorem ipsum dolor sit amet dolor sit transaction description dummy text and so on and so on..."
           />
 
           <div className="transactions__header__filter">
