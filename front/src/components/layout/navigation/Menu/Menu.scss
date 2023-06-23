@@ -1,3 +1,5 @@
+@import "Profile/Profile";
+
 .menu {
   @apply flex justify-between items-center;
 
@@ -163,14 +165,6 @@
           }
         }
       }
-    }
-  }
-
-  &__img {
-    @apply w-10 pb-10;
-
-    img {
-      border-radius: 50%;
     }
   }
 

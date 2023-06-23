@@ -1,8 +1,8 @@
 stages:
- - build
-#  - test
-#  - review
- - deploy
+  - build
+  #  - test
+  #  - review
+  - deploy
 
 build-job:
   tags:

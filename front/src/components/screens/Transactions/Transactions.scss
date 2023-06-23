@@ -1,8 +1,8 @@
-@import './TransactionsTableItem/TransactionsTableItem';
+@import "./TransactionsTableItem/TransactionsTableItem";
 
 .transactions {
   &__title {
-    @apply text-xl font-medium mb-4;
+    @apply mb-4;
   }
 
   &__header {
@@ -13,7 +13,7 @@
       @apply mb-6;
 
       &__select {
-        @apply border border-solid rounded-lg text-lg w-full p-3 ;
+        @apply border border-solid rounded-lg text-lg w-full p-3;
       }
 
       &__option {
@@ -24,7 +24,9 @@
 
   &__table {
     @apply mb-6;
-    &__header, &__item {
+
+    &__header,
+    &__item {
       @apply grid lg:grid-cols-[3fr_repeat(2,_2fr)_repeat(3,_1fr)]
       grid-cols-1
       lg:gap-6 gap-4 items-center 
@@ -39,6 +41,4 @@
       }
     }
   }
-
-  
 }
