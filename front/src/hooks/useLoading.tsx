@@ -1,28 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, RefObject } from 'react';
 
 interface IUseLoading {
-  (object: any): boolean;
+  (object: RefObject<HTMLImageElement> | RefObject<HTMLIFrameElement>): boolean;
 }
 
 const useLoading: IUseLoading = (object) => {
   const [ isLoading, setIsLoading ] = useState(true);
 
+  // Handle object load
   interface IHandleObjectLoad {
     (): void;
   }
-  const handleObjectLoad: IHandleObjectLoad = () => setIsLoading(false);
+  const handleLoadObject: IHandleObjectLoad = () => {
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    if (object.current.complete) {
-      handleObjectLoad();
+    const objectElement = object.current;
+
+    const isImg = objectElement instanceof HTMLImageElement;
+    const isImgComplete = isImg && objectElement.complete;
+
+    if (isImgComplete) {
+      handleLoadObject();
     } else {
-      object.current.addEventListener('load', handleObjectLoad);
+      objectElement?.addEventListener('load', handleLoadObject);
 
       return () => {
-        object.current?.removeEventListener('load', handleObjectLoad);
+        objectElement?.removeEventListener('load', handleLoadObject);
       };
     }
-
     return undefined;
   }, [ object, isLoading ]);
 

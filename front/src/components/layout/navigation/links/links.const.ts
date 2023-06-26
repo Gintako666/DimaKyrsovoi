@@ -13,6 +13,10 @@ const links: ILink[] = [
     value: 'transactions',
     href: '/transactions',
   },
+  {
+    value: 'upload file',
+    href: '/upload',
+  },
 ];
 
 export default links;

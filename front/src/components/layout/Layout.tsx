@@ -8,7 +8,6 @@ import Header from './Header/Header';
 const inter = Inter({
   subsets: [
     'latin',
-    //  "cyrillic-ext"
   ],
 });
 

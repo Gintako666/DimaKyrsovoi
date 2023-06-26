@@ -1,10 +1,10 @@
-type TransactionStatus = 'Paid' | 'Pending' | 'Rejected';
+type TypeTransactionStatus = 'Paid' | 'Pending' | 'Rejected';
 
-export interface Transaction {
+export interface ITransaction {
   id: number,
   img: string,
   type: string,
-  status: TransactionStatus,
+  status: TypeTransactionStatus,
   amount: number,
   category: {
     type: string,
