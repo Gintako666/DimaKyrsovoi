@@ -34,7 +34,7 @@
   &__item {
     @apply flex justify-between;
 
-    border-radius: em(5, 14);
+    border-radius: em(4, 14);
     border: em(1, 14) solid $light-gray;
   }
 
@@ -44,8 +44,8 @@
     @apply flex justify-center items-center;
 
     width: em(66, 14);
-    border-top-left-radius: em(5, 14);
-    border-bottom-left-radius: em(5, 14);
+    border-top-left-radius: em(4, 14);
+    border-bottom-left-radius: em(4, 14);
     color: $main-bg;
   }
 
@@ -118,7 +118,7 @@
 
     transform: translate(10%, -10%);
     padding: em(10, 14) em(15, 14);
-    border-radius: em(5, 14);
+    border-radius: em(4, 14);
     box-shadow: 0 0 em(2, 14) $gray;
     background-color: $main-bg;
     transition: all 0.3s ease 0s;

@@ -51,7 +51,7 @@
     @apply absolute top-full right-0 invisible opacity-0 pointer-events-none;
 
     transform: translate(10%, -10%);
-    border-radius: em(5, 14);
+    border-radius: em(4, 14);
     background-color: $blue;
     color: #fff;
     transition: all 0.3s ease 0s;

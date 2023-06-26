@@ -3,11 +3,11 @@
 .wrapper {
   &_header {
     main {
-      @apply my-28;
+      @apply py-28;
     }
 
     .not-found-page {
-      @apply my-0;
+      @apply py-0;
     }
   }
 }

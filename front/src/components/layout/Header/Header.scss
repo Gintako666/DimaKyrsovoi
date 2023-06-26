@@ -37,7 +37,7 @@
     span {
       @apply relative;
 
-      top: rem(-2);
+      top: em(-2, 24);
     }
   }
 
