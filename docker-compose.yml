@@ -1,12 +1,102 @@
 version: "2.2"
 
 services:
+  database:
+    image: postgis/postgis:13-master
+    # Required when running on platform other than amd64, like Apple M1/M2:
+    # platform: linux/amd64
+    volumes:
+      - ./back/database:/var/lib/postgresql/data
+    networks:
+      - webappnetwork
+    environment:
+      POSTGRES_USER: 'directus'
+      POSTGRES_PASSWORD: 'directus'
+      POSTGRES_DB: 'directus'
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  cache:
+    image: redis:6
+    networks:
+      - webappnetwork
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+
+  back:
+    image: directus/directus:10.2.0
+    # build: 
+    #   context: ./back
+    #   dockerfile: ./Dockerfile
+    environment:
+      KEY: '7073af92-cdb8-4443-9c52-b11241a0006e'
+      SECRET: '7a5631a5-f3ae-45d4-854c-076c843c0a9d'
+
+      ADMIN_EMAIL: 'admin@zagroza.agency'
+      ADMIN_PASSWORD: '5q6Hv&F1*Yk!'
+
+      DB_CLIENT: 'pg'
+      DB_HOST: 'database'
+      DB_PORT: '5432'
+      DB_DATABASE: 'directus'
+      DB_USER: 'directus'
+      DB_PASSWORD: 'directus'
+
+      CACHE_ENABLED: 'false'
+      CACHE_STORE: 'redis'
+      CACHE_REDIS: 'redis://cache:6379'
+
+      PUBLIC_URL: ${BACK_URI}
+
+      EMAIL_VERIFY_SETUP: true
+      EMAIL_TRANSPORT: smtp
+      EMAIL_FROM: ${EMAIL_FROM}
+      EMAIL_SMTP_HOST: ${EMAIL_SMTP_HOST}
+      EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT}
+      EMAIL_SMTP_USER: ${EMAIL_SMTP_USER}
+      EMAIL_SMTP_PASSWORD: ${EMAIL_SMTP_PASSWORD}
+      EMAIL_SMTP_SECURE: ${EMAIL_SMTP_SECURE}
+      EMAIL_SMTP_IGNORE_TLS: ${EMAIL_SMTP_IGNORE_TLS}
+
+      CORS_ENABLED: true
+      CORS_ORIGIN: '*'
+      TZ: ${TZ}
+    ports:
+      - 127.0.0.1:${BACK_PORT:-3010}:8055
+    networks:
+      - webappnetwork
+    volumes:
+      - ./back/uploads:/directus/uploads
+      - ./back/database:/directus/database
+      - ./back/extensions:/directus/extensions
+    restart: unless-stopped
+    depends_on:
+      cache:
+        condition: service_healthy
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider back:8055/admin || exit 1
+      interval: 5s
+      retries: 10
+      timeout: 10s
+
   front:
     build: front/
+    environment:
+      NEXT_PUBLIC_BACK_URI: ${BACK_URI}
+      NEXT_PUBLIC_API_INTERNAL_URI: http://back:8055
+      NEXT_PUBLIC_API_TOKEN: WuNaWPWkqvnApNVb_FcK7PMN90V7mcJk
     ports:
       - 127.0.0.1:${FRONT_PORT:-3009}:3000
     networks:
       - webappnetwork
+    depends_on:
+      back:
+        condition: service_healthy
 
 networks:
   webappnetwork:
