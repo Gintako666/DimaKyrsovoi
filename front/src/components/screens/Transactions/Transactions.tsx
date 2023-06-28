@@ -1,7 +1,7 @@
 import React, {
   FC, useEffect, useState,
 } from 'react';
-import { Transaction } from '~/types/Transaction';
+import { ITransaction } from '~/interfaces/transaction.interface';
 import Loader from '~/components/shared/Loader/Loader';
 import Title from '~/components/shared/Title/Title';
 import { useRouter } from 'next/router';
@@ -9,9 +9,9 @@ import transactionsFromApi from './transactions.json';
 import TransactionsTableItem from './TransactionsTableItem/TransactionsTableItem';
 
 const Transactions: FC = React.memo(() => {
-  const [ transactions, setTransactions ] = useState<Transaction[] | null>(null);
+  const [ transactions, setTransactions ] = useState<ITransaction[] | null>(null);
   // Пока нету апи используем renderTransactions, после будем использовать transactions для рендера
-  const [ renderTransactions, setRenderTransactions ] = useState<Transaction[]>([]);
+  const [ renderTransactions, setRenderTransactions ] = useState<ITransaction[]>([]);
   const [ selectFilter, setSelectFilter ] = useState('all');
   const router = useRouter();
 
@@ -19,7 +19,7 @@ const Transactions: FC = React.memo(() => {
     // Запрос на сервер
     setTimeout(
       () => {
-        setTransactions(transactionsFromApi as Transaction[]);
+        setTransactions(transactionsFromApi as ITransaction[]);
       },
       500,
     );

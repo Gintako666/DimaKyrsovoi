@@ -13,16 +13,14 @@
       @apply mb-6;
 
       h4 {
-        @apply text-sm text-right font-medium;
-
-        margin-bottom: rem(5);
+        @apply mb-1 text-sm text-right font-medium;
       }
 
       &__select {
-        padding: rem(10) 0;
-        border-color: $light-gray;
+        @apply border border-solid rounded-lg text-base w-full;
 
-        @apply border border-solid rounded-lg text-base w-full px-3;
+        padding: rem(10);
+        border-color: $light-gray;
       }
 
       &__option {
@@ -32,12 +30,13 @@
   }
 
   &__table {
-    @apply rounded-2xl mb-6 
+    @apply rounded-xl mb-6 
     border-[1px] border-solid border-slate-300 
     overflow-hidden
     shadow-2xl shadow-slate-300;
 
-    &__header, &__item {
+    &__header,
+    &__item {
       @apply grid lg:grid-cols-[3fr_repeat(2,_2fr)_repeat(3,_1fr)]
       grid-cols-1
       lg:gap-6 gap-4 items-center 
