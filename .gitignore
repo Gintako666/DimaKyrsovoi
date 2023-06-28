@@ -1,2 +1,4 @@
 .env
 /back/database
+/back/extensions
+/back/uploads
