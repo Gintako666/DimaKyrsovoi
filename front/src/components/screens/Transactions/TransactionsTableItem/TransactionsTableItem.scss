@@ -58,24 +58,26 @@
 
           &--pending {
             @apply bg-yellow-100  text-yellow-600;
+
             // background: #CCA879;
           }
 
           &--rejected {
-          @apply bg-red-100 text-red-600;
+            @apply bg-red-100 text-red-600;
           }
         }
       }
 
       &__amount {
         &__info {
-          @apply px-3 py-1 w-min h-min rounded-xl bg-blue-100 text-blue-600;
+          @apply px-3 py-0.5 w-min h-min rounded-lg bg-blue-100 text-blue-600;
+
           &--pending {
-            @apply bg-yellow-100 text-yellow-600
+            @apply bg-yellow-100 text-yellow-600;
           }
 
           &--rejected {
-            @apply bg-red-100 text-red-600
+            @apply bg-red-100 text-red-600;
           }
         }
       }
@@ -86,7 +88,7 @@
 
       &__button {
         @apply lg:bg-transparent
-        text-blue-600 bg-blue-300 p-2 rounded-lg 
+        text-blue-600 bg-blue-300  p-1.5 rounded-lg;
       }
     }
   }

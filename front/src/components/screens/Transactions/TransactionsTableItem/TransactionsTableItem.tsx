@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import React from 'react';
 import Img from '~/components/base/Img/Img';
-import { Transaction } from '~/types/Transaction';
+import { ITransaction } from '~/interfaces/transaction.interface';
 
 type Props = {
-  transaction: Transaction
+  transaction: ITransaction
 };
 
 const TransactionsTableItem: React.FC<Props> = ({ transaction }) => {
