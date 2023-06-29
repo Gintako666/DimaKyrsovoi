@@ -1,34 +1,10 @@
-import { FC, useRef, useEffect } from 'react';
+import { FC, useRef } from 'react';
 import Img from '~/components/base/Img/Img';
 import more from '~/assets/img/icons/more.svg';
+import useOutsideClick from '~/hooks/useOutsideClick';
 
 const ButtonMore: FC = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    // Handle outside click
-    interface IHandleOutsideClick {
-      (e: MouseEvent): void
-    }
-    const handleClickOutside: IHandleOutsideClick = (e) => {
-      const buttonElement = buttonRef.current;
-      const target = e.target as HTMLElement;
-
-      if (buttonElement && !buttonElement.contains(target)) {
-        const activeElements = document.querySelectorAll('.category-cards__more_active');
-
-        activeElements.forEach((element) => {
-          element.classList.remove('category-cards__more_active');
-        });
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
 
   // Handle click button
   interface IHandleClickButton {
@@ -41,7 +17,6 @@ const ButtonMore: FC = () => {
 
     if (buttonElement) {
       const activeElements = document.querySelectorAll('.category-cards__more_active');
-
       activeElements.forEach((element) => {
         element.classList.remove('category-cards__more_active');
       });
@@ -49,6 +24,8 @@ const ButtonMore: FC = () => {
       buttonElement.classList.add('category-cards__more_active');
     }
   };
+
+  useOutsideClick(buttonRef, 'category-cards__more_active');
 
   const img = {
     src: more,
