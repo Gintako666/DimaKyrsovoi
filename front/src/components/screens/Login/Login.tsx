@@ -2,6 +2,7 @@ import { FC, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import FullScreen from '~/components/base/FullScreen/FullScreen';
+
 import { useUser } from '~/contexts/user';
 import Form from './Form';
 
@@ -16,7 +17,7 @@ const Login: FC = () => {
     if (isLoggedIn && isLoginPage) {
       router.push('/');
     }
-  }, [ router, isLoggedIn ]);
+  }, [ router, isLoginPage, isLoggedIn ]);
 
   return (
     <FullScreen className="login">

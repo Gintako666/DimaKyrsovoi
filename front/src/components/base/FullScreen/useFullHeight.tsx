@@ -9,11 +9,7 @@ interface IUseFullHeight {
 const useFullHeight: IUseFullHeight = () => {
   const [ height, setHeight ] = useState('100vh');
 
-  // Handle height update
-  interface IHandleHeightUpdate {
-    (): void;
-  }
-  const handleHeightUpdate: IHandleHeightUpdate = () => {
+  const handleHeightUpdate = () => {
     const windowHeight = window.innerHeight;
     setHeight(`${ windowHeight - 0.0001 }px`);
   };

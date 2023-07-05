@@ -17,19 +17,11 @@ const Profile: FC = () => {
   const [ isActive, setIsActive ] = useState(false);
   const menuProfileRef = useRef<HTMLDivElement>(null);
 
-  // Handle active
-  interface IHandleActive {
-    (): void;
-  }
-  const handleActive: IHandleActive = () => {
+  const handleActive = () => {
     setIsActive(!isActive);
   };
 
-  // Handle deactivate
-  interface IHandleDeactivate {
-    (): void;
-  }
-  const handleDeactivate: IHandleDeactivate = () => {
+  const handleDeactivate = () => {
     setIsActive(false);
   };
   useOutsideClick(menuProfileRef, handleDeactivate);

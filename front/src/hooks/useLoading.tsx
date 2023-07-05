@@ -7,11 +7,7 @@ interface IUseLoading {
 const useLoading: IUseLoading = (object) => {
   const [ isLoading, setIsLoading ] = useState(true);
 
-  // Handle object load
-  interface IHandleObjectLoad {
-    (): void;
-  }
-  const handleLoadObject: IHandleObjectLoad = () => {
+  const handleLoadObject = () => {
     setIsLoading(false);
   };
 
