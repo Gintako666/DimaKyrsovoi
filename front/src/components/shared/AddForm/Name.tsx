@@ -7,14 +7,14 @@ interface NameProps {
 }
 
 const Name: FC<NameProps> = ({ type, name, onChange }) => (
-  <div className="add-form__field add-form__field_input">
-    <label htmlFor="name" className="add-form__label">
+  <div className="add-form__field add-form__field_name">
+    <span className="add-form__label">
       Enter
       {' '}
       {type}
       {' '}
       name
-    </label>
+    </span>
     <div className="add-form__input add-form__input_name">
       <span>/</span>
       <input id="name" type="text" value={ name } onChange={ onChange } />

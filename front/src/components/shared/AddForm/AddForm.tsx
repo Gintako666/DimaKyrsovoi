@@ -4,6 +4,7 @@ import handleClassName from '~/utils/className.util';
 import { IHandleChange } from '~/hooks/useAddForm';
 import Name from './Name';
 import Description from './Description';
+import Color from './Color';
 
 interface AddFormProps {
   className: string;
@@ -11,6 +12,7 @@ interface AddFormProps {
   type: string;
   name: string;
   description?: string;
+  color?: string;
   onChange: IHandleChange;
 }
 
@@ -20,6 +22,7 @@ const AddForm: FC<AddFormProps> = ({
   type,
   name,
   description,
+  color,
   onChange: handleChange,
 }) => {
   const modifiedClassName = handleClassName(
@@ -38,6 +41,13 @@ const AddForm: FC<AddFormProps> = ({
         onChange={ handleChange }
       />
       )}
+      {(typeof color === 'string') && (
+      <Color
+        type={ type }
+        color={ color }
+        onChange={ handleChange }
+      />
+      )}
     </div>
   );
 };
@@ -45,6 +55,7 @@ const AddForm: FC<AddFormProps> = ({
 AddForm.defaultProps = {
   modifier: undefined,
   description: undefined,
+  color: undefined,
 };
 
 export default AddForm;

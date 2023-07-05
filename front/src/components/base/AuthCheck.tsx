@@ -12,7 +12,6 @@ const AuthCheck: FC<IAuthCheck> = ({ children }) => {
   const { isLoggedIn, isLoading } = useUser();
 
   useEffect(() => {
-    console.log(isLoggedIn);
     if (!isLoggedIn && !isLoading) {
       router.push('/login');
     }

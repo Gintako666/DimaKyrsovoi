@@ -10,6 +10,7 @@ interface IUseAddForm {
   (): {
     name: string;
     description: string;
+    color: string;
     handleChange: IHandleChange;
   };
 }
@@ -17,18 +18,28 @@ interface IUseAddForm {
 const useAddForm: IUseAddForm = () => {
   const [ name, setName ] = useState('');
   const [ description, setDescription ] = useState('');
+  const [ color, setColor ] = useState('#4c44e4');
 
   const handleChange: IHandleChange = ({ target: { id, value } }) => {
-    if (id === 'name') {
-      setName(value);
-    } else if (id === 'description') {
-      setDescription(value);
+    switch (id) {
+      case 'name':
+        setName(value);
+        break;
+      case 'description':
+        setDescription(value);
+        break;
+      case 'color':
+        setColor(value);
+        break;
+      default:
+        break;
     }
   };
 
   return {
     name,
     description,
+    color,
     handleChange,
   };
 };
