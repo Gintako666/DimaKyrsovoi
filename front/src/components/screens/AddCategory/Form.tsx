@@ -5,7 +5,7 @@ import AddForm from '~/components/shared/AddForm/AddForm';
 import useAddForm from '~/hooks/useAddForm';
 
 const Form: FC = () => {
-  const { name, description, handleChange } = useAddForm();
+  const { name, handleChange } = useAddForm();
 
   // Handle submit
   interface IHandleSubmit {
@@ -21,7 +21,6 @@ const Form: FC = () => {
         className="add-category"
         type="category"
         name={ name }
-        description={ description }
         onChange={ handleChange }
       />
       <button className="add-category__button button" type="submit">

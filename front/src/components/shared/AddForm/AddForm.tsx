@@ -10,7 +10,7 @@ interface AddFormProps {
   modifier?: string;
   type: string;
   name: string;
-  description: string;
+  description?: string;
   onChange: IHandleChange;
 }
 
@@ -31,17 +31,20 @@ const AddForm: FC<AddFormProps> = ({
   return (
     <div className={ `${ modifiedClassName } add-form` }>
       <Name type={ type } name={ name } onChange={ handleChange } />
+      {(typeof description === 'string') && (
       <Description
         type={ type }
         description={ description }
         onChange={ handleChange }
       />
+      )}
     </div>
   );
 };
 
 AddForm.defaultProps = {
   modifier: undefined,
+  description: undefined,
 };
 
 export default AddForm;
