@@ -4,17 +4,18 @@ import {
 
 import Img from '~/components/base/Img/Img';
 
+import useOutsideClick from '~/hooks/useOutsideClick';
+
 import handleClassName from '~/utils/className.util';
 
 import isTouchScreen from '~/constants/isTouchScreen.const';
 
-import profile from '~/assets/img/profile.jpg';
-import arrow from '~/assets/img/icons/arrow.svg';
-import useOutsideClick from '~/hooks/useOutsideClick';
+import avatar from '~/assets/img/avatar.jpg';
+import ExitButton from './ExitButton';
 
 const Profile: FC = () => {
   const [ isActive, setIsActive ] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuProfileRef = useRef<HTMLDivElement>(null);
 
   // Handle active
   interface IHandleActive {
@@ -31,25 +32,20 @@ const Profile: FC = () => {
   const handleDeactivate: IHandleDeactivate = () => {
     setIsActive(false);
   };
-  useOutsideClick(buttonRef, handleDeactivate);
+  useOutsideClick(menuProfileRef, handleDeactivate);
 
-  const modifiedClassName = handleClassName(isActive, 'menu__profile');
+  const modifiedClassName = handleClassName(isActive, 'profile');
 
-  const profileImg = {
-    src: profile,
-    alt: 'Profile',
-  };
-
-  const exitImg = {
-    src: arrow,
+  const avatarImg = {
+    src: avatar,
     alt: 'Profile',
   };
 
   return (
-    <button
-      type="button"
-      className={ modifiedClassName }
-      ref={ buttonRef }
+    <div
+      role="button"
+      className={ `menu__profile ${ modifiedClassName }` }
+      ref={ menuProfileRef }
       { ...(isTouchScreen
         ? { onClick: handleActive }
         : {
@@ -57,14 +53,9 @@ const Profile: FC = () => {
           onMouseLeave: handleActive,
         }) }
     >
-      <Img className="menu" modifier="profile" img={ profileImg } />
-      <div className="menu__sub-profile">
-        <div>
-          <Img className="menu" modifier="exit" img={ exitImg } resetStyle />
-          <span>Exit</span>
-        </div>
-      </div>
-    </button>
+      <Img className="profile" modifier="avatar" img={ avatarImg } />
+      <ExitButton />
+    </div>
   );
 };
 

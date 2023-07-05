@@ -28,15 +28,19 @@
   &__input {
     border: rem(2) solid $light-gray;
 
-    // .login__input_text
+    // .login__input_username
 
-    // &_text {
+    // &_username {
     // }
 
     // .login__input_password
 
     // &_password {
     // }
+
+    &[class*="_err"] {
+      border-color: $red;
+    }
   }
 
   // .login__submit
