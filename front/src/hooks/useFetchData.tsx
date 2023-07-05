@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 
-const useFetchData = (url: string) => {
+interface IUseFetchData {
+  (url: string): {
+    data: any;
+    isLoading: boolean;
+    error: string;
+  };
+}
+
+const useFetchData: IUseFetchData = (url) => {
   const [ data, setData ] = useState<any>(null);
   const [ isLoading, setIsLoading ] = useState(true);
   const [ error, setError ] = useState('');
