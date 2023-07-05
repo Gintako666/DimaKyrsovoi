@@ -1,4 +1,5 @@
 .env
+/back/node_modules
+/back/package-lock.json
 /back/database
-/back/extensions
 /back/uploads
