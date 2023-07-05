@@ -1,16 +1,15 @@
 import { FC } from 'react';
 
+import { ICategory } from '~/interfaces/category.interface';
 import Item from './Item';
-
-import { ICategory } from '../../category.interface';
 
 interface ItemsProps {
   categories: ICategory[]
 }
 
 const Items: FC<ItemsProps> = ({ categories }) => {
-  const items = categories.map((category, index) => {
-    const id = index;
+  const items = categories.map((category) => {
+    const { id } = category;
 
     return <Item key={ id } category={ category } />;
   });

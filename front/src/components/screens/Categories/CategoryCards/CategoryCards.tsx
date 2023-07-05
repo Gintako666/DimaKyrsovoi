@@ -2,9 +2,8 @@ import { FC } from 'react';
 import Link from 'next/link';
 
 import Title from '~/components/shared/Title/Title';
+import { ICategory } from '~/interfaces/category.interface';
 import Items from './Items/Items';
-
-import { ICategory } from '../category.interface';
 
 interface CategoryCardsProps {
   categories: ICategory[]

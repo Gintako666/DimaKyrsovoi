@@ -2,10 +2,15 @@ import { FC } from 'react';
 
 import CategoryCards from './CategoryCards/CategoryCards';
 
-import categories from './categories.const';
+import useCategories from './useCategories';
 
-const Categories: FC = () => (
-  <CategoryCards categories={ categories } />
-);
+const Categories: FC = () => {
+  const categories = useCategories();
+
+  if (categories) {
+    return <CategoryCards categories={ categories } />;
+  }
+  return null;
+};
 
 export default Categories;

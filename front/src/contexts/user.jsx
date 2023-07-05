@@ -59,6 +59,20 @@ export const UserProvider = ({ children }) => {
     [ ],
   );
 
+  const getCategories = useCallback(
+    async () => {
+      setLoading(true);
+
+      return directus.auth.getCategories()
+        .then(() => {
+          setProfileData(false);
+        })
+        .finally(() => {
+        });
+    },
+    [ ],
+  );
+
   useEffect(
     () => {
       setLoading(true);
@@ -90,6 +104,7 @@ export const UserProvider = ({ children }) => {
     profileData,
     login,
     logout,
+    getCategories,
     directus,
   ]);
 
