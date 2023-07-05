@@ -1,19 +1,4 @@
 .category-cards {
-  // .category-cards__container
-
-  // &__container {
-  // }
-
-  // .category-cards__header
-
-  &__header {
-    @apply flex justify-between items-center gap-1 mb-3;
-
-    @media (width < $tablet) {
-      @apply flex-col;
-    }
-  }
-
   // .category-cards__button
 
   &__button {
