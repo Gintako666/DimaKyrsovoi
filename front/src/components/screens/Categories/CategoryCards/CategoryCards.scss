@@ -28,6 +28,7 @@
   &__image {
     @apply flex justify-center items-center;
 
+    flex-shrink: 0;
     width: em(66, 14);
     border-top-left-radius: em(4, 14);
     border-bottom-left-radius: em(4, 14);
@@ -39,6 +40,7 @@
   &__main {
     @apply flex justify-between items-center flex-auto;
 
+    gap: em(5, 14);
     padding: em(10, 14) em(15, 14);
   }
 
@@ -51,7 +53,9 @@
   // .category-cards__name
 
   &__name {
-    @apply font-semibold;
+    @apply font-semibold overflow-hidden whitespace-nowrap text-ellipsis;
+
+    max-width: em(185, 14);
   }
 
   // .category-cards__label
@@ -84,6 +88,7 @@
   // .category-cards__img
 
   &__img {
+    width: em(20, 14);
     height: em(20, 14);
     transition: opacity 0.3s ease 0s;
 

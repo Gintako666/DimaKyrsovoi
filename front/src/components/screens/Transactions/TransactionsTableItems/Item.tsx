@@ -71,7 +71,7 @@ const Item: FC<ItemProps> = ({
         },
       ) }
       >
-        {Math.round(Number(value))}
+        {Number(value).toFixed(2)}
         $
       </p>
     </div>
