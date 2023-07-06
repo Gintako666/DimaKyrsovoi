@@ -1,5 +1,7 @@
 import { ChangeEvent, FC } from 'react';
 
+import Field from './Field';
+
 interface ColorProps {
   type: string;
   color: string;
@@ -9,16 +11,9 @@ interface ColorProps {
 }
 
 const Color: FC<ColorProps> = ({ type, color, onChange }) => (
-  <div className="add-form__field add-form__field_color">
-    <span className="add-form__label">
-      Choose
-      {' '}
-      {type}
-      {' '}
-      color
-    </span>
-    <input id="color" type="color" value={ color } onChange={ onChange } />
-  </div>
+  <Field modifier="color" label={ `Choose ${ type } color` }>
+    <input type="color" id="color" className="add-form__input_color" value={ color } onChange={ onChange } />
+  </Field>
 );
 
 export default Color;

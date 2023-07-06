@@ -1,5 +1,7 @@
 import { ChangeEvent, FC } from 'react';
 
+import Field from './Field';
+
 interface NameProps {
   type: string;
   name: string;
@@ -9,19 +11,12 @@ interface NameProps {
 }
 
 const Name: FC<NameProps> = ({ type, name, onChange }) => (
-  <div className="add-form__field add-form__field_name">
-    <span className="add-form__label">
-      Enter
-      {' '}
-      {type}
-      {' '}
-      name
-    </span>
+  <Field modifier="name" label={ `Enter ${ type } name` }>
     <div className="add-form__input add-form__input_name">
       <span>/</span>
       <input id="name" type="text" value={ name } onChange={ onChange } />
     </div>
-  </div>
+  </Field>
 );
 
 export default Name;
