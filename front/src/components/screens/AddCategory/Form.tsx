@@ -3,6 +3,7 @@ import { FC, FormEvent } from 'react';
 import AddForm from '~/components/shared/AddForm/AddForm';
 
 import useAddForm from '~/hooks/useAddForm';
+import { addCategory } from '~/services/categories.service';
 
 const Form: FC = () => {
   const { name, color, handleChange } = useAddForm();
@@ -13,6 +14,8 @@ const Form: FC = () => {
   }
   const handleSubmit: IHandleSubmit = (e) => {
     e.preventDefault();
+
+    addCategory({ name, color });
   };
 
   return (
