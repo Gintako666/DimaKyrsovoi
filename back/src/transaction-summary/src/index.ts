@@ -32,7 +32,7 @@ async function calculateTotal(
 
   const items = await transactionService.readByQuery(query);
 
-  return items;
+  return items.reduce((sum: number, item) => item.value + sum, 0);
 }
 
 async function calculateMonthlyData(
