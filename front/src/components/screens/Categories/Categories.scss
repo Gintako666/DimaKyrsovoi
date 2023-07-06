@@ -12,7 +12,7 @@
     @apply flex justify-between items-center gap-1 mb-3;
 
     @media (width < $tablet) {
-      @apply flex-col;
+      @apply items-stretch flex-col;
     }
   }
 
@@ -28,6 +28,7 @@
 
   // .categories__button
 
-  // &__button {
-  // }
+  &__button {
+    @apply self-end pr-0;
+  }
 }
