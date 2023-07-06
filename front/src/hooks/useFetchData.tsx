@@ -1,32 +1,36 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-interface IUseFetchData {
-  (url: string): {
-    data: any;
-    isLoading: boolean;
-    error: string;
-  };
+import axiosInstance from '~/services/axiosInstance';
+
+export interface IUseFetchDataResult {
+  data: any;
+  isLoading: boolean;
+  error: string;
 }
 
-const useFetchData: IUseFetchData = (url) => {
+interface IUseFetchData {
+  (url: string, isAxiosInstance?: boolean): IUseFetchDataResult
+}
+
+const useFetchData: IUseFetchData = (url, isAxiosInstance = true) => {
   const [ data, setData ] = useState<any>(null);
   const [ isLoading, setIsLoading ] = useState(true);
   const [ error, setError ] = useState('');
 
   useEffect(() => {
-    try {
-      const fetchData = async () => {
-        const response = await fetch(url);
-        const result = await response.json();
+    const fetchData = async () => {
+      try {
+        const response = isAxiosInstance ? await axiosInstance.get(url) : await axios.get(url);
 
-        setData(result);
-      };
-      fetchData();
-    } catch (err: any) {
-      setError(err);
-    } finally {
-      setIsLoading(false);
-    }
+        setData(response.data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
   }, [ url ]);
 
   return { data, isLoading, error };

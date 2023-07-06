@@ -1,15 +1,11 @@
-type TypeTransactionStatus = 'Paid' | 'Pending' | 'Rejected';
-
 export interface ITransaction {
-  id: number,
-  img: string,
-  type: string,
-  status: TypeTransactionStatus,
-  amount: number,
-  category: {
-    type: string,
-    name: string
-  },
-  name: string,
-  bank: string,
+  id: number;
+  date: string;
+  name: string;
+  bank: string;
+  currency: string;
+  category: number;
+  value: string;
+  type: string;
+  status: string;
 }

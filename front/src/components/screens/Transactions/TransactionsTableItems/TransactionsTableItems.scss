@@ -18,7 +18,9 @@
         @apply grid grid-rows-2 grid-cols-[60px_1fr];
 
         &__img {
-          @apply row-start-1 row-end-3 h-12 w-12;
+          @apply row-start-1 row-end-3 flex justify-center items-center h-12 w-12 text-white bg-gray-500;
+
+          border-radius: 50%;
         }
 
         &__name {

@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
-import useFetchData from '~/hooks/useFetchData';
 import Loader from '~/components/shared/Loader/Loader';
+import CategoriesService from '~/services/categories.service';
 import Items from './Items/Items';
 
 const CategoryCards: FC = () => {
-  const { data, isLoading, error } = useFetchData(`${ process.env.NEXT_PUBLIC_BACK_URI }/items/category`);
+  const { data, isLoading, error } = CategoriesService();
   const categories = data?.data;
 
   if (isLoading) {
