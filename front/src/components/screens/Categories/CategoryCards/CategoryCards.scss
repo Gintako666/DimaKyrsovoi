@@ -47,9 +47,7 @@
   // .category-cards__name
 
   &__name {
-    @apply font-semibold overflow-hidden whitespace-nowrap text-ellipsis;
-
-    max-width: em(185, 14);
+    @apply font-semibold break-all;
   }
 
   // .category-cards__label
