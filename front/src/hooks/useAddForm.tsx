@@ -1,9 +1,9 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 
 export interface IHandleChange {
   ({
     target: { id, value },
-  }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
+  }: any): void;
 }
 
 interface IUseAddForm {

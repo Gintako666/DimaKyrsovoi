@@ -27,8 +27,8 @@ const Item: FC<ItemProps> = ({
         className="transactions__table__item__transaction"
       /> */}
       <div className="transactions__table__item__transaction__img">{getFirstLetters(name)}</div>
-      <div className="transactions__table__item__transaction__name">{name}</div>
-      <div className="transactions__table__item__transaction__bank">{bank}</div>
+      <div className="transactions__table__item__transaction__name">{name || 'Unknown'}</div>
+      <div className="transactions__table__item__transaction__bank">{bank || 'Unknown'}</div>
     </div>
     <div className="transactions__table__item__category">
       <p className="transactions__table__item__media">Status: </p>

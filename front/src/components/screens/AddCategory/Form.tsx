@@ -15,7 +15,12 @@ const Form: FC = () => {
   const handleSubmit: IHandleSubmit = (e) => {
     e.preventDefault();
 
-    addCategory({ name, color });
+    if (name) {
+      addCategory({ name, color });
+      handleChange({ target: { id: 'name', value: '' } });
+    } else {
+      alert('Enter category name!');
+    }
   };
 
   return (

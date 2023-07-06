@@ -15,9 +15,9 @@ interface IAddCategory {
   (category: Pick<ICategory, 'name' | 'color'>): void
 }
 
-export const addCategory: IAddCategory = (category) => {
+export const addCategory: IAddCategory = async (category) => {
   try {
-    axiosInstance.post(path, category);
+    await axiosInstance.post(path, category);
   } catch (err) {
     alert(err);
   }

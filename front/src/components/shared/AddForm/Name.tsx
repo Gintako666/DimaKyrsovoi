@@ -3,7 +3,9 @@ import { ChangeEvent, FC } from 'react';
 interface NameProps {
   type: string;
   name: string;
-  onChange: ({ target: { id, value } }: ChangeEvent<HTMLInputElement>) => void;
+  onChange: ({
+    target: { id, value },
+  }: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Name: FC<NameProps> = ({ type, name, onChange }) => (

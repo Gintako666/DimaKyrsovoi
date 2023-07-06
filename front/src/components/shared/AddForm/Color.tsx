@@ -3,7 +3,9 @@ import { ChangeEvent, FC } from 'react';
 interface ColorProps {
   type: string;
   color: string;
-  onChange: ({ target: { id, value } }: ChangeEvent<HTMLInputElement>) => void;
+  onChange: ({
+    target: { id, value },
+  }: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Color: FC<ColorProps> = ({ type, color, onChange }) => (

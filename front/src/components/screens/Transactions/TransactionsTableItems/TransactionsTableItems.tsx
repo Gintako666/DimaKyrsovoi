@@ -13,7 +13,6 @@ const TransactionsTableItems: FC<ITransactionsTableItemsProps> = ({ transactions
   const { data } = CategoriesService();
 
   const categoryItems: ICategory[] = data?.data;
-  console.log(categoryItems);
 
   const items = transactions.map((transaction) => {
     const { id, category } = transaction;
