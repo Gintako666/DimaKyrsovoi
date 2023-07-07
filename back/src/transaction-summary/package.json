@@ -11,7 +11,7 @@
   "type": "module",
   "directus:extension": {
     "type": "endpoint",
-    "path": "../../extensions/endpoints/transaction-summary/index.js",
+    "path": "../../extensions/endpoints/transaction_summary/index.js",
     "source": "src/index.ts",
     "host": "^10.1.5"
   },

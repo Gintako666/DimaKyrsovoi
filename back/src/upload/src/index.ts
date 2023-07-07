@@ -5,6 +5,8 @@ import multer from 'multer';
 import * as xlsx from 'xlsx';
 import fs from 'fs';
 import moment from 'moment';
+import {Category} from '../../interfaces/Category';
+
 
 const format = 'YYYY-MM-DDTHH:mm:ss';
 const upload = multer({ dest: 'uploads/' });
