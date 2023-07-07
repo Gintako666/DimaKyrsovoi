@@ -3,7 +3,8 @@ import { FC, FormEvent } from 'react';
 import AddForm from '~/components/shared/AddForm/AddForm';
 
 import useAddForm from '~/hooks/useAddForm';
-import { addCategory } from '~/services/categories.service';
+
+import CategoriesService from '~/services/categories.service';
 
 const Form: FC = () => {
   const { name, color, handleChange } = useAddForm();
@@ -16,6 +17,7 @@ const Form: FC = () => {
     e.preventDefault();
 
     if (name) {
+      const { addCategory } = CategoriesService;
       addCategory({ name, color });
       handleChange({ target: { id: 'name', value: '' } });
     } else {

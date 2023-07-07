@@ -1,10 +1,11 @@
 import { FC, FormEvent, useState } from 'react';
 
-import uploadFile from '~/services/file.service';
+import FileService from '~/services/file.service';
 import UploadFile from './UploadFile/UploadFile';
 
 const Form: FC = () => {
   const [ selectedFile, setSelectedFile ] = useState<File | null>(null);
+  const { uploadFile } = FileService;
 
   // Handle submit
   interface IHandleSubmit {

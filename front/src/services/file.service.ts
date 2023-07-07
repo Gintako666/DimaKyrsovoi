@@ -2,16 +2,16 @@ import axiosInstance from './axiosInstance';
 
 const path = '/upload';
 
-interface IUploadFile {
-  (file: FormData): void
-}
-
-const uploadFile: IUploadFile = async (file) => {
-  try {
-    await axiosInstance.post(path, file);
-  } catch (err) {
-    alert(err);
-  }
+const FileService = {
+  async uploadFile(file: FormData) {
+    try {
+      const response = await axiosInstance.post(path, file);
+      return response;
+    } catch (err) {
+      alert(err);
+      throw err;
+    }
+  },
 };
 
-export default uploadFile;
+export default FileService;

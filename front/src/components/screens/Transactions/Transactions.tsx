@@ -6,6 +6,8 @@ import {
 import Loader from '~/components/shared/Loader/Loader';
 import Title from '~/components/shared/Title/Title';
 
+import useFetchData from '~/hooks/useFetchData';
+
 import TransactionsService from '~/services/transactions.service';
 
 // import { ITransaction } from '~/interfaces/transaction.interface';
@@ -14,7 +16,8 @@ import TransactionsTableItems from './TransactionsTableItems/TransactionsTableIt
 // import transactionsFromApi from './transactions.json';
 
 const Transactions: FC = memo(() => {
-  const { data, isLoading, error } = TransactionsService();
+  const { getTransactions } = TransactionsService;
+  const { data, isLoading, error } = useFetchData(getTransactions);
   const transactions = data?.data;
 
   // const [ transactions, setTransactions ] = useState<ITransaction[] | null>(null);

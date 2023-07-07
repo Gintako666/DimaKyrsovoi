@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-
-import axiosInstance from '~/services/axiosInstance';
+import { AxiosResponse } from 'axios';
 
 export interface IUseFetchDataResult {
   data: any;
@@ -10,10 +8,10 @@ export interface IUseFetchDataResult {
 }
 
 interface IUseFetchData {
-  (url: string, isAxiosInstance?: boolean): IUseFetchDataResult
+  (request: () => Promise<AxiosResponse<any>>): IUseFetchDataResult;
 }
 
-const useFetchData: IUseFetchData = (url, isAxiosInstance = true) => {
+const useFetchData: IUseFetchData = (request) => {
   const [ data, setData ] = useState<any>(null);
   const [ isLoading, setIsLoading ] = useState(true);
   const [ error, setError ] = useState('');
@@ -21,7 +19,7 @@ const useFetchData: IUseFetchData = (url, isAxiosInstance = true) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = isAxiosInstance ? await axiosInstance.get(url) : await axios.get(url);
+        const response = await request();
 
         setData(response.data);
       } catch (err: any) {
@@ -31,7 +29,7 @@ const useFetchData: IUseFetchData = (url, isAxiosInstance = true) => {
       }
     };
     fetchData();
-  }, [ url ]);
+  }, [ request ]);
 
   return { data, isLoading, error };
 };

@@ -1,11 +1,11 @@
-import useFetchData, { IUseFetchDataResult } from '~/hooks/useFetchData';
+import axiosInstance from './axiosInstance';
 
 const path = '/items/transaction';
 
-interface ITransactionsService {
-  (): IUseFetchDataResult
-}
-
-const TransactionsService: ITransactionsService = () => useFetchData(path);
+const TransactionsService = {
+  async getTransactions() {
+    return axiosInstance(path);
+  },
+};
 
 export default TransactionsService;

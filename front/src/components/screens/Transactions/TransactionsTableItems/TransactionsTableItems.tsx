@@ -1,8 +1,11 @@
 import React, { FC } from 'react';
 
+import useFetchData from '~/hooks/useFetchData';
+
+import CategoriesService from '~/services/categories.service';
+
 import { ITransaction } from '~/interfaces/transaction.interface';
 import { ICategory } from '~/interfaces/category.interface';
-import CategoriesService from '~/services/categories.service';
 import Item from './Item';
 
 interface ITransactionsTableItemsProps {
@@ -10,7 +13,8 @@ interface ITransactionsTableItemsProps {
 }
 
 const TransactionsTableItems: FC<ITransactionsTableItemsProps> = ({ transactions }) => {
-  const { data } = CategoriesService();
+  const { getCategories } = CategoriesService;
+  const { data } = useFetchData(getCategories);
 
   const categoryItems: ICategory[] = data?.data;
 

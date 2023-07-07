@@ -1,26 +1,21 @@
-import useFetchData, { IUseFetchDataResult } from '~/hooks/useFetchData';
-
 import { ICategory } from '~/interfaces/category.interface';
 import axiosInstance from './axiosInstance';
 
 const path = '/items/category';
 
-interface ICategoriesService {
-  (): IUseFetchDataResult
-}
+const CategoriesService = {
+  async getCategories() {
+    return axiosInstance.get(path);
+  },
 
-const CategoriesService: ICategoriesService = () => useFetchData(path);
-
-interface IAddCategory {
-  (category: Pick<ICategory, 'name' | 'color'>): void
-}
-
-export const addCategory: IAddCategory = async (category) => {
-  try {
-    await axiosInstance.post(path, category);
-  } catch (err) {
-    alert(err);
-  }
+  async addCategory(category: Pick<ICategory, 'name' | 'color'>) {
+    try {
+      await axiosInstance.post(path, category);
+    } catch (err) {
+      alert(err);
+      throw err;
+    }
+  },
 };
 
 export default CategoriesService;
