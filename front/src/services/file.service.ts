@@ -1,11 +1,11 @@
 import axiosInstance from './axiosInstance';
 
-const path = '/upload';
+const PATH = '/upload';
 
 const FileService = {
   async uploadFile(file: FormData) {
     try {
-      const response = await axiosInstance.post(path, file);
+      const response = await axiosInstance.post(PATH, file);
       return response;
     } catch (err) {
       alert(err);

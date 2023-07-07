@@ -1,10 +1,10 @@
 import axiosInstance from './axiosInstance';
 
-const path = '/items/transaction';
+const PATH = '/items/transaction';
 
 const TransactionsService = {
   async getTransactions() {
-    return axiosInstance(path);
+    return axiosInstance(PATH);
   },
 };
 
