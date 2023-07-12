@@ -35,19 +35,21 @@ const UploadFile: FC<FileProps> = ({ selectedFile, setSelectedFile }) => {
   interface IHandleChangeFile {
     ({ target }: ChangeEvent<HTMLInputElement>): void;
   }
-  const handleChangeFile: IHandleChangeFile = ({ target }) => {
-    const file = target.files && target.files[0];
+  const handleChangeFile: IHandleChangeFile = ({ target: { files } }) => {
+    const file = files && files[0];
 
     if (file) {
+      const { type, size } = file;
+
       // Checking the type of file
-      if (file.type !== 'text/csv') {
+      if (type !== 'text/csv') {
         alert('File type must be CSV!');
         setSelectedFile(null);
         return;
       }
 
       // Checking the size file
-      if (file.size > 10 * 1024 * 1024) {
+      if (size > 10 * 1024 * 1024) {
         alert('File size should not exceed 10MB!');
         setSelectedFile(null);
         return;

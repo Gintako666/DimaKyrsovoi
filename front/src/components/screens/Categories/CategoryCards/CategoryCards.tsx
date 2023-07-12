@@ -1,30 +1,27 @@
 import { FC } from 'react';
-import Link from 'next/link';
 
-import Title from '~/components/shared/Title/Title';
+import Loader from '~/components/shared/Loader/Loader';
+
+import useFetchData from '~/hooks/useFetchData';
+
+import CategoriesService from '~/services/categories.service';
 import Items from './Items/Items';
 
-import { ICategory } from '../category.interface';
+const CategoryCards: FC = () => {
+  const { getCategories } = CategoriesService;
+  const { data, isLoading, error } = useFetchData(getCategories);
+  const categories = data?.data;
 
-interface CategoryCardsProps {
-  categories: ICategory[]
-}
-
-const CategoryCards: FC<CategoryCardsProps> = ({ categories }) => (
-  <section className="category-cards">
-    <div className="category-cards__container">
-      <div className="category-cards__header">
-        <Title
-          className="category-cards"
-          modifier="large"
-          title="Categories"
-          text="Categories lorem ipsum dolor sit amet dolor sit transaction description dummy text and so оn and so оn..."
-        />
-        <Link href="/add-category" className="category-cards__button button button_transparent">Add new category</Link>
-      </div>
-      <Items categories={ categories } />
-    </div>
-  </section>
-);
+  if (isLoading) {
+    return <Loader />;
+  }
+  if (!isLoading && categories) {
+    return <Items categories={ categories } />;
+  }
+  if (error || data?.errors) {
+    return ':(';
+  }
+  return null;
+};
 
 export default CategoryCards;
