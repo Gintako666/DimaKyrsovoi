@@ -30,6 +30,10 @@ deploy-job:
     CI_COMMIT_TIMESTAMP: $CI_COMMIT_TIMESTAMP
     CI_COMMIT_TITLE: $CI_COMMIT_TITLE
   script:
+    - cp -TRv back-initial-data/ .
+    - chmod -R 777 ./back/uploads
+    - chmod -R 777 ./back/database
+    - chmod -R 777 ./back/extensions
     - docker image prune -f
     - docker compose down
     - docker compose build --no-cache
