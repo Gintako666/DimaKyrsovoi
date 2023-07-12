@@ -38,3 +38,15 @@
     #{$property}: $calc-size;
   }
 }
+
+// Connecting font
+@mixin font($fontName, $fileName: $fontName, $weight: 400, $style: normal) {
+  @font-face {
+    font-family: $fontName;
+    font-display: swap;
+    src: url("../../fonts/#{$fontName}/#{$fontName}.woff2") format("woff2"),
+      url("../../fonts/#{$fontName}/#{$fontName}.woff") format("woff");
+    font-weight: #{$weight};
+    font-style: #{$style};
+  }
+}
