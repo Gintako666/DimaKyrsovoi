@@ -2,32 +2,24 @@ import { FC } from 'react';
 import Link from 'next/link';
 
 import Menu from '~/components/layout/navigation/Menu/Menu';
+import Img from '~/components/base/Img/Img';
 
 import useScrollLock from '~/hooks/useScrollLock';
 import useWindowListener from '~/hooks/useWindowListener';
 
 import Breakpoint from '~/enums/breakpoint.enum';
-import Img from '~/components/base/Img/Img';
 
 const Header: FC = () => {
   const { isScrollLocked, setIsScrollLocked } = useScrollLock();
   const breakpoint = Breakpoint.Mobile;
 
-  // Handle unlock scroll
-  interface IHandleUnlockScroll {
-    (): void;
-  }
-  const handleUnlockScroll: IHandleUnlockScroll = () => {
+  const handleUnlockScroll = () => {
     if (isScrollLocked) {
       setIsScrollLocked(false);
     }
   };
 
-  // Handle unlock scroll on breakpoint
-  interface IHandleUnlockScrollOnBreakpoint {
-    (): void;
-  }
-  const handleUnlockScrollOnBreakpoint: IHandleUnlockScrollOnBreakpoint = () => {
+  const handleUnlockScrollOnBreakpoint = () => {
     const windowWidth = window.innerWidth;
     const isMoreBreakpoint = windowWidth > breakpoint;
 
@@ -37,11 +29,7 @@ const Header: FC = () => {
   };
   useWindowListener(handleUnlockScrollOnBreakpoint);
 
-  // Handle click
-  interface IHandleClick {
-    (): void;
-  }
-  const handleClick: IHandleClick = () => {
+  const handleClick = () => {
     const windowWidth = window.innerWidth;
     const isLessBreakpoint = windowWidth < breakpoint;
 

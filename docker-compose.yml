@@ -10,11 +10,11 @@ services:
     networks:
       - webappnetwork
     environment:
-      POSTGRES_USER: 'directus'
-      POSTGRES_PASSWORD: 'directus'
-      POSTGRES_DB: 'directus'
+      POSTGRES_USER: "directus"
+      POSTGRES_PASSWORD: "directus"
+      POSTGRES_DB: "directus"
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready" ]
+      test: ["CMD-SHELL", "pg_isready"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -24,30 +24,30 @@ services:
     networks:
       - webappnetwork
     healthcheck:
-      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
 
   back:
     image: directus/directus:10.2.0
-    # build: 
+    # build:
     #   context: ./back
     #   dockerfile: ./Dockerfile
     environment:
-      KEY: '7073af92-cdb8-4443-9c52-b11241a0006e'
-      SECRET: '7a5631a5-f3ae-45d4-854c-076c843c0a9d'
+      KEY: "7073af92-cdb8-4443-9c52-b11241a0006e"
+      SECRET: "7a5631a5-f3ae-45d4-854c-076c843c0a9d"
 
-      ADMIN_EMAIL: 'admin@zagroza.agency'
-      ADMIN_PASSWORD: '5q6Hv&F1*Yk!'
+      ADMIN_EMAIL: "admin@zagroza.agency"
+      ADMIN_PASSWORD: "5q6Hv&F1*Yk!"
 
-      DB_CLIENT: 'pg'
-      DB_HOST: 'database'
-      DB_PORT: '5432'
-      DB_DATABASE: 'directus'
-      DB_USER: 'directus'
-      DB_PASSWORD: 'directus'
+      DB_CLIENT: "pg"
+      DB_HOST: "database"
+      DB_PORT: "5432"
+      DB_DATABASE: "directus"
+      DB_USER: "directus"
+      DB_PASSWORD: "directus"
 
-      CACHE_ENABLED: 'false'
-      CACHE_STORE: 'redis'
-      CACHE_REDIS: 'redis://cache:6379'
+      CACHE_ENABLED: "false"
+      CACHE_STORE: "redis"
+      CACHE_REDIS: "redis://cache:6379"
 
       PUBLIC_URL: ${BACK_URI}
 
@@ -62,7 +62,7 @@ services:
       EMAIL_SMTP_IGNORE_TLS: ${EMAIL_SMTP_IGNORE_TLS}
 
       CORS_ENABLED: true
-      CORS_ORIGIN: '*'
+      CORS_ORIGIN: ${FRONT_URI}
       TZ: ${TZ}
     ports:
       - 127.0.0.1:${BACK_PORT:-3010}:8055

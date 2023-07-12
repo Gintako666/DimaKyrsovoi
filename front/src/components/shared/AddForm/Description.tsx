@@ -1,5 +1,7 @@
 import { ChangeEvent, FC } from 'react';
 
+import Field from './Field';
+
 interface DescriptionProps {
   type: string;
   description: string;
@@ -9,10 +11,7 @@ interface DescriptionProps {
 }
 
 const Description: FC<DescriptionProps> = ({ type, description, onChange }) => (
-  <div className="add-form__field add-form__field_textarea">
-    <span className="add-form__label">
-      Description
-    </span>
+  <Field modifier="description" label="Description">
     <textarea
       className="add-form__input add-form__input_description"
       placeholder="Lorem ipsum dolor sit amet...."
@@ -24,7 +23,7 @@ const Description: FC<DescriptionProps> = ({ type, description, onChange }) => (
       {' '}
       {type}
     </span>
-  </div>
+  </Field>
 );
 
 export default Description;

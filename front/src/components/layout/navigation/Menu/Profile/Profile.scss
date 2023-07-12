@@ -1,36 +1,34 @@
-.menu {
-  // .menu__item_profile
+.profile {
+  @apply items-center relative text-sm cursor-default;
 
-  &__profile {
-    @apply items-center relative text-sm cursor-default;
+  gap: em(5, 14);
 
-    gap: em(5, 14);
+  // .profile_active
 
-    &:hover {
-      opacity: 1 !important;
-    }
+  &_active {
+    .profile__exit {
+      @apply visible opacity-100;
 
-    // .menu__item_profile_active
-
-    &_active {
-      .menu__sub-profile {
-        @apply visible opacity-100;
-
-        transform: translate(0);
-        pointer-events: all;
-        transition: all 0.3s ease 0s;
-      }
+      transform: translate(0);
+      pointer-events: all;
+      transition: all 0.3s ease 0s;
     }
   }
 
+  // .profile__img
+
   &__img {
-    &_profile {
+    // .profile__img_avatar
+
+    &_avatar {
       @apply w-10 pb-10;
 
       img {
         border-radius: 50%;
       }
     }
+
+    // .profile__img_exit
 
     &_exit {
       width: em(16, 14);
@@ -45,16 +43,15 @@
     }
   }
 
-  // .menu__sub-profile
+  // .profile__exit
 
-  &__sub-profile {
+  &__exit {
     @apply absolute top-full right-0 invisible opacity-0 pointer-events-none;
 
     transform: translate(10%, -10%);
     border-radius: em(4, 14);
     background-color: $blue;
     color: #fff;
-    transition: all 0.3s ease 0s;
 
     > div {
       @apply flex items-center cursor-pointer;

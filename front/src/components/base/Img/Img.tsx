@@ -1,11 +1,13 @@
 import { FC, useRef } from 'react';
 import Image from 'next/image';
 
+import Loader from '~/components/shared/Loader/Loader';
+
+import useLoadingObject from '~/hooks/useLoadingObject';
+
 import handleClassName from '~/utils/className.util';
 
-import { IImg } from '~/interfaces/img.interface';
-import Loader from '~/components/shared/Loader/Loader';
-import useLoading from '~/hooks/useLoading';
+import { IImg } from './img.interface';
 
 interface ImgProps {
   className: string;
@@ -31,7 +33,7 @@ const Img: FC<ImgProps> = ({
   height,
 }) => {
   const objectRef = useRef<HTMLImageElement>(null);
-  const isLoading = useLoading(objectRef);
+  const isLoading = useLoadingObject(objectRef);
 
   const modifiedClassName = handleClassName(
     !!modifier,

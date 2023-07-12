@@ -1,7 +1,7 @@
 stages:
   - build
-  #  - test
-  #  - review
+  # - test
+  # - review
   - deploy
 
 build-job:

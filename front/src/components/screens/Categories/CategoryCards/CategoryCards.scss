@@ -1,25 +1,4 @@
 .category-cards {
-  // .category-cards__container
-
-  // &__container {
-  // }
-
-  // .category-cards__header
-
-  &__header {
-    @apply flex justify-between items-center gap-1 mb-3;
-
-    @media (width < $tablet) {
-      @apply flex-col;
-    }
-  }
-
-  // .category-cards__button
-
-  &__button {
-    @apply self-end pr-0;
-  }
-
   // .category-cards__items
 
   &__items {
@@ -43,6 +22,7 @@
   &__image {
     @apply flex justify-center items-center;
 
+    flex-shrink: 0;
     width: em(66, 14);
     border-top-left-radius: em(4, 14);
     border-bottom-left-radius: em(4, 14);
@@ -54,6 +34,7 @@
   &__main {
     @apply flex justify-between items-center flex-auto;
 
+    gap: em(5, 14);
     padding: em(10, 14) em(15, 14);
   }
 
@@ -66,7 +47,7 @@
   // .category-cards__name
 
   &__name {
-    @apply font-semibold;
+    @apply font-semibold break-all;
   }
 
   // .category-cards__label
@@ -99,6 +80,7 @@
   // .category-cards__img
 
   &__img {
+    width: em(20, 14);
     height: em(20, 14);
     transition: opacity 0.3s ease 0s;
 
