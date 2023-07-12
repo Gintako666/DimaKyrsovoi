@@ -1,3 +1,4 @@
+/* eslint-disable import/no-relative-packages */
 /* eslint-disable import/no-extraneous-dependencies */
 import { defineEndpoint } from '@directus/extensions-sdk';
 import { Request, Response } from 'express';
@@ -5,10 +6,11 @@ import multer from 'multer';
 import * as xlsx from 'xlsx';
 import fs from 'fs';
 import moment from 'moment';
+import { StatusType, Transaction } from '../../interfaces/Transaction';
 
 const format = 'YYYY-MM-DDTHH:mm:ss';
 const upload = multer({ dest: 'uploads/' });
-const statusType = {
+const statusType: Record<string, StatusType> = {
   Abgeschlossen: 'Paid',
   Ausstehend: 'Pending',
   Abgelehnt: 'Rejected',
@@ -16,15 +18,18 @@ const statusType = {
 const millisecondsInDay = 24 * 60 * 60 * 1000;
 const startDate = new Date('1899-12-31');
 
-interface Transaction {
-  name: string | null,
-  type: string | null,
-  currency: string,
-  value: number,
-  status: 'Paid' | 'Pending' | 'Rejected' | null,
-  bank: string | null,
-  category: string | null,
-  date: string,
+interface TransactionFromFile {
+  Datum: number | string | string,
+  Uhrzeit: string,
+  Name: string,
+  Typ: string
+  Netto: string
+  Status: string
+  Betrag: number
+  Buchungsdatum: number
+  Währung: string
+  Partnername: string
+
 }
 
 const settings = [
@@ -32,11 +37,11 @@ const settings = [
   {
     columns: [ 'Name', 'Typ', 'Währung', 'Netto', 'Status', 'Datum', 'Uhrzeit' ],
     startRow: 1,
-    mapParser: (item): Transaction => {
+    mapParser: (item: TransactionFromFile): Transaction => {
       let date: string | Date = moment(`${ item.Datum } ${ item.Uhrzeit }`, 'DD.MM.YYYY HH:mm:ss').format(format);
 
       if (date === 'Invalid date') {
-        date = new Date(startDate.getTime() + (item.Datum - 1) * millisecondsInDay);
+        date = new Date(startDate.getTime() + (+item.Datum - 1) * millisecondsInDay);
       }
 
       return ({
@@ -44,7 +49,7 @@ const settings = [
         type: item.Typ,
         currency: item['Währung'],
         value: parseFloat(`${ item.Netto }`.replace(/./, '').replace(',', '.')),
-        status: statusType[item.Status as 'Abgelehnt' | 'Abgeschlossen' | 'Ausstehend'],
+        status: statusType[item.Status as 'Abgelehnt' | 'Abgeschlossen' | 'Ausstehend'] || null,
         bank: null,
         category: null,
         date,
@@ -56,7 +61,7 @@ const settings = [
   {
     columns: [ 'Buchungsdatum', 'Betrag', 'Währung' ],
     startRow: 3,
-    mapParser: (item): Transaction => {
+    mapParser: (item: TransactionFromFile): Transaction => {
       const date = new Date(startDate.getTime() + (item.Buchungsdatum - 1) * millisecondsInDay);
       return {
         name: null,
@@ -75,7 +80,7 @@ const settings = [
   {
     columns: [ 'Betrag', 'Partnername', 'Währung', 'Buchungsdatum' ],
     startRow: 4,
-    mapParser: (item): Transaction => ({
+    mapParser: (item: TransactionFromFile): Transaction => ({
       name: null,
       type: null,
       currency: item['Währung'],
@@ -91,10 +96,10 @@ const settings = [
   {
     columns: [ 'Betrag', 'Datum' ],
     startRow: 7,
-    mapParser: (item): Transaction => {
-      const dateParts = item.Datum.split('/').reverse();
-      dateParts[1] = parseInt(dateParts[1], 10) - 1;
-      dateParts[2] = parseInt(dateParts[2], 10) + 1;
+    mapParser: (item: TransactionFromFile): Transaction => {
+      const dateParts = `${ item.Datum }`.split('/').reverse().map((datePart) => +datePart);
+      dateParts[1] = parseInt(`${ dateParts[1] }`, 10) - 1;
+      dateParts[2] = parseInt(`${ dateParts[2] }`, 10) + 1;
       const date = new Date(...dateParts);
 
       return ({
@@ -126,7 +131,7 @@ export default defineEndpoint(async (router, { services, getSchema }) => {
     try {
       const fileFromReq = fs.readFileSync(file.path);
       const workbook = xlsx.read(fileFromReq);
-      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      const worksheet = workbook.Sheets[workbook.SheetNames[0] as string] as xlsx.WorkSheet;
       const data = xlsx.utils.sheet_to_csv(worksheet);
       const rows = data.split('\n').map((row) => row.split(','));
 
@@ -146,16 +151,16 @@ export default defineEndpoint(async (router, { services, getSchema }) => {
         return;
       }
 
-      const transactions = xlsx.utils.sheet_to_json(
+      const transactions: TransactionFromFile[] = xlsx.utils.sheet_to_json(
         worksheet,
         { range: correctSetting.startRow - 1 },
-      ).map(correctSetting.mapParser);
+      );
 
       const transactionService = new ItemsService('transaction', {
         schema,
       });
 
-      const items = await transactionService.createMany(transactions);
+      const items = await transactionService.createMany(transactions.map(correctSetting.mapParser));
       res.status(201).send(items);
     } catch (error) {
       console.log(error);
