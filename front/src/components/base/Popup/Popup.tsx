@@ -1,11 +1,11 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode } from 'react';
 
-import Transition from "@/components/base//Transition/Transition";
-import Body from "./Body";
+import Transition from '~/components/base/Transition/Transition';
 
-import { useScrollLock } from "@/hooks/useScrollLock";
+import useScrollLock from '~/hooks/useScrollLock';
 
-import { handleClassName } from "@/utils/className.util";
+import handleClassName from '~/utils/className.util';
+import Body from './Body';
 
 interface PopupProps {
   className: string;
@@ -14,7 +14,9 @@ interface PopupProps {
   button: ReactNode;
 }
 
-const Popup: FC<PopupProps> = ({ className, modifier, children, button }) => {
+const Popup: FC<PopupProps> = ({
+  className, modifier, children, button,
+}) => {
   const { isScrollLocked, setIsScrollLocked } = useScrollLock();
 
   const handleClick = () => {
@@ -23,20 +25,24 @@ const Popup: FC<PopupProps> = ({ className, modifier, children, button }) => {
 
   const modifiedClassName = handleClassName(
     !!modifier,
-    `${className}__popup`,
-    modifier
+    `${ className }__popup`,
+    modifier,
   );
 
   return (
-    <div className={`${modifiedClassName} popup`}>
-      <button className="popup__button" onClick={handleClick}>
+    <div className={ `${ modifiedClassName } popup` }>
+      <button type="button" className="popup__button" onClick={ handleClick }>
         {button}
       </button>
-      <Transition condition={isScrollLocked} className="popup">
-        <Body onClick={handleClick}>{children}</Body>
+      <Transition condition={ isScrollLocked } className="popup">
+        <Body onClick={ handleClick }>{children}</Body>
       </Transition>
     </div>
   );
+};
+
+Popup.defaultProps = {
+  modifier: undefined,
 };
 
 export default Popup;

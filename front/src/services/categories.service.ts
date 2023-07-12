@@ -16,6 +16,15 @@ const CategoriesService = {
       throw err;
     }
   },
+
+  async deleteCategory(id: ICategory['id']) {
+    try {
+      await axiosInstance.delete(`${ PATH }/${ id }`);
+    } catch (err) {
+      alert(err);
+      throw err;
+    }
+  },
 };
 
 export default CategoriesService;

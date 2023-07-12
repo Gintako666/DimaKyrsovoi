@@ -1,4 +1,6 @@
-import { FC, ReactNode, MouseEvent, useRef } from "react";
+import {
+  FC, ReactNode, MouseEvent, useRef,
+} from 'react';
 
 interface BodyProps {
   children: ReactNode;
@@ -21,10 +23,10 @@ const Body: FC<BodyProps> = ({ children, onClick }) => {
   };
 
   return (
-    <div className="popup__body" onClick={handleClick}>
+    <div className="popup__body" onClick={ handleClick }>
       <div className="popup__content">
-        <div className="popup__box" ref={popupBoxRef}>
-          <button className="popup__cross" onClick={onClick}></button>
+        <div className="popup__box" ref={ popupBoxRef }>
+          <button type="button" className="popup__cross" onClick={ onClick }>{null}</button>
           <div className="popup__children">{children}</div>
         </div>
       </div>
