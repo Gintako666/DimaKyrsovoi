@@ -4,8 +4,10 @@ import AddForm from '~/components/shared/AddForm/AddForm';
 
 import useAddForm from '~/hooks/useAddForm';
 
+import CategoriesService from '~/services/categories.service';
+
 const Form: FC = () => {
-  const { name, description, handleChange } = useAddForm();
+  const { name, color, handleChange } = useAddForm();
 
   // Handle submit
   interface IHandleSubmit {
@@ -13,6 +15,14 @@ const Form: FC = () => {
   }
   const handleSubmit: IHandleSubmit = (e) => {
     e.preventDefault();
+
+    if (name) {
+      const { addCategory } = CategoriesService;
+      addCategory({ name, color });
+      handleChange({ target: { id: 'name', value: '' } });
+    } else {
+      alert('Enter category name!');
+    }
   };
 
   return (
@@ -21,7 +31,7 @@ const Form: FC = () => {
         className="add-category"
         type="category"
         name={ name }
-        description={ description }
+        color={ color }
         onChange={ handleChange }
       />
       <button className="add-category__button button" type="submit">

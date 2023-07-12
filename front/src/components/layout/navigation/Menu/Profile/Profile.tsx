@@ -1,41 +1,43 @@
-import { FC, useState } from 'react';
+import {
+  FC, useRef, useState,
+} from 'react';
 
 import Img from '~/components/base/Img/Img';
+
+import useOutsideClick from '~/hooks/useOutsideClick';
 
 import handleClassName from '~/utils/className.util';
 
 import isTouchScreen from '~/constants/isTouchScreen.const';
 
-import profile from '~/assets/img/profile.jpg';
-import arrow from '~/assets/img/icons/arrow.svg';
+import avatar from '~/assets/img/avatar.jpg';
+import ExitButton from './ExitButton';
 
 const Profile: FC = () => {
   const [ isActive, setIsActive ] = useState(false);
+  const menuProfileRef = useRef<HTMLDivElement>(null);
 
-  // Handle active
-  interface IHandleActive {
-    (): void;
-  }
-  const handleActive: IHandleActive = () => {
+  const handleActive = () => {
     setIsActive(!isActive);
   };
 
-  const modifiedClassName = handleClassName(isActive, 'menu__profile');
-
-  const profileImg = {
-    src: profile,
-    alt: 'Profile',
+  const handleDeactivate = () => {
+    setIsActive(false);
   };
+  useOutsideClick(menuProfileRef, handleDeactivate);
 
-  const exitImg = {
-    src: arrow,
+  const modifiedClassName = handleClassName(isActive, 'profile');
+
+  const avatarImg = {
+    src: avatar,
     alt: 'Profile',
   };
 
   return (
-    <button
-      type="button"
-      className={ modifiedClassName }
+    <div
+      role="button"
+      className={ `menu__profile ${ modifiedClassName }` }
+      ref={ menuProfileRef }
       { ...(isTouchScreen
         ? { onClick: handleActive }
         : {
@@ -43,14 +45,9 @@ const Profile: FC = () => {
           onMouseLeave: handleActive,
         }) }
     >
-      <Img className="menu" modifier="profile" img={ profileImg } />
-      <div className="menu__sub-profile">
-        <div>
-          <Img className="menu" modifier="exit" img={ exitImg } resetStyle />
-          <span>Exit</span>
-        </div>
-      </div>
-    </button>
+      <Img className="profile" modifier="avatar" img={ avatarImg } />
+      <ExitButton />
+    </div>
   );
 };
 

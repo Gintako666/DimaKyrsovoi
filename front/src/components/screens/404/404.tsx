@@ -4,7 +4,7 @@ import FullScreen from '~/components/base/FullScreen/FullScreen';
 import useRedirectToHomepage from './useRedirectToHomepage';
 
 const NotFound: FC = () => {
-  const time: number = useRedirectToHomepage();
+  const time = useRedirectToHomepage();
 
   return (
     <section className="not-found">

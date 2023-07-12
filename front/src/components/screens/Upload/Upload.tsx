@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import Title from '~/components/shared/Title/Title';
 import SectionForm from '~/components/shared/SectionForm/SectionForm';
-import Form from './Form/Form';
+import Form from './Form';
 
 const Upload: FC = () => (
   <SectionForm className="upload">
