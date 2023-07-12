@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import {
   ChangeEvent, FC, FormEvent, useState,
 } from 'react';
@@ -14,7 +13,6 @@ const Form: FC = () => {
   const [ isUsernameErr, setIsUsernameErr ] = useState(false);
   const [ isInputErr, setIsInputErr ] = useState(false);
 
-  const router = useRouter();
   const { login } = useUser();
 
   // Handle change
