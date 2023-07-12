@@ -38,7 +38,7 @@ const Form: FC = () => {
 
     try {
       await login(username, password);
-      router.push('/');
+      // router.push('/');
     } catch (err: any) {
       const errMessage = err.message;
 
