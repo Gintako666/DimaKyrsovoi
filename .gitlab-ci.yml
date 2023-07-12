@@ -22,7 +22,10 @@ deploy-job:
     - review
   stage: deploy
   variables:
+    BACK_PORT: 3087
     FRONT_PORT: 3086
+    BACK_URI: https://uwto.dev.zagroza.agency:8080
+    FRONT_URI: https://uwto.dev.zagroza.agency
     CI_COMMIT_SHORT_SHA: $CI_COMMIT_SHORT_SHA
     CI_COMMIT_TIMESTAMP: $CI_COMMIT_TIMESTAMP
     CI_COMMIT_TITLE: $CI_COMMIT_TITLE
