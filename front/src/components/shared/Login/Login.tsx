@@ -19,8 +19,6 @@ const Login: FC = () => {
     }
   }, [ router, isLoginPage, isLoggedIn ]);
 
-  console.log(process.env);
-
   return (
     <FullScreen className="login">
       <Form />
