@@ -1,8 +1,8 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
+import AuthCheck from '~/components/base/AuthCheck/AuthCheck';
 import { UserProvider } from '~/contexts/user';
-import AuthCheck from '~/components/base/AuthCheck';
 
 import '~/assets/scss/globals.scss';
 
