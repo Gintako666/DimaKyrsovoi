@@ -1,10 +1,12 @@
+export type StatusType = 'Paid' | 'Pending' | 'Rejected';
+
 export interface Transaction {
   name: string | null,
   type: string | null,
-  currency: string,
+  currency: string | null,
   value: number,
-  status: 'Paid' | 'Pending' | 'Rejected' | null,
+  status: StatusType | null,
   bank: string | null,
   category: string | null,
-  date: string,
+  date: string | Date | number,
 }
