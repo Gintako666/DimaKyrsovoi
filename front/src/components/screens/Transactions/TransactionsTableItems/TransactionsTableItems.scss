@@ -88,16 +88,16 @@
         @apply lg:hidden;
       }
 
-      &__button {
-        @apply lg:bg-transparent
-        text-blue-600 bg-blue-300  p-1.5 rounded-lg;
+      // &__button {
+      //   @apply lg:bg-transparent
+      //   text-blue-600 bg-blue-300  p-1.5 rounded-lg;
 
-        transition: opacity 0.3s ease 0s;
+      //   transition: opacity 0.3s ease 0s;
 
-        &:hover {
-          @apply opacity-50;
-        }
-      }
+      //   &:hover {
+      //     @apply opacity-50;
+      //   }
+      // }
     }
   }
 }
