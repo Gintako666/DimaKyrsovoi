@@ -58,7 +58,6 @@ const Item: FC<ItemProps> = ({
       ) }
       >
         {status}
-
       </p>
     </div>
     <div className="transactions__table__item__amount">
@@ -75,7 +74,7 @@ const Item: FC<ItemProps> = ({
         $
       </p>
     </div>
-    <button type="button" className="transactions__table__item__button">Details</button>
+    {/* <button type="button" className="transactions__table__item__button">Details</button> */}
   </div>
 );
 
