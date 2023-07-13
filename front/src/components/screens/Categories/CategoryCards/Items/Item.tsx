@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 
 import getFirstLetters from '~/utils/firstLetters.util';
 
@@ -6,11 +6,13 @@ import { ICategory } from '~/interfaces/category.interface';
 import Buttons from './Buttons/Buttons';
 
 interface ItemProps {
-  category: ICategory
+  category: ICategory,
+  setDeletedCategoryId: Dispatch<SetStateAction<ICategory['id'] | null>>
 }
 
 const Item: FC<ItemProps> = ({
   category,
+  setDeletedCategoryId,
 }) => {
   const { name, color, transactions } = category;
 
@@ -26,7 +28,7 @@ const Item: FC<ItemProps> = ({
             <span> transaction</span>
           </div>
         </div>
-        <Buttons category={ category } />
+        <Buttons category={ category } setDeletedCategoryId={ setDeletedCategoryId } />
       </div>
     </div>
   );

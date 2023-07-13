@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 
 import Popup from '~/components/base/Popup/Popup';
 import Img from '~/components/base/Img/Img';
@@ -8,12 +8,16 @@ import { ICategory } from '~/interfaces/category.interface';
 import bin from '~/assets/img/icons/bin.svg';
 import CategoriesService from '~/services/categories.service';
 
-interface RemoveProps {
-  category: ICategory
+interface DeleteProps {
+  category: ICategory,
+  setDeletedCategoryId: Dispatch<SetStateAction<ICategory['id'] | null>>
 }
 
-const Remove: FC<RemoveProps> = ({
-  category: { id, name },
+const Delete: FC<DeleteProps> = ({
+  category: {
+    id, name,
+  },
+  setDeletedCategoryId,
 }) => {
   const img = {
     src: bin,
@@ -24,6 +28,7 @@ const Remove: FC<RemoveProps> = ({
 
   const handleDeleteOnClick = async () => {
     await CategoriesService.deleteCategory(id);
+    setDeletedCategoryId(id);
   };
 
   return (
@@ -41,4 +46,4 @@ const Remove: FC<RemoveProps> = ({
   );
 };
 
-export default Remove;
+export default Delete;
