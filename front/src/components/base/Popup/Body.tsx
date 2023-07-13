@@ -5,10 +5,9 @@ import {
 interface BodyProps {
   children: ReactNode;
   onClick(): void;
-  submit?: boolean
 }
 
-const Body: FC<BodyProps> = ({ children, onClick, submit }) => {
+const Body: FC<BodyProps> = ({ children, onClick }) => {
   const popupBoxRef = useRef<HTMLDivElement>(null);
 
   // Handle click
@@ -24,7 +23,7 @@ const Body: FC<BodyProps> = ({ children, onClick, submit }) => {
   };
 
   return (
-    <div className="popup__body" onClick={ handleClick }>
+    <div role="button" tabIndex={ -1 } className="popup__body" onClick={ handleClick } onKeyDown={ undefined }>
       <div className="popup__content">
         <div className="popup__box" ref={ popupBoxRef }>
           <button type="button" className="popup__cross" onClick={ onClick }>
@@ -32,7 +31,6 @@ const Body: FC<BodyProps> = ({ children, onClick, submit }) => {
           </button>
           <div className="popup__children">
             {children}
-            {submit && <button type="submit" className="popup__submit button" onClick={ onClick }>Save</button>}
           </div>
         </div>
       </div>
