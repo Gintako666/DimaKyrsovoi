@@ -13,9 +13,10 @@ import { ICategory } from '~/interfaces/category.interface';
 interface FormProps {
   category: ICategory;
   setEditedCategory: Dispatch<SetStateAction<ICategory | null>>;
+  onSubmit: () => void
 }
 
-const Form: FC<FormProps> = ({ category, setEditedCategory }) => {
+const Form: FC<FormProps> = ({ category, setEditedCategory, onSubmit }) => {
   const { name, color, handleChange } = useAddForm(
     category.name,
     category.color,
@@ -40,6 +41,8 @@ const Form: FC<FormProps> = ({ category, setEditedCategory }) => {
 
       setEditedCategory(editedCategory);
     }
+
+    onSubmit();
   };
 
   return (
