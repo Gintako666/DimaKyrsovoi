@@ -35,4 +35,9 @@ type Props = {
   data: DataToChart
 };
 
-export const LineChart: React.FC<Props> = ({ data }) => <Line options={ options } data={ data } />;
+export const LineChart: React.FC<Props> = ({ data }) => (
+  <Line
+    options={ options }
+    data={ data }
+  />
+);

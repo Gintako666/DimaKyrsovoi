@@ -1,15 +1,20 @@
 import { FC, useEffect, useState } from 'react';
-import { DataToChart } from '~/interfaces/chart.interface';
+import { DataToChart, PieChartData } from '~/interfaces/chart.interface';
 import axiosInstance from '~/services/axiosInstance';
 import Loader from '~/components/shared/Loader/Loader';
 import LastDays from './LastDays/LastDays';
 import Chart from './Chart/Chart';
 import { ICard } from './LastDays/card.interface';
+import PieCharts from './PieCharts/PieCharts';
 
 const Home: FC = () => {
   const [ dataFromServer, setDataFromServer ] = useState<{
     chartData: DataToChart,
     cards: ICard[],
+    pieChartsData: {
+      incomingData: PieChartData,
+      outgoingData: PieChartData,
+    }
   }>();
   useEffect(() => {
     function getMonthYearArray() {
@@ -33,7 +38,13 @@ const Home: FC = () => {
 
     async function requestToServer() {
       const { data } = await axiosInstance.get('/transaction_summary');
-      const { monthlyData, incomingTotal, outgoingTotal } = data;
+      const {
+        monthlyData,
+        incomingTotal,
+        outgoingTotal,
+        categoriesPerMonthOutgoing,
+        categoriesPerMonthIncoming,
+      } = data;
       setDataFromServer({
         chartData: {
           labels: getMonthYearArray().reverse(),
@@ -49,6 +60,10 @@ const Home: FC = () => {
             number: outgoingTotal,
           },
         ],
+        pieChartsData: {
+          incomingData: categoriesPerMonthIncoming,
+          outgoingData: categoriesPerMonthOutgoing,
+        },
       });
     }
 
@@ -62,6 +77,10 @@ const Home: FC = () => {
   return (
     <>
       <LastDays cards={ dataFromServer.cards } />
+      <PieCharts
+        incomingData={ dataFromServer.pieChartsData.incomingData }
+        outgoingData={ dataFromServer.pieChartsData.outgoingData }
+      />
       <Chart chartData={ dataFromServer.chartData } />
     </>
   );
