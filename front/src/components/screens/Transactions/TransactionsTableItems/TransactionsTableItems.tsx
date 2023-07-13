@@ -1,8 +1,4 @@
-import React, { FC } from 'react';
-
-import useFetchData from '~/hooks/useFetchData';
-
-import CategoriesService from '~/services/categories.service';
+import { FC } from 'react';
 
 import { ITransaction } from '~/interfaces/transaction.interface';
 import { ICategory } from '~/interfaces/category.interface';
@@ -10,17 +6,13 @@ import Item from './Item';
 
 interface ITransactionsTableItemsProps {
   transactions: ITransaction[];
+  categories: ICategory[]
 }
 
-const TransactionsTableItems: FC<ITransactionsTableItemsProps> = ({ transactions }) => {
-  const { getCategories } = CategoriesService;
-  const { data } = useFetchData(getCategories);
-
-  const categoryItems: ICategory[] = data?.data;
-
+const TransactionsTableItems: FC<ITransactionsTableItemsProps> = ({ transactions, categories }) => {
   const items = transactions.map((transaction) => {
     const { id, category } = transaction;
-    const categoryItem = categoryItems?.find((item: ICategory) => item.id === category);
+    const categoryItem = categories?.find((item: ICategory) => item.id === category);
 
     return <Item key={ id } transaction={ transaction } category={ categoryItem } />;
   });
