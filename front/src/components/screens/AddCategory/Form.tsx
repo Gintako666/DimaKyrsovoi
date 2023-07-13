@@ -18,6 +18,7 @@ const Form: FC = () => {
 
     if (name) {
       const { addCategory } = CategoriesService;
+
       addCategory({ name, color });
       handleChange({ target: { id: 'name', value: '' } });
     } else {
@@ -34,9 +35,6 @@ const Form: FC = () => {
         color={ color }
         onChange={ handleChange }
       />
-      <button className="add-category__button button" type="submit">
-        Save
-      </button>
     </form>
   );
 };

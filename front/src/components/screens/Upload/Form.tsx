@@ -37,9 +37,6 @@ const Form: FC = () => {
         selectedFile={ selectedFile }
         setSelectedFile={ setSelectedFile }
       />
-      <button className="upload__button button" type="submit">
-        Save
-      </button>
     </form>
   );
 };

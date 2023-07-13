@@ -7,7 +7,10 @@ export interface IHandleChange {
 }
 
 interface IUseAddForm {
-  (): {
+  (
+    defaultName?: string,
+    defaultColor?: string
+  ): {
     name: string;
     description: string;
     color: string;
@@ -15,10 +18,10 @@ interface IUseAddForm {
   };
 }
 
-const useAddForm: IUseAddForm = () => {
-  const [ name, setName ] = useState('');
+const useAddForm: IUseAddForm = (defaultName = '', defaultColor = '#4c44e4') => {
+  const [ name, setName ] = useState(defaultName);
   const [ description, setDescription ] = useState('');
-  const [ color, setColor ] = useState('#4c44e4');
+  const [ color, setColor ] = useState(defaultColor);
 
   const handleChange: IHandleChange = ({ target: { id, value } }) => {
     switch (id) {
