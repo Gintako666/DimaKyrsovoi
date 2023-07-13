@@ -32,7 +32,7 @@ const Delete: FC<DeleteProps> = ({
   };
 
   return (
-    <Popup className="category-cards" button={ button }>
+    <Popup className="category-cards" modifier="delete" button={ button }>
       <p className="category-cards__confirm-text">
         Are you sure you want to delete category
         {' '}

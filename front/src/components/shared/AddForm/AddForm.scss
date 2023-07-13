@@ -72,4 +72,10 @@
 
     color: $gray;
   }
+
+  // .add-form__button
+
+  &__button {
+    @apply self-end;
+  }
 }

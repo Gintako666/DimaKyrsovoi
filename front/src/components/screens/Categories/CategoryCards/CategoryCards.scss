@@ -93,7 +93,36 @@
 
   &__popup {
     font-size: rem(16);
+
+    // .category-cards__popup_delete
+
+    &_delete {
+      text-align: center;
+    }
+
+    // .category-cards__popup_edit
+
+    &_edit {
+      .popup {
+        // .popup__children
+
+        &__children {
+          @media (width > $mobile) {
+            min-width: rem(530);
+          }
+
+          > *:not(:last-child) {
+            @apply mb-7;
+          }
+        }
+      }
+    }
   }
+
+  // .category-cards__title
+
+  // &__title {
+  // }
 
   // .category-cards__confirm-text
 

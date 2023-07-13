@@ -25,6 +25,16 @@ const CategoriesService = {
       throw err;
     }
   },
+
+  async editCategory(editedCategory: ICategory) {
+    try {
+      const { id } = editedCategory;
+      await axiosInstance.patch(`${ PATH }/${ id }`, editedCategory);
+    } catch (err) {
+      alert(err);
+      throw err;
+    }
+  },
 };
 
 export default CategoriesService;
