@@ -1,17 +1,17 @@
-import { FC, memo } from "react";
-import { useRouter } from 'next/router';
+import { FC, memo } from 'react';
+// import { useRouter } from 'next/router';
 
-import Loader from "~/components/shared/Loader/Loader";
-import Title from "~/components/shared/Title/Title";
+import Loader from '~/components/shared/Loader/Loader';
+import Title from '~/components/shared/Title/Title';
 
-import useFetchData from "~/hooks/useFetchData";
+import useFetchData from '~/hooks/useFetchData';
 
-import TransactionsService from "~/services/transactions.service";
-import CategoriesService from "~/services/categories.service";
+import TransactionsService from '~/services/transactions.service';
+import CategoriesService from '~/services/categories.service';
 
 import { ITransaction } from '~/interfaces/transaction.interface';
-import { ICategory } from "~/interfaces/category.interface";
-import TransactionsTableItems from "./TransactionsTableItems/TransactionsTableItems";
+import { ICategory } from '~/interfaces/category.interface';
+import TransactionsTableItems from './TransactionsTableItems/TransactionsTableItems';
 
 // import transactionsFromApi from './transactions.json';
 
@@ -104,7 +104,7 @@ const Transactions: FC = memo(() => {
 
                 return (
                   <option
-                    key={id}
+                    key={ id }
                     className="transactions__header__filter__option"
                     value="Pending"
                   >
@@ -129,10 +129,10 @@ const Transactions: FC = memo(() => {
               <span className="transactions__table__header__item">status</span>
               <span className="transactions__table__header__item">amount</span>
             </div>
-            <TransactionsTableItems transactions={transactions} categories={categories} />
+            <TransactionsTableItems transactions={ transactions } categories={ categories } />
           </div>
         )}
-        {(error || transactionsData?.errors) && ":("}
+        {(error || transactionsData?.errors) && ':('}
       </div>
     </section>
   );
