@@ -135,13 +135,12 @@
   &__confirm-button {
     @apply text-white bg-red-600;
 
-    padding: em(5);
-    border-radius: em(5);
-    border: rem(2) solid #dc2626;
+    padding: em(5) em(10);
+    border: em(2) solid #dc2626;
     transition: color, background-color 0.3s ease 0s;
 
     &:hover {
-      @apply text-red-600 bg-white;
+      @apply text-red-600 bg-white opacity-100;
     }
   }
 }

@@ -39,7 +39,7 @@ const Delete: FC<DeleteProps> = ({
         {name}
         ? All transactions will become uncategorized.
       </p>
-      <button type="button" className="category-cards__confirm-button" onClick={ handleDeleteOnClick }>
+      <button type="button" className="category-cards__confirm-button button" onClick={ handleDeleteOnClick }>
         Yes, delete
       </button>
     </Popup>

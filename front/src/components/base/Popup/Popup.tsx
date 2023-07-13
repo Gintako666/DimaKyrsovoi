@@ -1,4 +1,6 @@
-import { FC, ReactNode } from 'react';
+import {
+  Dispatch, FC, ReactNode, SetStateAction,
+} from 'react';
 
 import Transition from '~/components/base/Transition/Transition';
 
@@ -12,16 +14,34 @@ interface PopupProps {
   modifier?: string;
   children: ReactNode;
   button: ReactNode;
+  isActive?: boolean;
+  setIsActive?: Dispatch<SetStateAction<boolean>>
 }
 
 const Popup: FC<PopupProps> = ({
-  className, modifier, children, button,
+  className, modifier, children, button, isActive, setIsActive,
 }) => {
   const { isScrollLocked, setIsScrollLocked } = useScrollLock();
 
+  const isActiveIsUndefined = typeof isActive === 'undefined';
+
   const handleClick = () => {
-    setIsScrollLocked(!isScrollLocked);
+    if (!isActiveIsUndefined && setIsActive) {
+      setIsActive(!isActive);
+    } else {
+      setIsScrollLocked(!isScrollLocked);
+    }
   };
+
+  const handleDisablePopup = () => {
+    if (!isActiveIsUndefined && setIsActive) {
+      setIsActive(false);
+    } else {
+      setIsScrollLocked(false);
+    }
+  };
+
+  const condition = isActiveIsUndefined ? isScrollLocked : isActive;
 
   const modifiedClassName = handleClassName(
     !!modifier,
@@ -34,8 +54,8 @@ const Popup: FC<PopupProps> = ({
       <button type="button" className="popup__button" onClick={ handleClick }>
         {button}
       </button>
-      <Transition condition={ isScrollLocked } className="popup">
-        <Body onClick={ handleClick }>{children}</Body>
+      <Transition condition={ condition } className="popup">
+        <Body onClick={ handleDisablePopup }>{children}</Body>
       </Transition>
     </div>
   );
@@ -43,6 +63,8 @@ const Popup: FC<PopupProps> = ({
 
 Popup.defaultProps = {
   modifier: undefined,
+  isActive: undefined,
+  setIsActive: undefined,
 };
 
 export default Popup;
