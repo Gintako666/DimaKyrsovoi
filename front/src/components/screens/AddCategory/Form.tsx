@@ -23,6 +23,7 @@ const Form: FC = () => {
 
       addCategory({ name, color });
       handleChange({ target: { id: 'name', value: '' } });
+
       router.push('/categories');
     } else {
       alert('Enter category name!');
