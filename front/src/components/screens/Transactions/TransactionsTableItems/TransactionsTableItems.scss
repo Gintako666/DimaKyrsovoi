@@ -15,7 +15,7 @@
       }
 
       &__transaction {
-        @apply grid grid-rows-2 grid-cols-[60px_1fr];
+        @apply grid grid-rows-[auto_auto] grid-cols-[60px_1fr];
 
         &__img {
           @apply row-start-1 row-end-3 flex justify-center items-center h-12 w-12 text-white bg-gray-500;

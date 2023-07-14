@@ -28,7 +28,7 @@ const Transactions: FC = memo(() => {
     data: transactionsData,
     isLoading: isLoadingTransactions,
     error,
-  } = useFetchData(getTransactions, `?fields=*,category.*&${ requestFilter || '' }`);
+  } = useFetchData(getTransactions, `?fields=*,category.*&sort=-date&${ requestFilter }`);
   const transactions: ITransaction[] = transactionsData?.data;
 
   const { getCategories } = CategoriesService;
@@ -106,6 +106,7 @@ const Transactions: FC = memo(() => {
               </span>
               <span className="transactions__table__header__item">type</span>
               <span className="transactions__table__header__item">amount</span>
+              <span className="transactions__table__header__item">date</span>
             </div>
             <TransactionsTableItems transactions={ transactions } categorys={ renderCategorys } />
           </div>
