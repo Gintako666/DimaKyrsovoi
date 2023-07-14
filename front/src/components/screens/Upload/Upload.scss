@@ -16,4 +16,8 @@
 
   // &__upload-file {
   // }
+
+  &__button {
+    @apply self-end;
+  }
 }
