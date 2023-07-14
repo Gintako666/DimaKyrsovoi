@@ -17,7 +17,7 @@ interface ItemProps {
 
 const Item: FC<ItemProps> = ({
   transaction: {
-    id, name, bank, value, type, status, date,
+    id, name, bank, value, type, date,
   },
   category,
   categorys,
@@ -68,11 +68,12 @@ const Item: FC<ItemProps> = ({
         <p className={ classNames(
           'transactions__table__item__amount__info',
           {
-            'transactions__table__item__amount__info--rejected': +value < 0,
+            'transactions__table__item__amount__info--outgoing': +value < 0,
+            'transactions__table__item__amount__info--incoming': +value > 0,
           },
         ) }
         >
-          {amountFormater.format(+value)}
+          {amountFormater.format(Math.abs(+value))}
         </p>
       </div>
       <div className="transactions__table__item__type">

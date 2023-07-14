@@ -52,11 +52,11 @@ const Home: FC = () => {
         },
         cards: [
           {
-            name: 'Income',
+            name: 'Incoming',
             number: incomingTotal,
           },
           {
-            name: 'Outcome',
+            name: 'Outgoing',
             number: outgoingTotal,
           },
         ],

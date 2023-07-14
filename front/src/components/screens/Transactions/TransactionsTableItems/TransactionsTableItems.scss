@@ -74,14 +74,26 @@
 
       &__amount {
         &__info {
-          @apply px-3 py-0.5 w-min h-min rounded-lg font-medium bg-blue-100 text-blue-600;
-
-          &--pending {
-            @apply bg-yellow-100 text-yellow-600;
+          @apply px-3 py-0.5 w-min h-min rounded-lg font-medium;
+          
+          &:before {
+            @apply pr-1
           }
 
-          &--rejected {
-            @apply bg-red-100 text-red-600;
+          &--outgoing {
+            @apply bg-yellow-100 text-yellow-600;
+
+            &:before {
+              content: '↓'
+            }
+          }
+
+          &--incoming {
+            @apply  bg-blue-100 text-blue-600;
+
+            &:before {
+              content: '↑'
+            }
           }
         }
       }
