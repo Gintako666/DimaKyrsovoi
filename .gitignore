@@ -4,3 +4,5 @@
 /back/database
 /back/uploads
 /back/extensions
+
+.DS_Store
