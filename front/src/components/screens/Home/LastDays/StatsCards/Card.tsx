@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import { amountFormater } from '~/utils/amountFormater';
 import { ICard } from '../card.interface';
 
 interface CardProps {
@@ -16,8 +17,7 @@ const Card: FC<CardProps> = ({
     <div className="stats-cards__box">
       <div className="stats-cards__main">
         <span className="stats-cards__number">
-          $
-          {number}
+          {amountFormater.format(number)}
         </span>
       </div>
     </div>

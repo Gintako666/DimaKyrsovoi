@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import classNames from 'classnames';
 
 import getFirstLetters from '~/utils/firstLetters.util';
@@ -6,6 +6,7 @@ import getFirstLetters from '~/utils/firstLetters.util';
 import { ITransaction } from '~/interfaces/transaction.interface';
 import { ICategory } from '~/interfaces/category.interface';
 import axiosInstance from '~/services/axiosInstance';
+import { amountFormater } from '~/utils/amountFormater';
 
 interface ItemProps {
   transaction: ITransaction,
@@ -15,7 +16,7 @@ interface ItemProps {
 
 const Item: FC<ItemProps> = ({
   transaction: {
-    id, name, bank, value, type, status,
+    id, name, bank, value, type, status, date,
   },
   category,
   categorys,
@@ -25,6 +26,16 @@ const Item: FC<ItemProps> = ({
       category: newCategory,
     });
   }, [ id ]);
+
+  const formatDate = useCallback((apiDate: string) => {
+    const date2 = new Date(apiDate);
+    const formattedDate = `${ date2.getMonth() + 1 }/${ date2.getDate() }/${ date2.getFullYear() }`;
+    return formattedDate;
+  }, []);
+
+  const formattedDate = useMemo(() => formatDate(date), [ date, formatDate ]);
+  const tooltipDate = useMemo(() => new Date(date).toLocaleString('en-US'), [ date ]);
+
   return (
     <div className="transactions__table__item">
       <div className="transactions__table__item__transaction">
@@ -67,9 +78,12 @@ const Item: FC<ItemProps> = ({
           },
         ) }
         >
-          {Number(value).toFixed(2)}
-          $
+          {amountFormater.format(+value)}
         </p>
+      </div>
+      <div className="transactions__table__item__type">
+        <p className="transactions__table__item__media">Date: </p>
+        <div title={ tooltipDate }>{formattedDate}</div>
       </div>
     </div>
   );
