@@ -7,6 +7,7 @@ import { ITransaction } from '~/interfaces/transaction.interface';
 import { ICategory } from '~/interfaces/category.interface';
 import axiosInstance from '~/services/axiosInstance';
 import { amountFormater } from '~/utils/amountFormater';
+import { format } from 'fecha';
 
 interface ItemProps {
   transaction: ITransaction,
@@ -27,14 +28,8 @@ const Item: FC<ItemProps> = ({
     });
   }, [ id ]);
 
-  const formatDate = useCallback((apiDate: string) => {
-    const date2 = new Date(apiDate);
-    const formattedDate = `${ date2.getMonth() + 1 }/${ date2.getDate() }/${ date2.getFullYear() }`;
-    return formattedDate;
-  }, []);
-
-  const formattedDate = useMemo(() => formatDate(date), [ date, formatDate ]);
-  const tooltipDate = useMemo(() => new Date(date).toLocaleString('en-US'), [ date ]);
+  const formattedDate = useMemo(() => format(new Date(date), 'MM/DD/YYYY'), [ date ]);
+  const tooltipDate = useMemo(() => format(new Date(date), 'MM/DD/YYYY hh:mm:ss'), [ date ]);
 
   return (
     <div className="transactions__table__item">
@@ -73,8 +68,7 @@ const Item: FC<ItemProps> = ({
         <p className={ classNames(
           'transactions__table__item__amount__info',
           {
-            'transactions__table__item__amount__info--pending': status === 'Pending',
-            'transactions__table__item__amount__info--rejected': status === 'Rejected',
+            'transactions__table__item__amount__info--rejected': +value < 0,
           },
         ) }
         >
