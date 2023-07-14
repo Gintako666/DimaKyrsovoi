@@ -5,8 +5,7 @@ const PATH = '/upload';
 const FileService = {
   async uploadFile(file: FormData) {
     try {
-      const response = await axiosInstance.post(PATH, file);
-      return response;
+      await axiosInstance.post(PATH, file);
     } catch (err) {
       alert(err);
       throw err;
