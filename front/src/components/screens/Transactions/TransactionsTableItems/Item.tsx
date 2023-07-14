@@ -28,6 +28,20 @@ const Item: FC<ItemProps> = ({
     });
   }, [ id ]);
 
+  const getContrastColor = useCallback((background: string | undefined): string => {
+    if (!background) {
+      return '#000000';
+    }
+
+    const r = parseInt(background.substr(1, 2), 16);
+    const g = parseInt(background.substr(3, 2), 16);
+    const b = parseInt(background.substr(5, 2), 16);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    const textColor = brightness > 128 ? '#000000' : '#ffffff';
+
+    return textColor;
+  }, []);
+
   const formattedDate = useMemo(() => format(new Date(date), 'MM/DD/YYYY'), [ date ]);
   const tooltipDate = useMemo(() => format(new Date(date), 'MM/DD/YYYY hh:mm:ss'), [ date ]);
 
@@ -42,6 +56,10 @@ const Item: FC<ItemProps> = ({
         <p className="transactions__table__item__media">Category: </p>
         <div className="transactions__table__item__category__info">
           <select
+            style={ {
+              background: `${ category?.color }`,
+              color: `${ getContrastColor(category?.color) }`,
+            } }
             className="transactions__table__item__category__name"
             name=""
             id=""
