@@ -11,7 +11,7 @@
       &__type,
       &__status,
       &__amount {
-        @apply grid grid-cols-[60px_auto] items-center gap-3 lg:grid-cols-1;
+        @apply grid grid-cols-[80px_auto] items-center gap-3 lg:grid-cols-1;
       }
 
       &__transaction {
@@ -34,11 +34,13 @@
 
       &__category {
         &__name {
-          @apply font-medium;
-        }
-
-        &__type {
+          @apply font-medium text-base;
+          outline: none;
+          // -moz-appearance:none; /* Firefox */
+          // -webkit-appearance:none; /* Safari and Chrome */
+          // appearance:none;
           color: $gray;
+          margin-left: -3px;
         }
       }
 

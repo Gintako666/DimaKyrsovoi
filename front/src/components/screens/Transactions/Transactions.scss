@@ -37,7 +37,7 @@
 
     &__header,
     &__item {
-      @apply grid lg:grid-cols-[3fr_repeat(2,_2fr)_repeat(3,_1fr)]
+      @apply grid lg:grid-cols-[3fr_repeat(2,_2fr)_1fr]
       grid-cols-1
       lg:gap-6 gap-4 items-center 
       border-b-[1px] border-solid border-slate-300;

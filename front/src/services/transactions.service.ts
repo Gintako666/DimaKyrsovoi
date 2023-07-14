@@ -3,8 +3,8 @@ import axiosInstance from './axiosInstance';
 const PATH = '/items/transaction';
 
 const TransactionsService = {
-  async getTransactions() {
-    return axiosInstance(PATH);
+  async getTransactions(searchParams: string) {
+    return axiosInstance(PATH + searchParams);
   },
 };
 
