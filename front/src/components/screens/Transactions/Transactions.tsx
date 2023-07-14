@@ -104,7 +104,7 @@ const Transactions: FC = memo(() => {
               <span className="transactions__table__header__item">
                 category
               </span>
-              <span className="transactions__table__header__item">status</span>
+              <span className="transactions__table__header__item">type</span>
               <span className="transactions__table__header__item">amount</span>
             </div>
             <TransactionsTableItems transactions={ transactions } categorys={ renderCategorys } />
