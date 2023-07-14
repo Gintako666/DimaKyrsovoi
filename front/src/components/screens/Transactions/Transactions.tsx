@@ -39,7 +39,7 @@ const Transactions: FC = memo(() => {
       return [ ...categories, {
         name: 'Uncategorized',
         id: 0,
-        color: '',
+        color: '#636363',
         transactions: [],
       } ];
     }
