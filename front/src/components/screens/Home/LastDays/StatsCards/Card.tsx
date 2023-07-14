@@ -16,6 +16,7 @@ const Card: FC<CardProps> = ({
     <div className="stats-cards__box">
       <div className="stats-cards__main">
         <span className="stats-cards__number">
+          $
           {number}
         </span>
       </div>

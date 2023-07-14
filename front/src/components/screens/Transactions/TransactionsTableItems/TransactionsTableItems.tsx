@@ -6,15 +6,21 @@ import Item from './Item';
 
 interface ITransactionsTableItemsProps {
   transactions: ITransaction[];
-  categories: ICategory[]
+  categorys: ICategory[]
 }
 
-const TransactionsTableItems: FC<ITransactionsTableItemsProps> = ({ transactions, categories }) => {
+const TransactionsTableItems: FC<ITransactionsTableItemsProps> = ({ transactions, categorys }) => {
   const items = transactions.map((transaction) => {
     const { id, category } = transaction;
-    const categoryItem = categories?.find((item: ICategory) => item.id === category);
 
-    return <Item key={ id } transaction={ transaction } category={ categoryItem } />;
+    return (
+      <Item
+        key={ id }
+        transaction={ transaction }
+        category={ category }
+        categorys={ categorys }
+      />
+    );
   });
 
   return <div>{items}</div>;

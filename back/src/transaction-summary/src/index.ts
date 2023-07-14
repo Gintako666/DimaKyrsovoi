@@ -116,23 +116,17 @@ async function calculateMonthlyData(
 async function calculationCategoriesPerMonth(type: 'outgoing' | 'incoming', transactionService: any, categoryService: any) {
   const categorys = await getCategorys(categoryService);
   const returnData: PieDataset = {
-    labels: categorys.map((category) => category.name),
+    labels: [ ...categorys.map((category) => category.name), 'Uncategorized' ],
     datasets: [],
   };
-  const curentDate = moment().hour(23).minute(59).second(59);
-  const DatesForLastMonth = [ curentDate.format(dateFormat) ];
-
-  for (let i = 0; i < 30; i += 1) {
-    DatesForLastMonth.unshift(curentDate.add(-1, 'day').format(dateFormat));
-  }
+  const startDate = moment().add(-30, 'day').format(dateFormat);
+  const endDate = moment().format(dateFormat);
 
   const data: number[] = [];
   const backgroundColor: string[] = [];
 
   for (const category of categorys) {
     const { id: categoryId, color } = category;
-    const startDate = moment().add(-30, 'day').format(dateFormat);
-    const endDate = moment().format(dateFormat);
 
     const transactionsInCategoryPerMonth = await getTransactions(
       transactionService,
@@ -160,9 +154,38 @@ async function calculationCategoriesPerMonth(type: 'outgoing' | 'incoming', tran
     );
 
     const sumValue = transactionsInCategoryPerMonth.reduce((sum, item) => sum + +item.value, 0);
-    data.push(sumValue);
+    data.push(Math.abs(sumValue));
     backgroundColor.push(color);
   }
+
+  const transactionsInCategoryPerMonth = await getTransactions(
+    transactionService,
+    {
+      filter: {
+        category: { _null: true },
+        value:
+            (type === 'incoming' && { _gt: 0 })
+            || (type === 'outgoing' && { _lt: 0 }),
+
+        _and: [
+          {
+            date: {
+              _gt: startDate,
+            },
+          },
+          {
+            date: {
+              _lt: endDate,
+            },
+          },
+        ],
+      },
+    },
+  );
+
+  const sumValue = transactionsInCategoryPerMonth.reduce((sum, item) => sum + +item.value, 0);
+  data.push(Math.abs(sumValue));
+  backgroundColor.push('#636363');
 
   returnData.datasets.push({
     label: null,
