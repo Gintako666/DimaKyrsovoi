@@ -40,7 +40,7 @@ async function calculateTotal(
   startDate: moment.Moment | string,
   endDate: moment.Moment | string,
   transactionService: any,
-  additionalFilters: Record<string, Record<string, number | string>> = {},
+  additionalFilters: Record<string, Record<string, number | string | boolean>> = {},
 ) {
   const query = {
     filter: {
@@ -80,8 +80,7 @@ async function calculateMonthlyData(
   const categorys = await getCategorys(categoryService);
   const returnData: Dataset[] = [];
 
-  for (const category of categorys) {
-    const { id: categoryId, name, color } = category;
+  async function addValuesInReturnData(category: Category | null) {
     const monthlyData = [];
     const currentDate = moment(startDate).add(1, 'month');
     const newEndDate = endDate.add(1, 'month');
@@ -95,7 +94,7 @@ async function calculateMonthlyData(
         monthStart,
         monthEnd,
         transactionService,
-        { category: { _eq: categoryId } },
+        { category: category ? { _eq: category.id } : { _null: true } },
       );
 
       monthlyData.push(allValues);
@@ -104,11 +103,17 @@ async function calculateMonthlyData(
     }
 
     returnData.push({
-      label: name,
-      borderColor: color,
+      label: category?.name || 'Uncategorized',
+      borderColor: category?.color || '#636363',
       data: monthlyData,
     });
   }
+
+  for (const category of categorys) {
+    await addValuesInReturnData(category);
+  }
+
+  await addValuesInReturnData(null);
 
   return returnData;
 }
@@ -125,14 +130,12 @@ async function calculationCategoriesPerMonth(type: 'outgoing' | 'incoming', tran
   const data: number[] = [];
   const backgroundColor: string[] = [];
 
-  for (const category of categorys) {
-    const { id: categoryId, color } = category;
-
+  async function addDataInReturnData(category:Category | null) {
     const transactionsInCategoryPerMonth = await getTransactions(
       transactionService,
       {
         filter: {
-          category: { _eq: categoryId },
+          category: category ? { _eq: category.id } : { _null: true },
           value:
             (type === 'incoming' && { _gt: 0 })
             || (type === 'outgoing' && { _lt: 0 }),
@@ -155,37 +158,14 @@ async function calculationCategoriesPerMonth(type: 'outgoing' | 'incoming', tran
 
     const sumValue = transactionsInCategoryPerMonth.reduce((sum, item) => sum + +item.value, 0);
     data.push(Math.abs(sumValue));
-    backgroundColor.push(color);
+    backgroundColor.push(category?.color || '#636363');
   }
 
-  const transactionsInCategoryPerMonth = await getTransactions(
-    transactionService,
-    {
-      filter: {
-        category: { _null: true },
-        value:
-            (type === 'incoming' && { _gt: 0 })
-            || (type === 'outgoing' && { _lt: 0 }),
+  for (const category of categorys) {
+    await addDataInReturnData(category);
+  }
 
-        _and: [
-          {
-            date: {
-              _gt: startDate,
-            },
-          },
-          {
-            date: {
-              _lt: endDate,
-            },
-          },
-        ],
-      },
-    },
-  );
-
-  const sumValue = transactionsInCategoryPerMonth.reduce((sum, item) => sum + +item.value, 0);
-  data.push(Math.abs(sumValue));
-  backgroundColor.push('#636363');
+  await addDataInReturnData(null);
 
   returnData.datasets.push({
     label: null,
