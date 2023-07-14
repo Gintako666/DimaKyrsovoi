@@ -1,7 +1,7 @@
 import { FC, FormEvent, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import FileService from '~/services/file.service';
-import { useRouter } from 'next/router';
 import UploadFile from './UploadFile/UploadFile';
 
 const Form: FC = () => {
@@ -40,8 +40,8 @@ const Form: FC = () => {
         selectedFile={ selectedFile }
         setSelectedFile={ setSelectedFile }
       />
-      <button type="submit" className="upload__button button">
-        Save
+      <button type="submit" disabled={ !selectedFile } className="upload__button button">
+        Upload
       </button>
     </form>
   );
