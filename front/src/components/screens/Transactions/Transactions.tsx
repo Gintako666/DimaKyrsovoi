@@ -34,7 +34,7 @@ const Transactions: FC = memo(() => {
   const { getCategories } = CategoriesService;
   const { data: categoriesData, isLoading: isLoadingCategorys } = useFetchData(getCategories);
   const categories: ICategory[] = categoriesData?.data;
-  const renderCategorys: ICategory[] = useMemo(() => {
+  const renderCategorys: ICategory[] | null = useMemo(() => {
     if (categories) {
       return [ ...categories, {
         name: 'Uncategorized',
@@ -44,7 +44,7 @@ const Transactions: FC = memo(() => {
       } ];
     }
 
-    return [];
+    return null;
   }, [ categories ]);
 
   return (
@@ -95,7 +95,7 @@ const Transactions: FC = memo(() => {
           </div>
         </div>
         {(isLoadingTransactions || isLoadingCategorys) && <Loader />}
-        {transactions && (
+        {transactions && renderCategorys && (
           <div className="transactions__table">
             <div className="transactions__table__header">
               <span className="transactions__table__header__item">
