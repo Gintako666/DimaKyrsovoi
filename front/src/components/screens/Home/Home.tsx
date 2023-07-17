@@ -1,7 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 import { DataToChart, PieChartData } from '~/interfaces/chart.interface';
-import axiosInstance from '~/services/axiosInstance';
 import Loader from '~/components/shared/Loader/Loader';
+import useFetchData from '~/hooks/useFetchData';
+import useDirectusApi from '~/hooks/useDirectusApi';
 import LastDays from './LastDays/LastDays';
 import Chart from './Chart/Chart';
 import { ICard } from './LastDays/card.interface';
@@ -16,6 +17,13 @@ const Home: FC = () => {
       outgoingData: PieChartData,
     }
   }>();
+  const { getTransactionSummary } = useDirectusApi();
+
+  const {
+    data,
+    isLoading: transactionsLoading,
+  } = useFetchData(getTransactionSummary);
+
   useEffect(() => {
     function getMonthYearArray() {
       const currentDate = new Date();
@@ -35,9 +43,7 @@ const Home: FC = () => {
 
       return monthYearArray;
     }
-
-    async function requestToServer() {
-      const { data } = await axiosInstance.get('/transaction_summary');
+    if (data) {
       const {
         monthlyData,
         incomingTotal,
@@ -45,6 +51,7 @@ const Home: FC = () => {
         categoriesPerMonthOutgoing,
         categoriesPerMonthIncoming,
       } = data;
+
       setDataFromServer({
         chartData: {
           labels: getMonthYearArray().reverse(),
@@ -66,11 +73,9 @@ const Home: FC = () => {
         },
       });
     }
+  }, [ data ]);
 
-    requestToServer();
-  }, []);
-
-  if (!dataFromServer) {
+  if (transactionsLoading || !dataFromServer) {
     return <Loader />;
   }
 

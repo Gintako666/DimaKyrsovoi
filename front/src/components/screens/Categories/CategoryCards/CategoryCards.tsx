@@ -4,23 +4,23 @@ import Loader from '~/components/shared/Loader/Loader';
 
 import useFetchData from '~/hooks/useFetchData';
 
-import CategoriesService from '~/services/categories.service';
+import useDirectusApi from '~/hooks/useDirectusApi';
 import Items from './Items/Items';
 
 const CategoryCards: FC = () => {
-  const { getCategories } = CategoriesService;
-  const { data, isLoading, error } = useFetchData(getCategories);
-  const categories = data?.data;
+  const { getCategories } = useDirectusApi();
+  const { data: categories, isLoading, error } = useFetchData(getCategories);
 
   if (isLoading) {
     return <Loader />;
   }
+  if (error) {
+    return ':(';
+  }
   if (categories) {
     return <Items categoriesData={ categories } />;
   }
-  if (error || data?.errors) {
-    return ':(';
-  }
+
   return null;
 };
 

@@ -1,18 +1,20 @@
-import { FC, useCallback, useMemo } from 'react';
+import {
+  FC, useCallback, useMemo, useState,
+} from 'react';
 import classNames from 'classnames';
 
 import getFirstLetters from '~/utils/firstLetters.util';
 
 import { ITransaction } from '~/interfaces/transaction.interface';
 import { ICategory } from '~/interfaces/category.interface';
-import axiosInstance from '~/services/axiosInstance';
 import { amountFormater } from '~/utils/amountFormater';
 import { format } from 'fecha';
+import useDirectusApi from '~/hooks/useDirectusApi';
 
 interface ItemProps {
   transaction: ITransaction,
   category: ICategory | null
-  categorys: ICategory[]
+  categories: ICategory[]
 }
 
 const Item: FC<ItemProps> = ({
@@ -20,13 +22,19 @@ const Item: FC<ItemProps> = ({
     id, name, bank, value, type, date,
   },
   category,
-  categorys,
+  categories,
 }) => {
+  const { editCategoryInTransaction } = useDirectusApi();
   const hendleChangeCategory = useCallback((newCategory: number | null) => {
-    axiosInstance.patch(`/items/transaction/${ id }`, {
-      category: newCategory,
-    });
-  }, [ id ]);
+    editCategoryInTransaction(id, newCategory);
+  }, [ editCategoryInTransaction, id ]);
+  const [ selectCategory, setSelectCategory ] = useState(category?.id || 0);
+  const categoryColor = useMemo(
+    () => categories.find(
+      (categoryItem) => categoryItem.id === selectCategory,
+    )?.color,
+    [ categories, selectCategory ],
+  );
 
   const getContrastColor = useCallback((background: string | undefined): string => {
     if (!background) {
@@ -57,16 +65,19 @@ const Item: FC<ItemProps> = ({
         <div className="transactions__table__item__category__info">
           <select
             style={ {
-              background: `${ category?.color }`,
-              color: `${ getContrastColor(category?.color) }`,
+              background: `${ categoryColor }`,
+              color: `${ getContrastColor(categoryColor) }`,
             } }
             className="transactions__table__item__category__name"
             name=""
             id=""
-            defaultValue={ category?.id || 0 }
-            onChange={ (e) => hendleChangeCategory(+e.target.value || null) }
+            value={ selectCategory }
+            onChange={ (e) => {
+              hendleChangeCategory(+e.target.value || null);
+              setSelectCategory(+e.target.value);
+            } }
           >
-            {categorys.map((categoryItem) => (
+            {categories.map((categoryItem) => (
               <option
                 key={ categoryItem.id }
                 value={ categoryItem.id }

@@ -1,12 +1,12 @@
 import { FC, FormEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import FileService from '~/services/file.service';
+import useDirectusApi from '~/hooks/useDirectusApi';
 import UploadFile from './UploadFile/UploadFile';
 
 const Form: FC = () => {
   const [ selectedFile, setSelectedFile ] = useState<File | null>(null);
-  const { uploadFile } = FileService;
+  const { uploadFile } = useDirectusApi();
   const router = useRouter();
 
   // Handle submit
