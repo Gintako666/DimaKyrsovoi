@@ -1,11 +1,11 @@
 stages:
-  - lint
+  - test
   - build
   # - test
   # - review
   - deploy
 
-lint-job:
+test-job:
   tags:
     - test
   stage: build
