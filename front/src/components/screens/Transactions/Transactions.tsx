@@ -21,6 +21,7 @@ const Transactions: FC = memo(() => {
         (router.query.filter === '0' && { _null: true })
         || (router.query.filter && { _eq: router.query.filter })),
     },
+    sort: 'date',
   }), [ router.query.filter ]);
   const {
     data: categories,

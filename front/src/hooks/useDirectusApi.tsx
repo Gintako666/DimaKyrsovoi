@@ -50,7 +50,6 @@ const useDirectusApi = () => {
   ): Promise<{ data: ITransaction[] }> => {
     const transactions = await user.directus.items('transaction').readByQuery({
       fields: [ '*', 'category.*' ],
-      sort: 'date',
       ...filter,
     });
 
