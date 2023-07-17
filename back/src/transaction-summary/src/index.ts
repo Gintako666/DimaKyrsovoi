@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable import/no-relative-packages */
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -7,19 +8,46 @@ import moment from 'moment';
 import { Category } from '../../interfaces/Category';
 import { Transaction } from '../../interfaces/Transaction';
 
+interface PieDataset {
+  labels: string[],
+  datasets:{
+    label: string | null,
+    data: number[],
+    backgroundColor: string[],
+  }[],
+}
+
+export interface Dataset {
+  label: string,
+  data: (number | null)[],
+  borderColor: string,
+}
+
+const dateFormat = 'YYYY-MM-DDTHH:mm:ss';
+
+async function getCategorys(categoryService: any): Promise<Category[]> {
+  const categorys: Category[] = await categoryService.readByQuery({});
+  return categorys;
+}
+
+async function getTransactions(transactionService: any, query: any): Promise<Transaction[]> {
+  const transactios: Transaction[] = await transactionService.readByQuery(query);
+  return transactios;
+}
+
 async function calculateTotal(
   type: 'outgoing' | 'incoming' | 'all',
   startDate: moment.Moment | string,
   endDate: moment.Moment | string,
   transactionService: any,
-  additionalFilters: Record<string, Record<string, number | string>> = {},
+  additionalFilters: Record<string, Record<string, number | string | boolean>> = {},
 ) {
   const query = {
     filter: {
       ...(type !== 'all' && {
         value:
-      (type === 'incoming' && { _lt: 0 })
-      || (type === 'outgoing' && { _gt: 0 }),
+      (type === 'incoming' && { _gt: 0 })
+      || (type === 'outgoing' && { _lt: 0 }),
       }),
 
       ...additionalFilters,
@@ -36,11 +64,10 @@ async function calculateTotal(
           },
         },
       ],
-
     },
   };
 
-  const items: Transaction[] = await transactionService.readByQuery(query);
+  const items: Transaction[] = await getTransactions(transactionService, query);
   return items.reduce((sum: number, item) => +item.value + sum, 0);
 }
 
@@ -50,30 +77,24 @@ async function calculateMonthlyData(
   transactionService: any,
   categoryService: any,
 ) {
-  const categorys: Category[] = await categoryService.readByQuery({});
-  const returnData: {
-    label: string,
-    borderColor: string,
-    data: number[]
-  }[] = [];
+  const categorys = await getCategorys(categoryService);
+  const returnData: Dataset[] = [];
 
-  for (const category of categorys) {
-    const { id: categoryId, name, color } = category;
+  async function addValuesInReturnData(category: Category | null) {
     const monthlyData = [];
     const currentDate = moment(startDate).add(1, 'month');
     const newEndDate = endDate.add(1, 'month');
 
     while (currentDate <= newEndDate) {
-      const monthStart = currentDate.startOf('month').format('YYYY-MM-DDTHH:mm:ss');
-      const monthEnd = currentDate.endOf('month').format('YYYY-MM-DDTHH:mm:ss');
+      const monthStart = currentDate.startOf('month').format(dateFormat);
+      const monthEnd = currentDate.endOf('month').format(dateFormat);
 
-      // eslint-disable-next-line no-await-in-loop
       const allValues = await calculateTotal(
         'all',
         monthStart,
         monthEnd,
         transactionService,
-        { category: { _eq: categoryId } },
+        { category: category ? { _eq: category.id } : { _null: true } },
       );
 
       monthlyData.push(allValues);
@@ -82,11 +103,75 @@ async function calculateMonthlyData(
     }
 
     returnData.push({
-      label: name,
-      borderColor: color,
+      label: category?.name || 'Uncategorized',
+      borderColor: category?.color || '#636363',
       data: monthlyData,
     });
   }
+
+  for (const category of categorys) {
+    await addValuesInReturnData(category);
+  }
+
+  await addValuesInReturnData(null);
+
+  return returnData;
+}
+
+async function calculationCategoriesPerMonth(type: 'outgoing' | 'incoming', transactionService: any, categoryService: any) {
+  const categorys = await getCategorys(categoryService);
+  const returnData: PieDataset = {
+    labels: [ ...categorys.map((category) => category.name), 'Uncategorized' ],
+    datasets: [],
+  };
+  const startDate = moment().add(-30, 'day').format(dateFormat);
+  const endDate = moment().format(dateFormat);
+
+  const data: number[] = [];
+  const backgroundColor: string[] = [];
+
+  async function addDataInReturnData(category:Category | null) {
+    const transactionsInCategoryPerMonth = await getTransactions(
+      transactionService,
+      {
+        filter: {
+          category: category ? { _eq: category.id } : { _null: true },
+          value:
+            (type === 'incoming' && { _gt: 0 })
+            || (type === 'outgoing' && { _lt: 0 }),
+
+          _and: [
+            {
+              date: {
+                _gt: startDate,
+              },
+            },
+            {
+              date: {
+                _lt: endDate,
+              },
+            },
+          ],
+        },
+      },
+    );
+
+    const sumValue = transactionsInCategoryPerMonth.reduce((sum, item) => sum + +item.value, 0);
+    data.push(Math.abs(sumValue));
+    backgroundColor.push(category?.color || '#636363');
+  }
+
+  for (const category of categorys) {
+    await addDataInReturnData(category);
+  }
+
+  await addDataInReturnData(null);
+
+  returnData.datasets.push({
+    label: null,
+    data,
+    backgroundColor,
+  });
 
   return returnData;
 }
@@ -116,11 +201,23 @@ export default defineEndpoint(async (router, { services, getSchema }) => {
       transactionService,
       categoryService,
     );
+    const categoriesPerMonthOutgoing = await calculationCategoriesPerMonth(
+      'outgoing',
+      transactionService,
+      categoryService,
+    );
+    const categoriesPerMonthIncoming = await calculationCategoriesPerMonth(
+      'incoming',
+      transactionService,
+      categoryService,
+    );
 
     res.send({
       outgoingTotal,
       incomingTotal,
       monthlyData,
+      categoriesPerMonthOutgoing,
+      categoriesPerMonthIncoming,
     });
   });
 });

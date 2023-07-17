@@ -22,4 +22,8 @@
   &:hover {
     @apply opacity-50;
   }
+
+  &:disabled {
+    @apply opacity-50 cursor-default;
+  }
 }

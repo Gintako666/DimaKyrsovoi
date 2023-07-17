@@ -48,6 +48,9 @@ const AddForm: FC<AddFormProps> = ({
         onChange={ handleChange }
       />
       )}
+      <button type="submit" className="add-form__button button">
+        Save
+      </button>
     </div>
   );
 };

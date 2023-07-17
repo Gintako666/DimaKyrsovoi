@@ -1,7 +1,6 @@
 import {
-  FC, memo,
+  FC, memo, useMemo, useState,
 } from 'react';
-// import { useRouter } from 'next/router';
 
 import Loader from '~/components/shared/Loader/Loader';
 import Title from '~/components/shared/Title/Title';
@@ -9,51 +8,44 @@ import Title from '~/components/shared/Title/Title';
 import useFetchData from '~/hooks/useFetchData';
 
 import TransactionsService from '~/services/transactions.service';
+import CategoriesService from '~/services/categories.service';
 
-// import { ITransaction } from '~/interfaces/transaction.interface';
+import { ITransaction } from '~/interfaces/transaction.interface';
+import { ICategory } from '~/interfaces/category.interface';
+import { useRouter } from 'next/router';
 import TransactionsTableItems from './TransactionsTableItems/TransactionsTableItems';
 
-// import transactionsFromApi from './transactions.json';
-
 const Transactions: FC = memo(() => {
+  const router = useRouter();
+  const [ selectFilter, setSelectFilter ] = useState(router.query.filter || 'all');
   const { getTransactions } = TransactionsService;
-  const { data, isLoading, error } = useFetchData(getTransactions);
-  const transactions = data?.data;
+  const requestFilter = useMemo(() => (router.query.filter && `filter={ "category": ${
+    router.query.filter === '0'
+      ? '{"_null": true}'
+      : `{"_eq": "${ router.query.filter }"}`
+  }}`) || '', [ router.query.filter ]);
+  const {
+    data: transactionsData,
+    isLoading: isLoadingTransactions,
+    error,
+  } = useFetchData(getTransactions, `?fields=*,category.*&sort=-date&${ requestFilter }`);
+  const transactions: ITransaction[] = transactionsData?.data;
 
-  // const [ transactions, setTransactions ] = useState<ITransaction[] | null>(null);
-  // Пока нету апи используем renderTransactions, после будем использовать transactions для рендера
-  // const [ renderTransactions, setRenderTransactions ] = useState<ITransaction[]>([]);
-  // const [ selectFilter, setSelectFilter ] = useState('all');
-  // const router = useRouter();
+  const { getCategories } = CategoriesService;
+  const { data: categoriesData, isLoading: isLoadingCategorys } = useFetchData(getCategories);
+  const categories: ICategory[] = categoriesData?.data;
+  const renderCategorys: ICategory[] | null = useMemo(() => {
+    if (categories) {
+      return [ ...categories, {
+        name: 'Uncategorized',
+        id: 0,
+        color: '#636363',
+        transactions: [],
+      } ];
+    }
 
-  // useEffect(() => {
-  // Запрос на сервер
-  // setTimeout(
-  // () => {
-  // setTransactions(transactionsFromApi as ITransaction[]);
-  // },
-  // 500,
-  // );
-  // }, [ selectFilter ]);
-
-  // Убираем после того как будет апи
-  // useEffect(() => {
-  // if (transactions) {
-  // if (selectFilter !== 'all') {
-  // setRenderTransactions(transactions
-  // .filter((transaction) => (
-  // transaction.status === selectFilter
-  // || transaction.type === selectFilter
-  // )));
-  // } else {
-  // setRenderTransactions(transactions);
-  // }
-  // }
-  // }, [ selectFilter, transactions ]);
-
-  // if (!transactions) {
-  // return <Loader />;
-  // }
+    return null;
+  }, [ categories ]);
 
   return (
     <section className="transactions">
@@ -71,13 +63,14 @@ const Transactions: FC = memo(() => {
               name=""
               id=""
               className="transactions__header__filter__select"
-              // onChange={ (e) => {
-              //   const { value } = e.target;
-              //   setSelectFilter(value);
-              //   router.push({
-              //     query: value !== 'all' ? { filter: value } : {},
-              //   });
-              // } }
+              onChange={ (e) => {
+                const { value } = e.target;
+                setSelectFilter(value);
+                router.push({
+                  query: value === 'all' ? {} : { filter: value },
+                });
+              } }
+              value={ selectFilter }
             >
               <option
                 className="transactions__header__filter__option"
@@ -85,53 +78,40 @@ const Transactions: FC = memo(() => {
               >
                 All
               </option>
-              <option
-                className="transactions__header__filter__option"
-                value="Paid"
-              >
-                Paid
-              </option>
-              <option
-                className="transactions__header__filter__option"
-                value="Pending"
-              >
-                Pending
-              </option>
-              <option
-                className="transactions__header__filter__option"
-                value="Rejected"
-              >
-                Rejected
-              </option>
-              <option
-                className="transactions__header__filter__option"
-                value="Bank transaction"
-              >
-                Bank transaction
-              </option>
-              <option
-                className="transactions__header__filter__option"
-                value="Credit card"
-              >
-                Credit card
-              </option>
+              {renderCategorys?.map((category) => {
+                const { id, name } = category;
+
+                return (
+                  <option
+                    key={ id }
+                    className="transactions__header__filter__option"
+                    value={ id }
+                  >
+                    {name}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>
-        {isLoading && <Loader />}
-        {!isLoading && transactions && (
-        <div className="transactions__table">
-          <div className="transactions__table__header">
-            <span className="transactions__table__header__item">transactions</span>
-            <span className="transactions__table__header__item">category</span>
-            <span className="transactions__table__header__item">type</span>
-            <span className="transactions__table__header__item">status</span>
-            <span className="transactions__table__header__item">amount</span>
+        {(isLoadingTransactions || isLoadingCategorys) && <Loader />}
+        {transactions && renderCategorys && (
+          <div className="transactions__table">
+            <div className="transactions__table__header">
+              <span className="transactions__table__header__item">
+                transactions
+              </span>
+              <span className="transactions__table__header__item">
+                category
+              </span>
+              <span className="transactions__table__header__item">type</span>
+              <span className="transactions__table__header__item">amount</span>
+              <span className="transactions__table__header__item">date</span>
+            </div>
+            <TransactionsTableItems transactions={ transactions } categorys={ renderCategorys } />
           </div>
-          <TransactionsTableItems transactions={ transactions } />
-        </div>
         )}
-        {(error || data?.errors) && ':('}
+        {(error || transactionsData?.errors) && ':('}
       </div>
     </section>
   );

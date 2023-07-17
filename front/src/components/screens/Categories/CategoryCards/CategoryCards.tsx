@@ -15,8 +15,8 @@ const CategoryCards: FC = () => {
   if (isLoading) {
     return <Loader />;
   }
-  if (!isLoading && categories) {
-    return <Items categories={ categories } />;
+  if (categories) {
+    return <Items categoriesData={ categories } />;
   }
   if (error || data?.errors) {
     return ':(';

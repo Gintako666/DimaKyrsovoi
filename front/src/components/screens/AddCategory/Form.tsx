@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { FC, FormEvent } from 'react';
 
 import AddForm from '~/components/shared/AddForm/AddForm';
@@ -8,6 +9,7 @@ import CategoriesService from '~/services/categories.service';
 
 const Form: FC = () => {
   const { name, color, handleChange } = useAddForm();
+  const router = useRouter();
 
   // Handle submit
   interface IHandleSubmit {
@@ -18,8 +20,11 @@ const Form: FC = () => {
 
     if (name) {
       const { addCategory } = CategoriesService;
+
       addCategory({ name, color });
       handleChange({ target: { id: 'name', value: '' } });
+
+      router.push('/categories');
     } else {
       alert('Enter category name!');
     }
@@ -34,9 +39,6 @@ const Form: FC = () => {
         color={ color }
         onChange={ handleChange }
       />
-      <button className="add-category__button button" type="submit">
-        Save
-      </button>
     </form>
   );
 };
