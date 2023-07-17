@@ -62,15 +62,15 @@ const useDirectusApi = () => {
     return updateCategory;
   }, [ user.directus ]);
 
-  const getTransactionSummary = useCallback(async (): Promise<{
+  const getTransactionSummary = useCallback(async (): Promise<{ data: {
     categoriesPerMonthIncoming: PieChartData
     categoriesPerMonthOutgoing: PieChartData
     incomingTotal: number
     outgoingTotal: number
     monthlyData: Dataset[]
-  }> => {
+  } }> => {
     const transactionSummary = (await user.directus.transport.get('/transaction_summary')).raw;
-    return transactionSummary;
+    return { data: transactionSummary };
   }, [ user.directus.transport ]);
 
   const uploadFile = useCallback(async (file: FormData) => {
