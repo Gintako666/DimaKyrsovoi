@@ -11,7 +11,7 @@ const Form: FC = () => {
   const [ password, setPassword ] = useState('');
 
   const [ isUsernameErr, setIsUsernameErr ] = useState(false);
-  const [ isInputErr, setIsInputErr ] = useState(false);
+  const [ isPasswordErr, setIsPasswordErr ] = useState(false);
 
   const { login } = useUser();
 
@@ -36,8 +36,11 @@ const Form: FC = () => {
 
     try {
       await login(username, password);
-      // router.push('/');
-    } catch (err: any) {
+    } catch (
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+      err: any
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    ) {
       const errMessage = err.message;
 
       switch (errMessage) {
@@ -45,17 +48,24 @@ const Form: FC = () => {
         case '"email" must be a valid email':
           setIsUsernameErr(true);
 
-          if (isInputErr) {
-            setIsInputErr(false);
+          if (setIsPasswordErr) {
+            setIsPasswordErr(true);
           }
           break;
 
-        case 'Invalid user credentials.':
-          setIsInputErr(true);
+        case '"password" is not allowed to empty':
+          setIsPasswordErr(true);
+
+          if (isUsernameErr) {
+            setIsUsernameErr(false);
+          }
           break;
 
+        // case 'Invalid user credentials.':
         default:
-          alert(err);
+          setIsUsernameErr(true);
+          setIsPasswordErr(true);
+          break;
       }
     }
   };
@@ -73,14 +83,14 @@ const Form: FC = () => {
     <form action="#" className="login__form" onSubmit={ handleSubmit }>
       <h1 className="login__title">Login</h1>
       <input
-        className={ ` ${ getModifierClassName(isInputErr, 'login__input') } ${ getModifierClassName(isUsernameErr, 'login__input_username') }` }
+        className={ ` 'login__input' ${ getModifierClassName(isUsernameErr, 'login__input_username') }` }
         type="text"
         placeholder="Username"
         value={ username }
         onChange={ handleChange }
       />
       <input
-        className={ `${ getModifierClassName(isInputErr, 'login__input') } login__input_password` }
+        className={ `'login__input' ${ getModifierClassName(isPasswordErr, 'login__input_password') }` }
         type="password"
         placeholder="Password"
         value={ password }

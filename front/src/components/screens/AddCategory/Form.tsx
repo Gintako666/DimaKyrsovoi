@@ -25,8 +25,6 @@ const Form: FC = () => {
       handleChange({ target: { id: 'name', value: '' } });
 
       router.push('/categories');
-    } else {
-      alert('Enter category name!');
     }
   };
 

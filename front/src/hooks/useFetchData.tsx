@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 
 export interface IUseFetchDataResult {
+  /*  eslint-disable @typescript-eslint/no-explicit-any */
   data: any;
+  /*  eslint-disable @typescript-eslint/no-explicit-any */
   isLoading: boolean;
   error: string;
 }
@@ -16,7 +18,9 @@ interface IUseFetchData {
 }
 
 const useFetchData: IUseFetchData = (request, searchParams = '') => {
+  // eslint-disable @typescript-eslint/no-explicit-any
   const [ data, setData ] = useState<any>(null);
+  // eslint-disable @typescript-eslint/no-explicit-any
   const [ isLoading, setIsLoading ] = useState(true);
   const [ error, setError ] = useState('');
 
@@ -26,7 +30,11 @@ const useFetchData: IUseFetchData = (request, searchParams = '') => {
         const response = await request(searchParams);
 
         setData(response.data);
-      } catch (err: any) {
+      } catch (
+        /*  eslint-disable @typescript-eslint/no-explicit-any */
+        err: any
+        /*  eslint-disable @typescript-eslint/no-explicit-any */
+      ) {
         setError(err.message);
       } finally {
         setIsLoading(false);

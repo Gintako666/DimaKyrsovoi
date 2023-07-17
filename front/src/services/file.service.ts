@@ -7,8 +7,9 @@ const FileService = {
     try {
       await axiosInstance.post(PATH, file);
     } catch (err) {
-      alert(err);
-      throw err;
+      /* eslint-disable no-console */
+      console.log(err);
+      /* eslint-disable no-console */
     }
   },
 };
