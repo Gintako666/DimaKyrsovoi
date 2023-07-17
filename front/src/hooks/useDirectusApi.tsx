@@ -13,7 +13,7 @@ const useDirectusApi = () => {
   } = useUser();
   const getCategories = useCallback(async (
     withUncategorized = false,
-  ): Promise<ICategory[]> => {
+  ): Promise<{ data: ICategory[] }> => {
     const categories = await user.directus.items('category').readByQuery({
       fields: '*',
     });
@@ -27,7 +27,7 @@ const useDirectusApi = () => {
       });
     }
 
-    return categories.data as ICategory[];
+    return categories as { data: ICategory[] };
   }, [ user.directus ]);
 
   const addCategory = useCallback(async (category: Pick<ICategory, 'name' | 'color'>) => {
@@ -47,14 +47,14 @@ const useDirectusApi = () => {
 
   const getTransactions = useCallback(async (
     filter?: { filter: any },
-  ): Promise<ITransaction[]> => {
+  ): Promise<{ data: ITransaction[] }> => {
     const transactions = await user.directus.items('transaction').readByQuery({
       fields: [ '*', 'category.*' ],
       sort: 'date',
       ...filter,
     });
 
-    return transactions.data as ITransaction[];
+    return transactions as { data: ITransaction[] };
   }, [ user.directus ]);
 
   const editCategoryInTransaction = useCallback(async (id: number, newCategory: number | null) => {

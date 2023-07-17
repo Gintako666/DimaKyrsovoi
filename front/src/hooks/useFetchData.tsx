@@ -7,7 +7,7 @@ export interface IUseFetchDataResult<T> {
 }
 
 function useFetchData <T>(
-  request: (params: any) => Promise<T>,
+  request: (params: any) => Promise<{ data: T }>,
   params?: any,
 ): IUseFetchDataResult<T> {
   const [ data, setData ] = useState<T | null>(null);
@@ -19,7 +19,7 @@ function useFetchData <T>(
       try {
         const response = await request(params);
 
-        setData(response);
+        setData(response.data);
       } catch (err: any) {
         setError(err.message);
       } finally {
