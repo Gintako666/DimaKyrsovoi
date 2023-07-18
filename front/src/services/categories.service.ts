@@ -12,8 +12,9 @@ const CategoriesService = {
     try {
       await axiosInstance.post(PATH, category);
     } catch (err) {
-      alert(err);
-      throw err;
+      /* eslint-disable no-console */
+      console.log(err);
+      /* eslint-disable no-console */
     }
   },
 
@@ -21,8 +22,9 @@ const CategoriesService = {
     try {
       await axiosInstance.delete(`${ PATH }/${ id }`);
     } catch (err) {
-      alert(err);
-      throw err;
+      /* eslint-disable no-console */
+      console.log(err);
+      /* eslint-disable no-console */
     }
   },
 
@@ -31,8 +33,9 @@ const CategoriesService = {
       const { id } = editedCategory;
       await axiosInstance.patch(`${ PATH }/${ id }`, editedCategory);
     } catch (err) {
-      alert(err);
-      throw err;
+      /* eslint-disable no-console */
+      console.log(err);
+      /* eslint-disable no-console */
     }
   },
 };

@@ -29,8 +29,6 @@ const Form: FC = () => {
       await uploadFile(formData);
       setSelectedFile(null);
       router.push('/transactions');
-    } else {
-      alert('Upload a file!');
     }
   };
 
