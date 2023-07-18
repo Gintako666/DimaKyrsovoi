@@ -49,7 +49,7 @@ const useDirectusApi = () => {
     filter?: { filter: any },
   ): Promise<{ data: ITransaction[] }> => {
     const transactions = await user.directus.items('transaction').readByQuery({
-      fields: [ '*', 'category.*' ],
+      fields: [ '*', 'category.*', 'file.*' ],
       ...filter,
     });
 

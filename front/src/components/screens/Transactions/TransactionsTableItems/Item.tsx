@@ -19,7 +19,7 @@ interface ItemProps {
 
 const Item: FC<ItemProps> = ({
   transaction: {
-    id, name, bank, value, type, date,
+    id, name, bank, value, date, file,
   },
   category,
   categories,
@@ -89,8 +89,8 @@ const Item: FC<ItemProps> = ({
         </div>
       </div>
       <div className="transactions__table__item__type">
-        <p className="transactions__table__item__media">Type: </p>
-        {type}
+        <p className="transactions__table__item__media">File: </p>
+        {file?.name || 'no file'}
       </div>
       <div className="transactions__table__item__amount">
         <p className="transactions__table__item__media">Amount: </p>
