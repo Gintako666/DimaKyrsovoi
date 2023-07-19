@@ -3,11 +3,11 @@ import { Dispatch, FC, SetStateAction } from 'react';
 import Popup from '~/components/base/Popup/Popup';
 import Img from '~/components/base/Img/Img';
 
+import CategoriesService from '~/services/categories.service';
+
 import { ICategory } from '~/interfaces/category.interface';
 
 import bin from '~/assets/img/icons/bin.svg';
-import useDirectusApi from '~/hooks/useDirectusApi';
-// import CategoriesService from '~/services/categories.service';
 
 interface DeleteProps {
   category: ICategory,
@@ -25,7 +25,7 @@ const Delete: FC<DeleteProps> = ({
     alt: 'Remove',
   };
 
-  const { deleteCategory } = useDirectusApi();
+  const { deleteCategory } = CategoriesService;
 
   const button = <Img className="category-cards" img={ img } />;
 
