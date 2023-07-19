@@ -1,20 +1,27 @@
 import {
   FC, memo, useMemo, useState,
 } from 'react';
+import { useRouter } from 'next/router';
 
 import Loader from '~/components/shared/Loader/Loader';
 import Title from '~/components/shared/Title/Title';
 
 import useFetchData from '~/hooks/useFetchData';
 
-import { useRouter } from 'next/router';
-import useDirectusApi from '~/hooks/useDirectusApi';
+import CategoriesService from '~/services/categories.service';
+import TransactionsService from '~/services/transactions.service';
+
+import { ICategory } from '~/interfaces/category.interface';
+import { ITransaction } from '~/interfaces/transaction.interface';
 import TransactionsTableItems from './TransactionsTableItems/TransactionsTableItems';
 
 const Transactions: FC = memo(() => {
   const router = useRouter();
   const [ selectFilter, setSelectFilter ] = useState(router.query.filter || 'all');
-  const { getTransactions, getCategories } = useDirectusApi();
+
+  const { getCategories } = CategoriesService;
+  const { getTransactions } = TransactionsService;
+
   const transactionsFilter = useMemo(() => ({
     filter: {
       category: (
@@ -23,16 +30,23 @@ const Transactions: FC = memo(() => {
     },
     sort: 'date',
   }), [ router.query.filter ]);
+
   const {
-    data: categories,
+    data: categoriesData,
     isLoading: categoriesLoading,
     error: categoriesError,
-  } = useFetchData(getCategories, true);
+  } = useFetchData(getCategories);
+  const categories: ICategory[] = categoriesData?.data;
+
   const {
-    data: transactions,
+    data: transactionsData,
     isLoading: transactionsLoading,
     error: transactionsError,
-  } = useFetchData(getTransactions, transactionsFilter);
+  } = useFetchData<{ data: ITransaction[] }>(
+    getTransactions,
+    transactionsFilter,
+  );
+  const transactions = transactionsData?.data;
 
   return (
     <section className="transactions">

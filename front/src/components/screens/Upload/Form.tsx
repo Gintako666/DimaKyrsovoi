@@ -1,13 +1,14 @@
 import { FC, FormEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import useDirectusApi from '~/hooks/useDirectusApi';
+import FileService from '~/services/file.service';
 import UploadFile from './UploadFile/UploadFile';
 
 const Form: FC = () => {
   const [ selectedFile, setSelectedFile ] = useState<File | null>(null);
-  const { uploadFile } = useDirectusApi();
-  const router = useRouter();
+  const { push } = useRouter();
+
+  const { uploadFile } = FileService;
 
   // Handle submit
   interface IHandleSubmit {
@@ -19,21 +20,24 @@ const Form: FC = () => {
 
     const formData = new FormData();
 
-    try {
-      if (selectedFile) {
+    if (selectedFile) {
+      const { name } = selectedFile;
+
+      try {
         formData.append(
           'file',
           selectedFile,
-          selectedFile.name,
+          name,
         );
 
         await uploadFile(formData);
+
         setSelectedFile(null);
-        router.push('/transactions');
+        push('/transactions');
+      } catch (error) {
+      /* eslint-disable-next-line no-alert */
+        alert(`Incorrect file format. We can't recognize data structure in file: ${ name }`);
       }
-    } catch (error) {
-      // eslint-disable-next-line no-alert
-      alert(`Incorrect file format. We can't recognize data structure in file: ${ selectedFile?.name }`);
     }
   };
 

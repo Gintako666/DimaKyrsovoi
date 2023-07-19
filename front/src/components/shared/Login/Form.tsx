@@ -39,7 +39,6 @@ const Form: FC = () => {
     } catch (
       /* eslint-disable @typescript-eslint/no-explicit-any */
       err: any
-      /* eslint-disable @typescript-eslint/no-explicit-any */
     ) {
       if (!username && !password) {
         setIsUsernameErr(true);
