@@ -13,7 +13,7 @@ const CategoryCards: FC = () => {
   const { getCategories } = CategoriesService;
   const { data, isLoading, error } = useFetchData(getCategories);
 
-  const categories: ICategory[] | null = data?.data;
+  const categories: ICategory[] | null | undefined = data?.data;
 
   if (isLoading) {
     return <Loader />;
