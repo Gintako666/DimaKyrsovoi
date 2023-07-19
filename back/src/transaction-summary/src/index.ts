@@ -25,9 +25,9 @@ export interface Dataset {
 
 const dateFormat = 'YYYY-MM-DDTHH:mm:ss';
 
-async function getCategorys(categoryService: any): Promise<Category[]> {
-  const categorys: Category[] = await categoryService.readByQuery({});
-  return categorys;
+async function getCategories(categoryService: any): Promise<Category[]> {
+  const categories: Category[] = await categoryService.readByQuery({});
+  return categories;
 }
 
 async function getTransactions(transactionService: any, query: any): Promise<Transaction[]> {
@@ -77,7 +77,7 @@ async function calculateMonthlyData(
   transactionService: any,
   categoryService: any,
 ) {
-  const categorys = await getCategorys(categoryService);
+  const categories = await getCategories(categoryService);
   const returnData: Dataset[] = [];
 
   async function addValuesInReturnData(category: Category | null) {
@@ -109,7 +109,7 @@ async function calculateMonthlyData(
     });
   }
 
-  for (const category of categorys) {
+  for (const category of categories) {
     await addValuesInReturnData(category);
   }
 
@@ -119,9 +119,9 @@ async function calculateMonthlyData(
 }
 
 async function calculationCategoriesPerMonth(type: 'outgoing' | 'incoming', transactionService: any, categoryService: any) {
-  const categorys = await getCategorys(categoryService);
+  const categories = await getCategories(categoryService);
   const returnData: PieDataset = {
-    labels: [ ...categorys.map((category) => category.name), 'Uncategorized' ],
+    labels: [ ...categories.map((category) => category.name), 'Uncategorized' ],
     datasets: [],
   };
   const startDate = moment().add(-30, 'day').format(dateFormat);
@@ -161,7 +161,7 @@ async function calculationCategoriesPerMonth(type: 'outgoing' | 'incoming', tran
     backgroundColor.push(category?.color || '#636363');
   }
 
-  for (const category of categorys) {
+  for (const category of categories) {
     await addDataInReturnData(category);
   }
 
