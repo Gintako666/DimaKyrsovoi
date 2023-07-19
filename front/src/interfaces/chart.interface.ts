@@ -1,12 +1,17 @@
 export interface Dataset {
   label: string,
   data: (number | null)[],
-  borderColor: string,
+  backgroundColor: string,
 }
 
 export interface DataToChart {
   labels: string[];
   datasets: Dataset[];
+}
+
+export interface BarChartData {
+  labels: string[],
+  datasets:Dataset[],
 }
 
 export interface PieChartData {
