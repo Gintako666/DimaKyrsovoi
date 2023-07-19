@@ -5,7 +5,7 @@ import { ICategory } from '~/interfaces/category.interface';
 const PATH = 'category';
 
 const CategoriesService = {
-  async getCategories(): Promise<{ data: ICategory[] }> {
+  async getCategories() {
     return directus.items(PATH).readByQuery();
   },
 
