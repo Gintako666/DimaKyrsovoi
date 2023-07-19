@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable import/no-relative-packages */
@@ -16,18 +17,20 @@ interface PieDataset {
     backgroundColor: string[],
   }[],
 }
-
-export interface Dataset {
-  label: string,
-  data: (number | null)[],
-  borderColor: string,
+interface BarDataset {
+  labels: string[],
+  datasets:{
+    label: string,
+    data: number[],
+    backgroundColor: string,
+  }[],
 }
 
 const dateFormat = 'YYYY-MM-DDTHH:mm:ss';
 
-async function getCategorys(categoryService: any): Promise<Category[]> {
-  const categorys: Category[] = await categoryService.readByQuery({});
-  return categorys;
+async function getCategories(categoryService: any): Promise<Category[]> {
+  const categories: Category[] = await categoryService.readByQuery({});
+  return categories;
 }
 
 async function getTransactions(transactionService: any, query: any): Promise<Transaction[]> {
@@ -77,51 +80,80 @@ async function calculateMonthlyData(
   transactionService: any,
   categoryService: any,
 ) {
-  const categorys = await getCategorys(categoryService);
-  const returnData: Dataset[] = [];
+  const categories = [ ...(await getCategories(categoryService)), {
+    name: 'Uncategorized',
+    id: 0,
+    color: '#636363',
+  } ];
+  function getMonthYearArray() {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
 
-  async function addValuesInReturnData(category: Category | null) {
-    const monthlyData = [];
-    const currentDate = moment(startDate).add(1, 'month');
-    const newEndDate = endDate.add(1, 'month');
+    const monthYearArray = [];
 
-    while (currentDate <= newEndDate) {
-      const monthStart = currentDate.startOf('month').format(dateFormat);
-      const monthEnd = currentDate.endOf('month').format(dateFormat);
+    for (let i = 0; i < 12; i += 1) {
+      const year = currentYear + Math.floor((currentMonth - i) / 12);
+      const month = (currentMonth - i + 12) % 12;
+      const monthName = new Date(year, month).toLocaleString('en-us', { month: 'long' });
+      const formattedMonthYear = `${ monthName } ${ year }`;
 
-      const allValues = await calculateTotal(
-        'all',
+      monthYearArray.push(formattedMonthYear);
+    }
+
+    return monthYearArray;
+  }
+  const returnData: BarDataset = {
+    labels: getMonthYearArray().reverse(),
+    datasets: [ ...categories.map((category) => ({
+      label: category.name,
+      backgroundColor: category.color,
+      data: [],
+    })), {
+      label: 'Total',
+      backgroundColor: '#98FAA5',
+      data: [],
+    } ],
+  };
+
+  const newEndDate = endDate.add(1, 'month');
+  const currentDate = moment(startDate).add(1, 'month');
+
+  while (currentDate <= newEndDate) {
+    const monthStart = currentDate.startOf('month').format(dateFormat);
+    const monthEnd = currentDate.endOf('month').format(dateFormat);
+
+    for (const category of categories) {
+      const outgoingValues = await calculateTotal(
+        'outgoing',
         monthStart,
         monthEnd,
         transactionService,
-        { category: category ? { _eq: category.id } : { _null: true } },
+        { category: category.id ? { _eq: category.id } : { _null: true } },
       );
 
-      monthlyData.push(allValues);
-
-      currentDate.add(1, 'month');
+      returnData.datasets.find((item) => item.label === category.name)?.data.push(outgoingValues);
     }
 
-    returnData.push({
-      label: category?.name || 'Uncategorized',
-      borderColor: category?.color || '#636363',
-      data: monthlyData,
-    });
-  }
+    const incomingValues = await calculateTotal(
+      'incoming',
+      monthStart,
+      monthEnd,
+      transactionService,
+    );
 
-  for (const category of categorys) {
-    await addValuesInReturnData(category);
-  }
+    returnData.datasets.find((item) => item.label === 'Total')?.data.push(incomingValues);
 
-  await addValuesInReturnData(null);
+    currentDate.add(1, 'month');
+  }
 
   return returnData;
 }
 
 async function calculationCategoriesPerMonth(type: 'outgoing' | 'incoming', transactionService: any, categoryService: any) {
-  const categorys = await getCategorys(categoryService);
+  const categories = await getCategories(categoryService);
   const returnData: PieDataset = {
-    labels: [ ...categorys.map((category) => category.name), 'Uncategorized' ],
+    labels: [ ...categories.map((category) => category.name), 'Uncategorized' ],
     datasets: [],
   };
   const startDate = moment().add(-30, 'day').format(dateFormat);
@@ -161,7 +193,7 @@ async function calculationCategoriesPerMonth(type: 'outgoing' | 'incoming', tran
     backgroundColor.push(category?.color || '#636363');
   }
 
-  for (const category of categorys) {
+  for (const category of categories) {
     await addDataInReturnData(category);
   }
 

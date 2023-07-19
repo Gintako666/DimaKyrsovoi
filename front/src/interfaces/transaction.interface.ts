@@ -1,4 +1,5 @@
 import { ICategory } from './category.interface';
+import { IFile } from './file.interface';
 
 export interface ITransaction {
   id: number;
@@ -10,4 +11,5 @@ export interface ITransaction {
   value: string;
   type: string;
   status: string;
+  file: IFile;
 }

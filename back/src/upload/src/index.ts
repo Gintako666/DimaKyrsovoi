@@ -7,6 +7,7 @@ import * as xlsx from 'xlsx';
 import fs from 'fs';
 import moment from 'moment';
 import { StatusType, Transaction } from '../../interfaces/Transaction';
+import { File } from '../../interfaces/File';
 
 const format = 'YYYY-MM-DDTHH:mm:ss';
 const upload = multer({ dest: 'uploads/' });
@@ -37,7 +38,7 @@ const settings = [
   {
     columns: [ 'Name', 'Typ', 'Währung', 'Netto', 'Status', 'Datum', 'Uhrzeit' ],
     startRow: 1,
-    mapParser: (item: TransactionFromFile): Transaction => {
+    mapParser: (item: TransactionFromFile, file: File): Transaction => {
       let date: string | Date = moment(`${ item.Datum } ${ item.Uhrzeit }`, 'DD.MM.YYYY HH:mm:ss').format(format);
 
       if (date === 'Invalid date') {
@@ -48,11 +49,12 @@ const settings = [
         name: item.Name,
         type: item.Typ,
         currency: item['Währung'],
-        value: parseFloat(`${ item.Netto }`.replace(/./, '').replace(',', '.')),
+        value: +(`${ item.Netto }`.replace(/\./g, '')) / 100,
         status: statusType[item.Status as 'Abgelehnt' | 'Abgeschlossen' | 'Ausstehend'] || null,
         bank: null,
         category: null,
         date,
+        file,
       });
     },
   },
@@ -61,7 +63,7 @@ const settings = [
   {
     columns: [ 'Buchungsdatum', 'Betrag', 'Währung' ],
     startRow: 3,
-    mapParser: (item: TransactionFromFile): Transaction => {
+    mapParser: (item: TransactionFromFile, file: File): Transaction => {
       const date = new Date(startDate.getTime() + (item.Buchungsdatum - 1) * millisecondsInDay);
       return {
         name: null,
@@ -72,6 +74,7 @@ const settings = [
         bank: null,
         category: null,
         date,
+        file,
       };
     },
   },
@@ -80,15 +83,16 @@ const settings = [
   {
     columns: [ 'Betrag', 'Partnername', 'Währung', 'Buchungsdatum' ],
     startRow: 4,
-    mapParser: (item: TransactionFromFile): Transaction => ({
-      name: null,
+    mapParser: (item: TransactionFromFile, file: File): Transaction => ({
+      name: item.Partnername,
       type: null,
       currency: item['Währung'],
       value: item.Betrag,
       status: null,
-      bank: item.Partnername,
+      bank: null,
       category: null,
       date: item.Buchungsdatum,
+      file,
     }),
 
   },
@@ -96,7 +100,7 @@ const settings = [
   {
     columns: [ 'Betrag', 'Datum' ],
     startRow: 7,
-    mapParser: (item: TransactionFromFile): Transaction => {
+    mapParser: (item: TransactionFromFile, file: File): Transaction => {
       const dateParts = `${ item.Datum }`.split('/').reverse().map((datePart) => +datePart);
       dateParts[1] = parseInt(`${ dateParts[1] }`, 10) - 1;
       dateParts[2] = parseInt(`${ dateParts[2] }`, 10) + 1;
@@ -111,17 +115,17 @@ const settings = [
         bank: null,
         category: null,
         date,
+        file,
       });
     },
   },
 ];
 
 export default defineEndpoint(async (router, { services, getSchema }) => {
-  const { ItemsService } = services;
-  const schema = await getSchema();
-
   router.post('/', upload.single('file'), async (req: Request, res:Response) => {
     const { file } = req;
+    const { ItemsService } = services;
+    const schema = await getSchema();
 
     if (!file) {
       res.status(400).send('Файл не найден');
@@ -160,7 +164,17 @@ export default defineEndpoint(async (router, { services, getSchema }) => {
         schema,
       });
 
-      const items = await transactionService.createMany(transactions.map(correctSetting.mapParser));
+      const fileService = new ItemsService('file', {
+        schema,
+      });
+
+      const newFile = await fileService.createOne({
+        name: file.originalname,
+      });
+
+      const items = await transactionService.createMany(
+        transactions.map((item) => correctSetting.mapParser(item, newFile)),
+      );
       res.status(201).send(items);
     } catch (error) {
       console.log(error);

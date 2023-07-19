@@ -6,7 +6,8 @@ import Img from '~/components/base/Img/Img';
 import { ICategory } from '~/interfaces/category.interface';
 
 import bin from '~/assets/img/icons/bin.svg';
-import CategoriesService from '~/services/categories.service';
+import useDirectusApi from '~/hooks/useDirectusApi';
+// import CategoriesService from '~/services/categories.service';
 
 interface DeleteProps {
   category: ICategory,
@@ -24,10 +25,12 @@ const Delete: FC<DeleteProps> = ({
     alt: 'Remove',
   };
 
+  const { deleteCategory } = useDirectusApi();
+
   const button = <Img className="category-cards" img={ img } />;
 
   const handleDeleteOnClick = async () => {
-    await CategoriesService.deleteCategory(id);
+    await deleteCategory(id);
     setDeletedCategoryId(id);
   };
 

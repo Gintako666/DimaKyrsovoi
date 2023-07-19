@@ -3,30 +3,31 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { DataToChart } from '~/interfaces/chart.interface';
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
 );
 
-export const options = {
+const options = {
   responsive: true,
-  plugins: {
-    legend: {
-      position: 'top' as const,
+  scales: {
+    x: {
+      stacked: true,
+    },
+    y: {
+      stacked: true,
     },
   },
 };
@@ -35,9 +36,8 @@ type Props = {
   data: DataToChart
 };
 
-export const LineChart: React.FC<Props> = ({ data }) => (
-  <Line
-    options={ options }
-    data={ data }
-  />
+const BarChart: React.FC<Props> = ({ data }) => (
+  <Bar options={ options } data={ data } />
 );
+
+export default BarChart;

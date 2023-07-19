@@ -1,3 +1,5 @@
+import { File } from './File';
+
 export type StatusType = 'Paid' | 'Pending' | 'Rejected';
 
 export interface Transaction {
@@ -9,4 +11,5 @@ export interface Transaction {
   bank: string | null,
   category: string | null,
   date: string | Date | number,
+  file: File
 }
