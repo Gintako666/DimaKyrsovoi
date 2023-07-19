@@ -1,9 +1,12 @@
 import { useState } from 'react';
 
+interface ITarget {
+  id: string;
+  value: string;
+}
+
 export interface IHandleChange {
-  ({
-    target: { id, value },
-  }: any): void;
+  (e: { target: ITarget }): void;
 }
 
 interface IUseAddForm {

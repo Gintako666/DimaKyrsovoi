@@ -35,7 +35,9 @@
       &__category {
         &__name {
           @apply font-medium text-base rounded-lg p-1;
+
           outline: none;
+
           // -moz-appearance:none; /* Firefox */
           // -webkit-appearance:none; /* Safari and Chrome */
           // appearance:none;
@@ -43,6 +45,7 @@
 
           option {
             @apply bg-white;
+
             color: $gray;
           }
         }
@@ -77,24 +80,24 @@
       &__amount {
         &__info {
           @apply px-3 py-0.5 w-min h-min rounded-lg font-medium;
-          
-          &:before {
-            @apply pr-1
+
+          &::before {
+            @apply pr-1;
           }
 
           &--outgoing {
-            @apply bg-yellow-100 text-yellow-600;
+            @apply bg-red-100 text-red-600;
 
-            &:before {
-              content: '↑'
+            &::before {
+              content: "↑";
             }
           }
 
           &--incoming {
-            @apply  bg-blue-100 text-blue-600;
+            @apply bg-green-100 text-green-600;
 
-            &:before {
-              content: '↓'
+            &::before {
+              content: "↓";
             }
           }
         }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 
 export interface IUseFetchDataResult<T> {
@@ -20,7 +21,9 @@ function useFetchData <T>(
         const response = await request(params);
 
         setData(response.data);
-      } catch (err: any) {
+      } catch (
+        err: any
+      ) {
         setError(err.message);
       } finally {
         setIsLoading(false);
