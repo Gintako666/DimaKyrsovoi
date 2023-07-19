@@ -1,7 +1,8 @@
 import { FC } from 'react';
 
-import handleClassName from '~/utils/className.util';
 import { IHandleChange } from '~/hooks/useAddForm';
+
+import handleClassName from '~/utils/className.util';
 import Name from './Name';
 import Description from './Description';
 import Color from './Color';
@@ -23,7 +24,7 @@ const AddForm: FC<AddFormProps> = ({
   name,
   description,
   color,
-  onChange: handleChange,
+  onChange,
 }) => {
   const modifiedClassName = handleClassName(
     !!modifier,
@@ -33,19 +34,19 @@ const AddForm: FC<AddFormProps> = ({
 
   return (
     <div className={ `${ modifiedClassName } add-form` }>
-      <Name type={ type } name={ name } onChange={ handleChange } />
+      <Name type={ type } name={ name } onChange={ onChange } />
       {(typeof description === 'string') && (
       <Description
         type={ type }
         description={ description }
-        onChange={ handleChange }
+        onChange={ onChange }
       />
       )}
       {(typeof color === 'string') && (
       <Color
         type={ type }
         color={ color }
-        onChange={ handleChange }
+        onChange={ onChange }
       />
       )}
       <button type="submit" className="add-form__button button">

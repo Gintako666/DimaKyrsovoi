@@ -20,7 +20,11 @@ function useFetchData <T>(
         const response = await request(params);
 
         setData(response.data);
-      } catch (err: any) {
+      } catch (
+        /*  eslint-disable @typescript-eslint/no-explicit-any */
+        err: any
+        /*  eslint-disable @typescript-eslint/no-explicit-any */
+      ) {
         setError(err.message);
       } finally {
         setIsLoading(false);

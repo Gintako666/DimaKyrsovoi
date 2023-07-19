@@ -49,14 +49,20 @@ const UploadFile: FC<FileProps> = ({ selectedFile, setSelectedFile }) => {
         ].includes(type)
         && !name.endsWith('.numbers')
       ) {
+        /* eslint-disable no-alert */
         alert('File type must be CSV, XLSX or NUMBERS!');
+        /* eslint-disable no-alert */
+
         setSelectedFile(null);
         return;
       }
 
       // Checking the size of the file
       if (size > 10 * 1024 * 1024) {
+        /* eslint-disable no-alert */
         alert('File size should not exceed 10MB!');
+        /* eslint-disable no-alert */
+
         setSelectedFile(null);
         return;
       }
@@ -100,7 +106,7 @@ const UploadFile: FC<FileProps> = ({ selectedFile, setSelectedFile }) => {
           <input
             className="upload-file__input"
             type="file"
-            accept=".csv, .xlsx, .numbers, application/x-iwork-numbers-sffnumbers"
+            accept=".csv, .xlsx, .numbers"
             onChange={ handleChangeFile }
           />
         </div>
