@@ -19,16 +19,21 @@ const Form: FC = () => {
 
     const formData = new FormData();
 
-    if (selectedFile) {
-      formData.append(
-        'file',
-        selectedFile,
-        selectedFile.name,
-      );
+    try {
+      if (selectedFile) {
+        formData.append(
+          'file',
+          selectedFile,
+          selectedFile.name,
+        );
 
-      await uploadFile(formData);
-      setSelectedFile(null);
-      router.push('/transactions');
+        await uploadFile(formData);
+        setSelectedFile(null);
+        router.push('/transactions');
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-alert
+      alert(`Incorrect file format. We can't recognize data structure in file: ${ selectedFile?.name }`);
     }
   };
 
