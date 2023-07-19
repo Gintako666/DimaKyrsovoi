@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 
 export interface IUseFetchDataResult<T> {
@@ -21,9 +22,7 @@ function useFetchData <T>(
 
         setData(response.data);
       } catch (
-        /*  eslint-disable @typescript-eslint/no-explicit-any */
         err: any
-        /*  eslint-disable @typescript-eslint/no-explicit-any */
       ) {
         setError(err.message);
       } finally {
