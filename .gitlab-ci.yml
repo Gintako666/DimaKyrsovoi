@@ -43,6 +43,7 @@ deploy-job:
     CI_COMMIT_TITLE: $CI_COMMIT_TITLE
   script:
     - cp -TRv back-initial-data/ .
+    - find . -name '.gitkeep' -delete
     - chmod -R 777 ./back/uploads
     - chmod -R 777 ./back/database
     - chmod -R 777 ./back/extensions
