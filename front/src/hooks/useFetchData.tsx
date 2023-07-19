@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 export interface IUseFetchDataResult<T> {
-  data: T | null;
+  data: T | null | undefined;
   isLoading: boolean;
   error: string;
 }
