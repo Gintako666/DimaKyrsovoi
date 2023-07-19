@@ -4,7 +4,7 @@ import {
 import { useCallback } from 'react';
 import { useUser } from '~/contexts/user';
 import { ICategory } from '~/interfaces/category.interface';
-import { Dataset, PieChartData } from '~/interfaces/chart.interface';
+import { DataToChart, PieChartData } from '~/interfaces/chart.interface';
 import { ITransaction } from '~/interfaces/transaction.interface';
 
 const useDirectusApi = () => {
@@ -66,7 +66,7 @@ const useDirectusApi = () => {
     categoriesPerMonthOutgoing: PieChartData
     incomingTotal: number
     outgoingTotal: number
-    monthlyData: Dataset[]
+    monthlyData: DataToChart,
   } }> => {
     const transactionSummary = (await user.directus.transport.get('/transaction_summary')).raw;
     return { data: transactionSummary };

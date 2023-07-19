@@ -25,24 +25,6 @@ const Home: FC = () => {
   } = useFetchData(getTransactionSummary);
 
   useEffect(() => {
-    function getMonthYearArray() {
-      const currentDate = new Date();
-      const currentMonth = currentDate.getMonth();
-      const currentYear = currentDate.getFullYear();
-
-      const monthYearArray = [];
-
-      for (let i = 0; i < 12; i += 1) {
-        const year = currentYear + Math.floor((currentMonth - i) / 12);
-        const month = (currentMonth - i + 12) % 12;
-        const monthName = new Date(year, month).toLocaleString('en-us', { month: 'long' });
-        const formattedMonthYear = `${ monthName } ${ year }`;
-
-        monthYearArray.push(formattedMonthYear);
-      }
-
-      return monthYearArray;
-    }
     if (data) {
       const {
         monthlyData,
@@ -53,10 +35,7 @@ const Home: FC = () => {
       } = data;
 
       setDataFromServer({
-        chartData: {
-          labels: getMonthYearArray().reverse(),
-          datasets: monthlyData,
-        },
+        chartData: monthlyData,
         cards: [
           {
             name: 'Incoming',
