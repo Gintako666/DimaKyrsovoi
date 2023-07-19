@@ -15,19 +15,24 @@ import TransactionsTableItems from './TransactionsTableItems/TransactionsTableIt
 
 const Transactions: FC = memo(() => {
   const router = useRouter();
-  const [ selectFilter, setSelectFilter ] = useState(router.query.filter || 'all');
+  const [ selectFilter, setSelectFilter ] = useState(
+    router.query.filter || 'all',
+  );
 
   const { getCategories } = CategoriesService;
   const { getTransactions } = TransactionsService;
 
-  const transactionsFilter = useMemo(() => ({
-    filter: {
-      category: (
-        (router.query.filter === '0' && { _null: true })
-        || (router.query.filter && { _eq: router.query.filter })),
-    },
-    sort: 'date',
-  }), [ router.query.filter ]);
+  const transactionsFilter = useMemo(
+    () => ({
+      filter: {
+        category:
+          (router.query.filter === '0' && { _null: true })
+          || (router.query.filter && { _eq: router.query.filter }),
+      },
+      sort: 'date',
+    }),
+    [ router.query.filter ],
+  );
 
   const {
     data: categoriesData,
@@ -40,10 +45,7 @@ const Transactions: FC = memo(() => {
     data: transactionsData,
     isLoading: transactionsLoading,
     error: transactionsError,
-  } = useFetchData(
-    getTransactions,
-    transactionsFilter,
-  );
+  } = useFetchData(getTransactions, transactionsFilter);
   const transactions = transactionsData?.data;
 
   return (
@@ -77,19 +79,20 @@ const Transactions: FC = memo(() => {
               >
                 All
               </option>
-              {categories && categories.map((category) => {
-                const { id, name } = category;
+              {categories
+                && categories.map((category) => {
+                  const { id, name } = category;
 
-                return (
-                  <option
-                    key={ id }
-                    className="transactions__header__filter__option"
-                    value={ id }
-                  >
-                    {name}
-                  </option>
-                );
-              })}
+                  return (
+                    <option
+                      key={ id }
+                      className="transactions__header__filter__option"
+                      value={ id }
+                    >
+                      {name}
+                    </option>
+                  );
+                })}
             </select>
           </div>
         </div>
@@ -107,7 +110,10 @@ const Transactions: FC = memo(() => {
               <span className="transactions__table__header__item">amount</span>
               <span className="transactions__table__header__item">date</span>
             </div>
-            <TransactionsTableItems transactions={ transactions } categories={ categories } />
+            <TransactionsTableItems
+              transactions={ transactions }
+              categories={ categories }
+            />
           </div>
         )}
         {(transactionsError || categoriesError) && ':('}
