@@ -6,10 +6,10 @@ import Item from './Item';
 
 interface ITransactionsTableItemsProps {
   transactions: ITransaction[];
-  categorys: ICategory[]
+  categories: ICategory[]
 }
 
-const TransactionsTableItems: FC<ITransactionsTableItemsProps> = ({ transactions, categorys }) => {
+const TransactionsTableItems: FC<ITransactionsTableItemsProps> = ({ transactions, categories }) => {
   const items = transactions.map((transaction) => {
     const { id, category } = transaction;
 
@@ -18,7 +18,7 @@ const TransactionsTableItems: FC<ITransactionsTableItemsProps> = ({ transactions
         key={ id }
         transaction={ transaction }
         category={ category }
-        categorys={ categorys }
+        categories={ categories }
       />
     );
   });

@@ -43,8 +43,6 @@
           // appearance:none;
           color: $gray;
 
-          // margin-left: -3px;
-
           option {
             @apply bg-white;
 
@@ -71,8 +69,6 @@
 
           &--pending {
             @apply bg-yellow-100  text-yellow-600;
-
-            // background: #CCA879;
           }
 
           &--rejected {
@@ -110,17 +106,6 @@
       &__media {
         @apply lg:hidden;
       }
-
-      // &__button {
-      //   @apply lg:bg-transparent
-      //   text-blue-600 bg-blue-300  p-1.5 rounded-lg;
-
-      //   transition: opacity 0.3s ease 0s;
-
-      //   &:hover {
-      //     @apply opacity-50;
-      //   }
-      // }
     }
   }
 }
