@@ -6,12 +6,11 @@ import useFetchData from '~/hooks/useFetchData';
 
 import CategoriesService from '~/services/categories.service';
 
-import { ICategory } from '~/interfaces/category.interface';
 import Items from './Items/Items';
 
 const CategoryCards: FC = () => {
   const { getCategories } = CategoriesService;
-  const { data, isLoading, error } = useFetchData<{ data: ICategory[] }>(getCategories);
+  const { data, isLoading, error } = useFetchData(getCategories);
 
   const categories = data?.data;
 
