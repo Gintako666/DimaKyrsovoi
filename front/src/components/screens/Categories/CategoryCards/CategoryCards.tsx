@@ -6,18 +6,19 @@ import useFetchData from '~/hooks/useFetchData';
 
 import CategoriesService from '~/services/categories.service';
 
+import { ICategory } from '~/interfaces/category.interface';
 import Items from './Items/Items';
 
 const CategoryCards: FC = () => {
   const { getCategories } = CategoriesService;
-  const { data, isLoading, error } = useFetchData(getCategories);
+  const { data, isLoading, error } = useFetchData<{ data: ICategory[] }>(getCategories);
 
   const categories = data?.data;
 
   if (isLoading) {
     return <Loader />;
   }
-  if (error || data?.errors) {
+  if (error) {
     return ':(';
   }
   if (categories) {
