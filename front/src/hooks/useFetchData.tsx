@@ -8,7 +8,11 @@ export interface IUseFetchDataResult<T> {
 
 /* eslint-disable-next-line @typescript-eslint/comma-dangle */
 const useFetchData = <T,>(
-  request: (searchParams?: any) => Promise<T>,
+  request: (
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    searchParams?: any
+  ) => Promise<T>,
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   searchParams?: any,
 ): IUseFetchDataResult<T> => {
   const [ data, setData ] = useState<T | null>(null);

@@ -7,6 +7,7 @@ const PATH = 'category';
 const CategoriesService = {
   async getCategories() {
     const result = directus.items(PATH).readByQuery();
+
     return result as Promise<{ data: ICategory[] }>;
   },
 
