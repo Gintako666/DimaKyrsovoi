@@ -37,9 +37,11 @@ const Form: FC = () => {
 
         setSelectedFile(null);
         push('/transactions');
-      } catch (error) {
-      /* eslint-disable-next-line no-alert */
+      } catch (err) {
+        /* eslint-disable-next-line no-alert */
         alert(`Incorrect file format. We can't recognize data structure in file: ${ name }`);
+        /* eslint-disable-next-line no-console */
+        console.error(err);
       }
     }
   };
