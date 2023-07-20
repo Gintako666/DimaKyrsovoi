@@ -6,7 +6,6 @@ import useFetchData from '~/hooks/useFetchData';
 
 import TransactionsService from '~/services/transactions.service';
 import { DataToChart, PieChartData } from '~/interfaces/chart.interface';
-import { ITransactionSummary } from '~/interfaces/transaction.interface';
 import LastDays from './LastDays/LastDays';
 import Chart from './Chart/Chart';
 import PieCharts from './PieCharts/PieCharts';
@@ -25,7 +24,7 @@ const Home: FC = () => {
   const {
     data,
     isLoading: transactionsLoading,
-  } = useFetchData<{ data: ITransactionSummary }>(getTransactionSummary);
+  } = useFetchData(getTransactionSummary);
 
   useEffect(() => {
     if (data) {
