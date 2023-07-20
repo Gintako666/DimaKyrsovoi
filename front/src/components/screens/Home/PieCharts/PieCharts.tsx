@@ -3,8 +3,8 @@ import { PieChartData } from '~/interfaces/chart.interface';
 import PieChart from './PieChart/PieChart';
 
 type Props = {
-  outgoingData: PieChartData,
-  incomingData: PieChartData,
+  outgoingData: PieChartData | null,
+  incomingData: PieChartData | null,
 };
 
 const PieCharts: React.FC<Props> = ({ outgoingData, incomingData }) => (
@@ -12,7 +12,7 @@ const PieCharts: React.FC<Props> = ({ outgoingData, incomingData }) => (
     <div className="pie-charts__container">
       <div className="pie-charts__charts">
         {incomingData && <PieChart data={ incomingData } />}
-        {incomingData && <PieChart data={ outgoingData } />}
+        {outgoingData && <PieChart data={ outgoingData } />}
       </div>
     </div>
   </section>

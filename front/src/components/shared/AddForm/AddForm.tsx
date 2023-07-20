@@ -11,7 +11,8 @@ interface AddFormProps {
   className: string;
   modifier?: string;
   type: string;
-  name: string;
+  button?: boolean;
+  name?: string;
   description?: string;
   color?: string;
   onChange: IHandleChange;
@@ -21,6 +22,7 @@ const AddForm: FC<AddFormProps> = ({
   className,
   modifier,
   type,
+  button,
   name,
   description,
   color,
@@ -34,30 +36,32 @@ const AddForm: FC<AddFormProps> = ({
 
   return (
     <div className={ `${ modifiedClassName } add-form` }>
-      <Name type={ type } name={ name } onChange={ onChange } />
-      {(typeof description === 'string') && (
-      <Description
-        type={ type }
-        description={ description }
-        onChange={ onChange }
-      />
+      {typeof name === 'string' && (
+        <Name type={ type } name={ name } onChange={ onChange } />
       )}
-      {(typeof color === 'string') && (
-      <Color
-        type={ type }
-        color={ color }
-        onChange={ onChange }
-      />
+      {typeof description === 'string' && (
+        <Description
+          type={ type }
+          description={ description }
+          onChange={ onChange }
+        />
       )}
-      <button type="submit" className="add-form__button button">
-        Save
-      </button>
+      {typeof color === 'string' && (
+        <Color type={ type } color={ color } onChange={ onChange } />
+      )}
+      {button && (
+        <button type="submit" className="add-form__button button">
+          Save
+        </button>
+      )}
     </div>
   );
 };
 
 AddForm.defaultProps = {
   modifier: undefined,
+  button: true,
+  name: undefined,
   description: undefined,
   color: undefined,
 };

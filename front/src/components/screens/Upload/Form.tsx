@@ -2,6 +2,8 @@ import { FC, FormEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import FileService from '~/services/file.service';
+import useAddForm from '~/hooks/useAddForm';
+import AddForm from '~/components/shared/AddForm/AddForm';
 import UploadFile from './UploadFile/UploadFile';
 
 const Form: FC = () => {
@@ -9,6 +11,7 @@ const Form: FC = () => {
   const { push } = useRouter();
 
   const { uploadFile } = FileService;
+  const { name: inputName, handleChange } = useAddForm();
 
   // Handle submit
   interface IHandleSubmit {
@@ -43,11 +46,12 @@ const Form: FC = () => {
 
   return (
     <form action="#" className="upload__form" onSubmit={ handleSubmit }>
+      <AddForm className="upload" type="file" button={ false } name={ inputName } onChange={ handleChange } />
       <UploadFile
         selectedFile={ selectedFile }
         setSelectedFile={ setSelectedFile }
       />
-      <button type="submit" disabled={ !selectedFile } className="upload__button button">
+      <button type="submit" disabled={ !(selectedFile && inputName) } className="upload__button button">
         Upload
       </button>
     </form>

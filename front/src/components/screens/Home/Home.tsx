@@ -16,8 +16,8 @@ const Home: FC = () => {
     chartData: DataToChart,
     cards: ICard[],
     pieChartsData: {
-      incomingData: PieChartData,
-      outgoingData: PieChartData,
+      incomingData: PieChartData | null,
+      outgoingData: PieChartData | null,
     }
   }>();
   const { getTransactionSummary } = TransactionsService;
@@ -49,8 +49,8 @@ const Home: FC = () => {
           },
         ],
         pieChartsData: {
-          incomingData: categoriesPerMonthIncoming,
-          outgoingData: categoriesPerMonthOutgoing,
+          incomingData: (incomingTotal && categoriesPerMonthIncoming) || null,
+          outgoingData: (outgoingTotal && categoriesPerMonthOutgoing) || null,
         },
       });
     }
