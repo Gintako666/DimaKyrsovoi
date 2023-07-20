@@ -12,6 +12,7 @@ import CategoriesService from '~/services/categories.service';
 import TransactionsService from '~/services/transactions.service';
 
 import { ITransaction } from '~/interfaces/transaction.interface';
+import { ICategory } from '~/interfaces/category.interface';
 import TransactionsTableItems from './TransactionsTableItems/TransactionsTableItems';
 
 const Transactions: FC = memo(() => {
@@ -40,16 +41,14 @@ const Transactions: FC = memo(() => {
     isLoading: categoriesLoading,
     error: categoriesError,
   } = useFetchData(getCategories);
-  const categories = categoriesData?.data;
+  const categories: ICategory[] = categoriesData?.data;
 
   const {
     data: transactionsData,
     isLoading: transactionsLoading,
     error: transactionsError,
-  } = useFetchData<{
-    data: ITransaction[]
-  }>(getTransactions, transactionsFilter);
-  const transactions = transactionsData?.data;
+  } = useFetchData(getTransactions, transactionsFilter);
+  const transactions: ITransaction[] = transactionsData?.data;
 
   return (
     <section className="transactions">
