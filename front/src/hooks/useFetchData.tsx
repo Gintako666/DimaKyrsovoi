@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 
-export interface IUseFetchDataResult {
-  data: any | null;
+export interface IUseFetchDataResult<T> {
+  data: T | null;
   isLoading: boolean;
   error: string;
 }
 
 /* eslint-disable-next-line @typescript-eslint/comma-dangle */
-const useFetchData = (
-  request: (searchParams?: any) => Promise<any>,
+const useFetchData = <T,>(
+  request: (searchParams?: any) => Promise<T>,
   searchParams?: any,
-): IUseFetchDataResult => {
-  const [ data, setData ] = useState<any>(null);
+): IUseFetchDataResult<T> => {
+  const [ data, setData ] = useState<T | null>(null);
   const [ isLoading, setIsLoading ] = useState(true);
   const [ error, setError ] = useState('');
 

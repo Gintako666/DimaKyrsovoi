@@ -1,13 +1,16 @@
 import { directus } from '~/contexts/user';
+import { ITransaction } from '~/interfaces/transaction.interface';
 
 const PATH = 'transaction';
 
 const TransactionsService = {
   async getTransactions(searchParams?: any) {
-    return directus.items(PATH).readByQuery({
+    const result = directus.items(PATH).readByQuery({
       fields: [ '*', 'category.*', 'file.*' ],
       ...searchParams,
     });
+
+    return result as Promise<{ data: ITransaction[] }>;
   },
 
   async editCategoryInTransaction(id: number, newCategory: number | null) {

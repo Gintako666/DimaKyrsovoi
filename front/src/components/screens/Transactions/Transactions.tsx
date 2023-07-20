@@ -11,8 +11,6 @@ import useFetchData from '~/hooks/useFetchData';
 import CategoriesService from '~/services/categories.service';
 import TransactionsService from '~/services/transactions.service';
 
-import { ITransaction } from '~/interfaces/transaction.interface';
-import { ICategory } from '~/interfaces/category.interface';
 import TransactionsTableItems from './TransactionsTableItems/TransactionsTableItems';
 
 const Transactions: FC = memo(() => {
@@ -41,14 +39,14 @@ const Transactions: FC = memo(() => {
     isLoading: categoriesLoading,
     error: categoriesError,
   } = useFetchData(getCategories);
-  const categories: ICategory[] = categoriesData?.data;
+  const categories = categoriesData?.data;
 
   const {
     data: transactionsData,
     isLoading: transactionsLoading,
     error: transactionsError,
   } = useFetchData(getTransactions, transactionsFilter);
-  const transactions: ITransaction[] = transactionsData?.data;
+  const transactions = transactionsData?.data;
 
   return (
     <section className="transactions">
