@@ -14,8 +14,7 @@ const ExitButton: FC = () => {
       await logout();
     } catch (err) {
       /* eslint-disable no-console */
-      console.log(err);
-      /* eslint-disable no-console */
+      console.error(err);
     }
   };
 

@@ -39,43 +39,44 @@ const Form: FC = () => {
     } catch (
       /* eslint-disable @typescript-eslint/no-explicit-any */
       err: any
-      /* eslint-disable @typescript-eslint/no-explicit-any */
     ) {
-      const errMessage = err.message;
+      if (!username && !password) {
+        setIsUsernameErr(true);
+        setIsPasswordErr(true);
+      } else {
+        const errMessage = err.message;
 
-      switch (errMessage) {
-        case '"email" is not allowed to be empty':
-        case '"email" must be a valid email':
-          setIsUsernameErr(true);
+        switch (errMessage) {
+          case '"email" is not allowed to be empty':
+          case '"email" must be a valid email':
+            setIsUsernameErr(true);
 
-          if (setIsPasswordErr) {
+            if (isPasswordErr) {
+              setIsPasswordErr(false);
+            }
+            break;
+
+          case '"password" is not allowed to empty':
             setIsPasswordErr(true);
-          }
-          break;
 
-        case '"password" is not allowed to empty':
-          setIsPasswordErr(true);
+            if (isUsernameErr) {
+              setIsUsernameErr(false);
+            }
+            break;
 
-          if (isUsernameErr) {
-            setIsUsernameErr(false);
-          }
-          break;
-
-        // case 'Invalid user credentials.':
-        default:
-          setIsUsernameErr(true);
-          setIsPasswordErr(true);
-          break;
+          // case 'Invalid user credentials.':
+          default:
+            setIsUsernameErr(true);
+            setIsPasswordErr(true);
+            break;
+        }
       }
     }
   };
 
   // Get modifier className
   interface IGetModifierClassName {
-    (
-      isActive: boolean,
-      className: string
-    ): string
+    (isActive: boolean, className: string): string;
   }
   const getModifierClassName: IGetModifierClassName = (isActive, className) => handleClassName(isActive, className, 'err');
 
@@ -83,14 +84,20 @@ const Form: FC = () => {
     <form action="#" className="login__form" onSubmit={ handleSubmit }>
       <h1 className="login__title">Login</h1>
       <input
-        className={ ` 'login__input' ${ getModifierClassName(isUsernameErr, 'login__input_username') }` }
+        className={ `login__input ${ getModifierClassName(
+          isUsernameErr,
+          'login__input_username',
+        ) }` }
         type="text"
         placeholder="Username"
         value={ username }
         onChange={ handleChange }
       />
       <input
-        className={ `'login__input' ${ getModifierClassName(isPasswordErr, 'login__input_password') }` }
+        className={ `login__input ${ getModifierClassName(
+          isPasswordErr,
+          'login__input_password',
+        ) }` }
         type="password"
         placeholder="Password"
         value={ password }

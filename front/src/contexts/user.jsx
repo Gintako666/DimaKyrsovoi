@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import { Directus } from '@directus/sdk';
 
-const directus = new Directus(process.env.NEXT_PUBLIC_BACK_URI, {
+export const directus = new Directus(process.env.NEXT_PUBLIC_BACK_URI, {
   storage: {
     prefix: 'front_',
     mode: 'LocalStorage',

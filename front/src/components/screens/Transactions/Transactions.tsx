@@ -1,38 +1,52 @@
 import {
   FC, memo, useMemo, useState,
 } from 'react';
+import { useRouter } from 'next/router';
 
 import Loader from '~/components/shared/Loader/Loader';
 import Title from '~/components/shared/Title/Title';
 
 import useFetchData from '~/hooks/useFetchData';
 
-import { useRouter } from 'next/router';
-import useDirectusApi from '~/hooks/useDirectusApi';
+import CategoriesService from '~/services/categories.service';
+import TransactionsService from '~/services/transactions.service';
+
 import TransactionsTableItems from './TransactionsTableItems/TransactionsTableItems';
 
 const Transactions: FC = memo(() => {
   const router = useRouter();
-  const [ selectFilter, setSelectFilter ] = useState(router.query.filter || 'all');
-  const { getTransactions, getCategories } = useDirectusApi();
-  const transactionsFilter = useMemo(() => ({
-    filter: {
-      category: (
-        (router.query.filter === '0' && { _null: true })
-        || (router.query.filter && { _eq: router.query.filter })),
-    },
-    sort: 'date',
-  }), [ router.query.filter ]);
+  const [ selectFilter, setSelectFilter ] = useState(
+    router.query.filter || 'all',
+  );
+
+  const { getCategories } = CategoriesService;
+  const { getTransactions } = TransactionsService;
+
+  const transactionsFilter = useMemo(
+    () => ({
+      filter: {
+        category:
+          (router.query.filter === '0' && { _null: true })
+          || (router.query.filter && { _eq: router.query.filter }),
+      },
+      sort: 'date',
+    }),
+    [ router.query.filter ],
+  );
+
   const {
-    data: categories,
+    data: categoriesData,
     isLoading: categoriesLoading,
     error: categoriesError,
-  } = useFetchData(getCategories, true);
+  } = useFetchData(getCategories);
+  const categories = categoriesData?.data;
+
   const {
-    data: transactions,
+    data: transactionsData,
     isLoading: transactionsLoading,
     error: transactionsError,
   } = useFetchData(getTransactions, transactionsFilter);
+  const transactions = transactionsData?.data;
 
   return (
     <section className="transactions">
@@ -65,19 +79,20 @@ const Transactions: FC = memo(() => {
               >
                 All
               </option>
-              {categories && categories.map((category) => {
-                const { id, name } = category;
+              {categories
+                && categories.map((category) => {
+                  const { id, name } = category;
 
-                return (
-                  <option
-                    key={ id }
-                    className="transactions__header__filter__option"
-                    value={ id }
-                  >
-                    {name}
-                  </option>
-                );
-              })}
+                  return (
+                    <option
+                      key={ id }
+                      className="transactions__header__filter__option"
+                      value={ id }
+                    >
+                      {name}
+                    </option>
+                  );
+                })}
             </select>
           </div>
         </div>
@@ -95,7 +110,10 @@ const Transactions: FC = memo(() => {
               <span className="transactions__table__header__item">amount</span>
               <span className="transactions__table__header__item">date</span>
             </div>
-            <TransactionsTableItems transactions={ transactions } categories={ categories } />
+            <TransactionsTableItems
+              transactions={ transactions }
+              categories={ categories }
+            />
           </div>
         )}
         {(transactionsError || categoriesError) && ':('}

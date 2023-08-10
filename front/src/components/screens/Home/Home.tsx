@@ -1,12 +1,15 @@
 import { FC, useEffect, useState } from 'react';
-import { DataToChart, PieChartData } from '~/interfaces/chart.interface';
+
 import Loader from '~/components/shared/Loader/Loader';
+
 import useFetchData from '~/hooks/useFetchData';
-import useDirectusApi from '~/hooks/useDirectusApi';
+
+import TransactionsService from '~/services/transactions.service';
+import { DataToChart, PieChartData } from '~/interfaces/chart.interface';
 import LastDays from './LastDays/LastDays';
 import Chart from './Chart/Chart';
-import { ICard } from './LastDays/card.interface';
 import PieCharts from './PieCharts/PieCharts';
+import { ICard } from './LastDays/card.interface';
 
 const Home: FC = () => {
   const [ dataFromServer, setDataFromServer ] = useState<{
@@ -17,8 +20,7 @@ const Home: FC = () => {
       outgoingData: PieChartData | null,
     }
   }>();
-  const { getTransactionSummary } = useDirectusApi();
-
+  const { getTransactionSummary } = TransactionsService;
   const {
     data,
     isLoading: transactionsLoading,
@@ -32,7 +34,7 @@ const Home: FC = () => {
         outgoingTotal,
         categoriesPerMonthOutgoing,
         categoriesPerMonthIncoming,
-      } = data;
+      } = data.data;
 
       setDataFromServer({
         chartData: monthlyData,

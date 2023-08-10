@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 
 export interface IUseFetchDataResult<T> {
@@ -7,10 +6,15 @@ export interface IUseFetchDataResult<T> {
   error: string;
 }
 
-function useFetchData <T>(
-  request: (params: any) => Promise<{ data: T }>,
-  params?: any,
-): IUseFetchDataResult<T> {
+/* eslint-disable-next-line @typescript-eslint/comma-dangle */
+const useFetchData = <T,>(
+  request: (
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    searchParams?: any
+  ) => Promise<T>,
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  searchParams?: any,
+): IUseFetchDataResult<T> => {
   const [ data, setData ] = useState<T | null>(null);
   const [ isLoading, setIsLoading ] = useState(true);
   const [ error, setError ] = useState('');
@@ -18,10 +22,10 @@ function useFetchData <T>(
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await request(params);
-
-        setData(response.data);
+        const response = await request(searchParams);
+        setData(response);
       } catch (
+        /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
         err: any
       ) {
         setError(err.message);
@@ -30,9 +34,13 @@ function useFetchData <T>(
       }
     };
     fetchData();
-  }, [ request, params ]);
+  }, [ request, searchParams ]);
 
-  return { data, isLoading, error };
-}
+  return {
+    data,
+    isLoading,
+    error,
+  };
+};
 
 export default useFetchData;

@@ -9,7 +9,7 @@ import { ITransaction } from '~/interfaces/transaction.interface';
 import { ICategory } from '~/interfaces/category.interface';
 import { amountFormater } from '~/utils/amountFormater';
 import { format } from 'fecha';
-import useDirectusApi from '~/hooks/useDirectusApi';
+import TransactionsService from '~/services/transactions.service';
 
 interface ItemProps {
   transaction: ITransaction,
@@ -24,7 +24,7 @@ const Item: FC<ItemProps> = ({
   category,
   categories,
 }) => {
-  const { editCategoryInTransaction } = useDirectusApi();
+  const { editCategoryInTransaction } = TransactionsService;
   const hendleChangeCategory = useCallback((newCategory: number | null) => {
     editCategoryInTransaction(id, newCategory);
   }, [ editCategoryInTransaction, id ]);

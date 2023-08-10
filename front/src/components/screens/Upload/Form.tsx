@@ -1,16 +1,17 @@
 import { FC, FormEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import useDirectusApi from '~/hooks/useDirectusApi';
-import Name from '~/components/shared/AddForm/Name';
+import FileService from '~/services/file.service';
 import useAddForm from '~/hooks/useAddForm';
+import AddForm from '~/components/shared/AddForm/AddForm';
 import UploadFile from './UploadFile/UploadFile';
 
 const Form: FC = () => {
   const [ selectedFile, setSelectedFile ] = useState<File | null>(null);
-  const { uploadFile } = useDirectusApi();
-  const { name, handleChange } = useAddForm();
-  const router = useRouter();
+  const { push } = useRouter();
+
+  const { uploadFile } = FileService;
+  const { name: inputName, handleChange } = useAddForm();
 
   // Handle submit
   interface IHandleSubmit {
@@ -22,8 +23,10 @@ const Form: FC = () => {
 
     const formData = new FormData();
 
-    try {
-      if (selectedFile) {
+    if (selectedFile) {
+      const { name } = selectedFile;
+
+      try {
         formData.append(
           'file',
           selectedFile,
@@ -31,23 +34,26 @@ const Form: FC = () => {
         );
 
         await uploadFile(formData);
+
         setSelectedFile(null);
-        router.push('/transactions');
+        push('/transactions');
+      } catch (err) {
+        /* eslint-disable-next-line no-alert */
+        alert(`Incorrect file format. We can't recognize data structure in file: ${ name }`);
+        /* eslint-disable-next-line no-console */
+        console.error(err);
       }
-    } catch (error) {
-      // eslint-disable-next-line no-alert
-      alert(`Incorrect file format. We can't recognize data structure in file: ${ selectedFile?.name }`);
     }
   };
 
   return (
     <form action="#" className="upload__form" onSubmit={ handleSubmit }>
-      <Name name={ name } onChange={ handleChange } type="file" />
+      <AddForm className="upload" type="file" button={ false } name={ inputName } onChange={ handleChange } />
       <UploadFile
         selectedFile={ selectedFile }
         setSelectedFile={ setSelectedFile }
       />
-      <button type="submit" disabled={ !(selectedFile && name) } className="upload__button button">
+      <button type="submit" disabled={ !(selectedFile && inputName) } className="upload__button button">
         Upload
       </button>
     </form>

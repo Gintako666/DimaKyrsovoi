@@ -5,7 +5,8 @@ import {
 import AddForm from '~/components/shared/AddForm/AddForm';
 
 import useAddForm from '~/hooks/useAddForm';
-import useDirectusApi from '~/hooks/useDirectusApi';
+
+import CategoriesService from '~/services/categories.service';
 
 import { ICategory } from '~/interfaces/category.interface';
 
@@ -20,7 +21,7 @@ const Form: FC<FormProps> = ({ category, setEditedCategory, onSubmit }) => {
     category.name,
     category.color,
   );
-  const { editCategory } = useDirectusApi();
+  const { editCategory } = CategoriesService;
 
   // Handle submit
   interface IHandleSubmit {

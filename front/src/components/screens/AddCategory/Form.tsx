@@ -4,12 +4,13 @@ import { FC, FormEvent } from 'react';
 import AddForm from '~/components/shared/AddForm/AddForm';
 
 import useAddForm from '~/hooks/useAddForm';
-import useDirectusApi from '~/hooks/useDirectusApi';
+
+import CategoriesService from '~/services/categories.service';
 
 const Form: FC = () => {
   const { name, color, handleChange } = useAddForm();
   const router = useRouter();
-  const { addCategory } = useDirectusApi();
+  const { addCategory } = CategoriesService;
 
   // Handle submit
   interface IHandleSubmit {
@@ -19,8 +20,16 @@ const Form: FC = () => {
     e.preventDefault();
 
     if (name) {
-      addCategory({ name, color });
-      handleChange({ target: { id: 'name', value: '' } });
+      addCategory({
+        name,
+        color,
+      });
+      handleChange({
+        target: {
+          id: 'name',
+          value: '',
+        },
+      });
 
       router.push('/categories');
     }
