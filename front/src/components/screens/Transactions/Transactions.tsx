@@ -38,7 +38,7 @@ const Transactions: FC = memo(() => {
     data: categoriesData,
     isLoading: categoriesLoading,
     error: categoriesError,
-  } = useFetchData(getCategories);
+  } = useFetchData(getCategories, true);
   const categories = categoriesData?.data;
 
   const {

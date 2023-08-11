@@ -37,7 +37,7 @@ type Props = {
 };
 
 const BarChart: React.FC<Props> = ({ data }) => (
-  <Bar options={ options } data={ data } />
+  <Bar className="bar-chart" options={ options } data={ data } />
 );
 
 export default BarChart;

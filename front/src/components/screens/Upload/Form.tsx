@@ -11,6 +11,7 @@ const Form: FC = () => {
   const { push } = useRouter();
 
   const { uploadFile } = FileService;
+  const [ isLoading, setIsLoading ] = useState(false);
   const { name: inputName, handleChange } = useAddForm();
 
   // Handle submit
@@ -24,22 +25,22 @@ const Form: FC = () => {
     const formData = new FormData();
 
     if (selectedFile) {
-      const { name } = selectedFile;
-
       try {
+        setIsLoading(true);
         formData.append(
           'file',
           selectedFile,
-          name,
+          inputName,
         );
 
         await uploadFile(formData);
 
         setSelectedFile(null);
+        setIsLoading(false);
         push('/transactions');
       } catch (err) {
         /* eslint-disable-next-line no-alert */
-        alert(`Incorrect file format. We can't recognize data structure in file: ${ name }`);
+        alert(`Incorrect file format. We can't recognize data structure in file: ${ inputName }`);
         /* eslint-disable-next-line no-console */
         console.error(err);
       }
@@ -53,7 +54,11 @@ const Form: FC = () => {
         selectedFile={ selectedFile }
         setSelectedFile={ setSelectedFile }
       />
-      <button type="submit" disabled={ !(selectedFile && inputName) } className="upload__button button">
+      <button
+        type="submit"
+        disabled={ !(selectedFile && inputName) || isLoading }
+        className="upload__button button"
+      >
         Upload
       </button>
     </form>

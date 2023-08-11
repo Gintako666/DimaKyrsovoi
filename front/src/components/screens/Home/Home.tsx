@@ -7,13 +7,16 @@ import useFetchData from '~/hooks/useFetchData';
 import TransactionsService from '~/services/transactions.service';
 import { DataToChart, PieChartData } from '~/interfaces/chart.interface';
 import LastDays from './LastDays/LastDays';
-import Chart from './Chart/Chart';
 import PieCharts from './PieCharts/PieCharts';
 import { ICard } from './LastDays/card.interface';
+import BarCharts from './BarCharts/BarCharts';
 
 const Home: FC = () => {
   const [ dataFromServer, setDataFromServer ] = useState<{
-    chartData: DataToChart,
+    chartData: {
+      earningsData: DataToChart,
+      lossesData: DataToChart,
+    },
     cards: ICard[],
     pieChartsData: {
       incomingData: PieChartData | null,
@@ -29,7 +32,8 @@ const Home: FC = () => {
   useEffect(() => {
     if (data) {
       const {
-        monthlyData,
+        earningsData,
+        lossesData,
         incomingTotal,
         outgoingTotal,
         categoriesPerMonthOutgoing,
@@ -37,7 +41,10 @@ const Home: FC = () => {
       } = data.data;
 
       setDataFromServer({
-        chartData: monthlyData,
+        chartData: {
+          earningsData,
+          lossesData,
+        },
         cards: [
           {
             name: 'Incoming',
@@ -67,7 +74,10 @@ const Home: FC = () => {
         incomingData={ dataFromServer.pieChartsData.incomingData }
         outgoingData={ dataFromServer.pieChartsData.outgoingData }
       />
-      <Chart chartData={ dataFromServer.chartData } />
+      <BarCharts
+        earningsData={ dataFromServer.chartData.earningsData }
+        lossesData={ dataFromServer.chartData.lossesData }
+      />
     </>
   );
 };

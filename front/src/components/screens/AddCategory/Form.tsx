@@ -16,11 +16,11 @@ const Form: FC = () => {
   interface IHandleSubmit {
     (e: FormEvent<HTMLFormElement>): void;
   }
-  const handleSubmit: IHandleSubmit = (e) => {
+  const handleSubmit: IHandleSubmit = async (e) => {
     e.preventDefault();
 
     if (name) {
-      addCategory({
+      await addCategory({
         name,
         color,
       });

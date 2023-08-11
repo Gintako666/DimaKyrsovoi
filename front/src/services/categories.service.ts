@@ -5,8 +5,17 @@ import { ICategory } from '~/interfaces/category.interface';
 const PATH = 'category';
 
 const CategoriesService = {
-  async getCategories() {
-    const result = directus.items(PATH).readByQuery();
+  async getCategories(withUncategorized: boolean) {
+    const result = await directus.items(PATH).readByQuery();
+
+    if (withUncategorized) {
+      result.data?.push({
+        name: 'Uncategorized',
+        id: 0,
+        color: '#636363',
+        transactions: [],
+      });
+    }
 
     return result as Promise<{ data: ICategory[] }>;
   },
