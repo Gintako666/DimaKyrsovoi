@@ -7,7 +7,6 @@ import useFetchData from '~/hooks/useFetchData';
 import TransactionsService from '~/services/transactions.service';
 import { DataToChart, PieChartData } from '~/interfaces/chart.interface';
 import LastDays from './LastDays/LastDays';
-import Chart from './Chart/BarChart';
 import PieCharts from './PieCharts/PieCharts';
 import { ICard } from './LastDays/card.interface';
 import BarCharts from './BarCharts/BarCharts';

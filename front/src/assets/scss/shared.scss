@@ -7,6 +7,7 @@
 .button {
   @apply whitespace-nowrap;
 
+  position: relative;
   padding: em(10) em(20);
   border-radius: em(5);
   color: $main-bg;
@@ -20,7 +21,7 @@
   }
 
   &:hover {
-    @apply opacity-50;
+    @apply opacity-70;
   }
 
   &:disabled {
