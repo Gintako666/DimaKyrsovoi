@@ -103,51 +103,78 @@ async function calculateMonthlyData(
 
     return monthYearArray;
   }
-  const returnData: BarDataset = {
+  const earningsData: BarDataset = {
     labels: getMonthYearArray().reverse(),
     datasets: [ ...categories.map((category) => ({
       label: category.name,
       backgroundColor: category.color,
       data: [],
-    })), {
-      label: 'Total',
-      backgroundColor: '#98FAA5',
+    })) ],
+  };
+
+  const lossesData: BarDataset = {
+    labels: getMonthYearArray().reverse(),
+    datasets: [ ...categories.map((category) => ({
+      label: category.name,
+      backgroundColor: category.color,
       data: [],
-    } ],
+    })) ],
   };
 
   const newEndDate = endDate.add(1, 'month');
   const currentDate = moment(startDate).add(1, 'month');
+
+  const getDataValues = async (
+    type: 'outgoing' | 'incoming',
+    monthStart: string,
+    monthEnd: string,
+    category: (Category | {
+      name: string;
+      id: number;
+      color: string;
+    }),
+    data: BarDataset,
+  ) => {
+    const values = await calculateTotal(
+      type,
+      monthStart,
+      monthEnd,
+      transactionService,
+
+      {
+        category: category.id ? { _eq: category.id } : { _null: true },
+      },
+    );
+
+    data.datasets.find((item) => item.label === category.name)?.data.push(values);
+  };
 
   while (currentDate <= newEndDate) {
     const monthStart = currentDate.startOf('month').format(dateFormat);
     const monthEnd = currentDate.endOf('month').format(dateFormat);
 
     for (const category of categories) {
-      const outgoingValues = await calculateTotal(
+      getDataValues(
         'outgoing',
         monthStart,
         monthEnd,
-        transactionService,
-        { category: category.id ? { _eq: category.id } : { _null: true } },
+        category,
+        earningsData,
       );
 
-      returnData.datasets.find((item) => item.label === category.name)?.data.push(outgoingValues);
+      getDataValues(
+        'incoming',
+        monthStart,
+        monthEnd,
+        category,
+        lossesData,
+      );
     }
-
-    const incomingValues = await calculateTotal(
-      'incoming',
-      monthStart,
-      monthEnd,
-      transactionService,
-    );
-
-    returnData.datasets.find((item) => item.label === 'Total')?.data.push(incomingValues);
 
     currentDate.add(1, 'month');
   }
 
-  return returnData;
+  return { earningsData, lossesData };
 }
 
 async function calculationCategoriesPerMonth(type: 'outgoing' | 'incoming', transactionService: any, categoryService: any) {
@@ -227,7 +254,7 @@ export default defineEndpoint(async (router, { services, getSchema }) => {
 
     const outgoingTotal = await calculateTotal('outgoing', startDate, currentDate, transactionService);
     const incomingTotal = await calculateTotal('incoming', startDate, currentDate, transactionService);
-    const monthlyData = await calculateMonthlyData(
+    const { earningsData, lossesData } = await calculateMonthlyData(
       startOfMonth,
       currentDate,
       transactionService,
@@ -247,7 +274,8 @@ export default defineEndpoint(async (router, { services, getSchema }) => {
     res.send({
       outgoingTotal,
       incomingTotal,
-      monthlyData,
+      earningsData,
+      lossesData,
       categoriesPerMonthOutgoing,
       categoriesPerMonthIncoming,
     });

@@ -24,13 +24,11 @@ const Form: FC = () => {
     const formData = new FormData();
 
     if (selectedFile) {
-      const { name } = selectedFile;
-
       try {
         formData.append(
           'file',
           selectedFile,
-          name,
+          inputName,
         );
 
         await uploadFile(formData);
