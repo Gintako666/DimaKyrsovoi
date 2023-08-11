@@ -19,7 +19,7 @@ interface ItemProps {
 
 const Item: FC<ItemProps> = ({
   transaction: {
-    id, name, bank, value, date, file,
+    id, name, value, date, file,
   },
   category,
   categories,
@@ -58,7 +58,6 @@ const Item: FC<ItemProps> = ({
       <div className="transactions__table__item__transaction">
         <div className="transactions__table__item__transaction__img">{getFirstLetters(name)}</div>
         <div className="transactions__table__item__transaction__name">{name || 'Unknown'}</div>
-        <div className="transactions__table__item__transaction__bank">{bank || 'Unknown'}</div>
       </div>
       <div className="transactions__table__item__category">
         <p className="transactions__table__item__media">Category: </p>

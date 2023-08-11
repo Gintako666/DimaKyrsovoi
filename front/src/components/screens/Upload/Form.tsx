@@ -33,6 +33,11 @@ const Form: FC = () => {
           inputName,
         );
 
+        formData.append(
+          'fileName',
+          inputName,
+        );
+
         await uploadFile(formData);
 
         setSelectedFile(null);
@@ -46,6 +51,8 @@ const Form: FC = () => {
       }
     }
   };
+
+  console.log(inputName);
 
   return (
     <form action="#" className="upload__form" onSubmit={ handleSubmit }>

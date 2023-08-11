@@ -58,12 +58,12 @@ async function calculateTotal(
       _and: [
         {
           date: {
-            _gt: startDate,
+            _gte: startDate,
           },
         },
         {
           date: {
-            _lt: endDate,
+            _lte: endDate,
           },
         },
       ],
@@ -135,7 +135,7 @@ async function calculateMonthlyData(
     }),
     data: BarDataset,
   ) => {
-    const values = await calculateTotal(
+    const values = Math.abs(await calculateTotal(
       type,
       monthStart,
       monthEnd,
@@ -144,7 +144,7 @@ async function calculateMonthlyData(
       {
         category: category.id ? { _eq: category.id } : { _null: true },
       },
-    );
+    ));
 
     data.datasets.find((item) => item.label === category.name)?.data.push(values);
   };
@@ -154,7 +154,7 @@ async function calculateMonthlyData(
     const monthEnd = currentDate.endOf('month').format(dateFormat);
 
     for (const category of categories) {
-      getDataValues(
+      await getDataValues(
         'outgoing',
         monthStart,
         monthEnd,
@@ -162,7 +162,9 @@ async function calculateMonthlyData(
         earningsData,
       );
 
-      getDataValues(
+      console.log('-------------------END----------------');
+
+      await getDataValues(
         'incoming',
         monthStart,
         monthEnd,
@@ -202,12 +204,12 @@ async function calculationCategoriesPerMonth(type: 'outgoing' | 'incoming', tran
           _and: [
             {
               date: {
-                _gt: startDate,
+                _gte: startDate,
               },
             },
             {
               date: {
-                _lt: endDate,
+                _lte: endDate,
               },
             },
           ],

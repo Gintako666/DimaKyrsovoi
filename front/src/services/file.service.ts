@@ -3,9 +3,9 @@ import { directus } from '~/contexts/user';
 const PATH = '/upload';
 
 const FileService = {
-  async uploadFile(file: FormData) {
+  async uploadFile(formData: FormData) {
     try {
-      await directus.transport.post(PATH, file);
+      await directus.transport.post(PATH, formData);
     } catch (err) {
       /* eslint-disable no-console */
       console.error(err);
