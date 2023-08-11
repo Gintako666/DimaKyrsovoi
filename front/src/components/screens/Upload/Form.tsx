@@ -52,8 +52,6 @@ const Form: FC = () => {
     }
   };
 
-  console.log(inputName);
-
   return (
     <form action="#" className="upload__form" onSubmit={ handleSubmit }>
       <AddForm className="upload" type="file" button={ false } name={ inputName } onChange={ handleChange } />

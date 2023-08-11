@@ -162,8 +162,6 @@ async function calculateMonthlyData(
         earningsData,
       );
 
-      console.log('-------------------END----------------');
-
       await getDataValues(
         'incoming',
         monthStart,
