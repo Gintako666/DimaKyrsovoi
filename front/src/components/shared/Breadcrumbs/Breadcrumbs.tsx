@@ -6,7 +6,7 @@ type Props = {
   breadcrumbs: IBreadcrumbs
 };
 
-const Breadcrumbs1: React.FC<Props> = ({ breadcrumbs }) => (
+const Breadcrumbs: React.FC<Props> = ({ breadcrumbs }) => (
   <div className="breadcrumbs">
     {breadcrumbs.map((breadcrumbsItem) => (
       <Link className="breadcrumbs__item" href={ `${ breadcrumbsItem.url }` || '' }>
@@ -16,4 +16,4 @@ const Breadcrumbs1: React.FC<Props> = ({ breadcrumbs }) => (
   </div>
 );
 
-export default Breadcrumbs1;
+export default Breadcrumbs;

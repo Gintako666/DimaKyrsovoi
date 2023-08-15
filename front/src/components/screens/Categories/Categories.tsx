@@ -3,7 +3,7 @@ import { FC, useContext, useMemo } from 'react';
 import Title from '~/components/shared/Title/Title';
 import { CategoriesContext } from '~/contexts/category.context';
 import Popup from '~/components/base/Popup/Popup';
-import Breadcrumbs1 from '~/components/shared/Breadcrumbs/Breadcrumbs';
+import Breadcrumbs from '~/components/shared/Breadcrumbs/Breadcrumbs';
 import CategoryCards from './CategoryCards/CategoryCards';
 import Form from './AddCategory/Form';
 
@@ -12,14 +12,14 @@ const Categories: FC = () => {
     currentCategory, openPopup, setOpenPopup, curentCategoryParentsList,
   } = useContext(CategoriesContext);
 
-  const breadcrumbs = useMemo(() => [ !!currentCategory && { name: 'Categories', url: '/categories' }, ...curentCategoryParentsList.map((item) => ({
+  const breadcrumbs = useMemo(() => [ { name: 'Categories', url: '/categories' }, ...curentCategoryParentsList.map((item) => ({
     name: item.name, url: `/categories/${ item.id }`,
-  })) ], [ curentCategoryParentsList, currentCategory ]);
+  })) ], [ curentCategoryParentsList ]);
 
   return (
     <section className="categories">
       <div className="categories__container">
-        <Breadcrumbs1 breadcrumbs={ breadcrumbs } />
+        {!!currentCategory && <Breadcrumbs breadcrumbs={ breadcrumbs } />}
 
         <div className="categories__header">
           <Title
