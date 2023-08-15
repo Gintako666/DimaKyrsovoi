@@ -1,4 +1,5 @@
 import { directus } from '~/contexts/user';
+import { DataToChart, PieChartData } from '~/interfaces/chart.interface';
 import { ITransaction } from '~/interfaces/transaction.interface';
 
 const PATH = 'transaction';
@@ -15,7 +16,7 @@ const TransactionsService = {
 
   async editCategoryInTransaction(id: number, newCategory: number | null) {
     try {
-      directus.items(PATH).updateOne(id, {
+      await directus.items(PATH).updateOne(id, {
         category: newCategory,
       });
     } catch (err) {
@@ -27,9 +28,13 @@ const TransactionsService = {
   async getTransactionSummary() {
     const transactionSummary = (await directus.transport.get('/transaction_summary')).raw;
 
-    return {
-      data: transactionSummary,
-    };
+    return transactionSummary as Promise<{
+      outgoingTotal: number,
+      incomingTotal: number,
+      monthlyData: DataToChart,
+      categoriesPerMonthOutgoing: PieChartData,
+      categoriesPerMonthIncoming:PieChartData,
+    }>;
   },
 };
 

@@ -1,4 +1,5 @@
 @import "CategoryCards/CategoryCards";
+@import "AddCategory/AddCategory";
 
 .categories {
   // .categories__container
@@ -9,7 +10,7 @@
   // .categories__header
 
   &__header {
-    @apply flex justify-between items-center gap-1 mb-3;
+    @apply flex justify-between items-end gap-1 mb-3;
 
     @media (width < $tablet) {
       @apply items-stretch flex-col;
@@ -29,6 +30,6 @@
   // .categories__button
 
   &__button {
-    @apply self-end pr-0;
+    @apply self-end pr-0 p-0;
   }
 }

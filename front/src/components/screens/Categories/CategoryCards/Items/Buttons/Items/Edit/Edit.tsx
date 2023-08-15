@@ -1,5 +1,5 @@
 import {
-  Dispatch, FC, SetStateAction,
+  FC,
 } from 'react';
 
 import Img from '~/components/base/Img/Img';
@@ -15,12 +15,10 @@ import Form from './Form';
 
 interface EditProps {
   category: ICategory,
-  setEditedCategory: Dispatch<SetStateAction<ICategory | null>>
 }
 
 const Edit: FC<EditProps> = ({
   category,
-  setEditedCategory,
 }) => {
   const { isScrollLocked, setIsScrollLocked } = useScrollLock();
 
@@ -50,7 +48,6 @@ const Edit: FC<EditProps> = ({
       />
       <Form
         category={ category }
-        setEditedCategory={ setEditedCategory }
         onSubmit={ handleActivePopup }
       />
     </Popup>

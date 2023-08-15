@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { FC, useContext } from 'react';
 
 import Popup from '~/components/base/Popup/Popup';
 import Img from '~/components/base/Img/Img';
@@ -8,18 +8,18 @@ import CategoriesService from '~/services/categories.service';
 import { ICategory } from '~/interfaces/category.interface';
 
 import bin from '~/assets/img/icons/bin.svg';
+import { CategoriesContext } from '~/contexts/category.context';
 
 interface DeleteProps {
   category: ICategory,
-  setDeletedCategoryId: Dispatch<SetStateAction<ICategory['id'] | null>>
 }
 
 const Delete: FC<DeleteProps> = ({
   category: {
     id, name,
   },
-  setDeletedCategoryId,
 }) => {
+  const { setOpenPopup, setCategories } = useContext(CategoriesContext);
   const img = {
     src: bin,
     alt: 'Remove',
@@ -31,7 +31,9 @@ const Delete: FC<DeleteProps> = ({
 
   const handleDeleteOnClick = async () => {
     await deleteCategory(id);
-    setDeletedCategoryId(id);
+
+    setCategories((prev) => prev?.filter((categoryItem) => categoryItem.id !== id) || null);
+    setOpenPopup(false);
   };
 
   return (

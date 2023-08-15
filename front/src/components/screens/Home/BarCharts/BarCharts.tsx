@@ -3,16 +3,14 @@ import { DataToChart } from '~/interfaces/chart.interface';
 import BarChart from './BarChart/BarChart';
 
 type Props = {
-  earningsData: DataToChart | null,
-  lossesData: DataToChart | null,
+  chartData: DataToChart | null,
 };
 
-const BarCharts: React.FC<Props> = ({ earningsData, lossesData }) => (
+const BarCharts: React.FC<Props> = ({ chartData }) => (
   <section className="bar-charts">
     <div className="bar-charts__container">
       <div className="bar-charts__charts">
-        {lossesData && <BarChart data={ lossesData } />}
-        {earningsData && <BarChart data={ earningsData } />}
+        {chartData && <BarChart data={ chartData } />}
       </div>
     </div>
   </section>

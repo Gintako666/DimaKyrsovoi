@@ -1,0 +1,20 @@
+.breadcrumbs {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+
+  &__item {
+    display: flex;
+    align-items: center;
+
+    &::after {
+      content: "—";
+      display: block;
+      padding: 0 0 0 15px;
+    }
+
+    &:last-of-type::after {
+      display: none;
+    }
+  }
+}

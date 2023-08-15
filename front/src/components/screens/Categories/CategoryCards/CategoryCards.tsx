@@ -1,18 +1,35 @@
-import { FC } from 'react';
+import {
+  FC, useContext, useEffect, useMemo,
+} from 'react';
 
 import Loader from '~/components/shared/Loader/Loader';
 
-import useFetchData from '~/hooks/useFetchData';
+// import useFetchData from '~/hooks/useFetchData';
 
-import CategoriesService from '~/services/categories.service';
+// import CategoriesService from '~/services/categories.service';
 
+// import { useRouter } from 'next/router';
+import { CategoriesContext } from '~/contexts/category.context';
 import Items from './Items/Items';
 
 const CategoryCards: FC = () => {
-  const { getCategories } = CategoriesService;
-  const { data, isLoading, error } = useFetchData(getCategories);
+  // const router = useRouter();
+  // const { getCategories } = CategoriesService;
+  // const { query } = router;
+  // const { category: categoryId } = query;
+  // const reqParam = useMemo(() => ({ categoryId }), [ categoryId ]);
+  // const { data, isLoading, error } = useFetchData(getCategories, reqParam);
 
-  const categories = data?.data;
+  // const categories = useMemo(() => data?.data, [ data?.data ]);
+
+  const { categories, isLoading, error } = useContext(CategoriesContext);
+
+  // useEffect(() => {
+  //   console.log('enter effect');
+  //   setCategories(categories || null);
+  // }, [ categories, setCategories ]);
+
+  // console.log(qwe, categories);
 
   if (isLoading) {
     return <Loader />;
@@ -21,7 +38,7 @@ const CategoryCards: FC = () => {
     return ':(';
   }
   if (categories) {
-    return <Items categoriesData={ categories } />;
+    return <Items />;
   }
 
   return null;

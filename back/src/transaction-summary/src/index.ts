@@ -17,12 +17,18 @@ interface PieDataset {
     backgroundColor: string[],
   }[],
 }
+
+enum Stacks {
+  stack1 = 'Stack 0',
+  stack2 = 'Stack 1',
+}
 interface BarDataset {
   labels: string[],
   datasets:{
     label: string,
     data: number[],
     backgroundColor: string,
+    stack: Stacks
   }[],
 }
 
@@ -104,20 +110,22 @@ async function calculateMonthlyData(
     return monthYearArray;
   }
   const earningsData: BarDataset = {
-    labels: getMonthYearArray().reverse(),
+    labels: [],
     datasets: [ ...categories.map((category) => ({
-      label: category.name,
+      label: `${ category.name }`,
       backgroundColor: category.color,
       data: [],
+      stack: Stacks.stack1,
     })) ],
   };
 
   const lossesData: BarDataset = {
-    labels: getMonthYearArray().reverse(),
+    labels: [],
     datasets: [ ...categories.map((category) => ({
-      label: category.name,
+      label: `${ category.name }`,
       backgroundColor: category.color,
       data: [],
+      stack: Stacks.stack2,
     })) ],
   };
 
@@ -146,7 +154,7 @@ async function calculateMonthlyData(
       },
     ));
 
-    data.datasets.find((item) => item.label === category.name)?.data.push(values);
+    data.datasets.find((item) => item.label.includes(category.name))?.data.push(values);
   };
 
   while (currentDate <= newEndDate) {
@@ -174,7 +182,12 @@ async function calculateMonthlyData(
     currentDate.add(1, 'month');
   }
 
-  return { earningsData, lossesData };
+  const result: BarDataset = {
+    labels: getMonthYearArray().reverse(),
+    datasets: lossesData.datasets.concat(earningsData.datasets),
+  };
+
+  return result;
 }
 
 async function calculationCategoriesPerMonth(type: 'outgoing' | 'incoming', transactionService: any, categoryService: any) {
@@ -254,7 +267,7 @@ export default defineEndpoint(async (router, { services, getSchema }) => {
 
     const outgoingTotal = await calculateTotal('outgoing', startDate, currentDate, transactionService);
     const incomingTotal = await calculateTotal('incoming', startDate, currentDate, transactionService);
-    const { earningsData, lossesData } = await calculateMonthlyData(
+    const monthlyData = await calculateMonthlyData(
       startOfMonth,
       currentDate,
       transactionService,
@@ -274,8 +287,7 @@ export default defineEndpoint(async (router, { services, getSchema }) => {
     res.send({
       outgoingTotal,
       incomingTotal,
-      earningsData,
-      lossesData,
+      monthlyData,
       categoriesPerMonthOutgoing,
       categoriesPerMonthIncoming,
     });

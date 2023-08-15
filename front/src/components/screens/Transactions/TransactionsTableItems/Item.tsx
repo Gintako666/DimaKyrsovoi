@@ -1,5 +1,5 @@
 import {
-  FC, useCallback, useMemo, useState,
+  FC, useMemo, useState,
 } from 'react';
 import classNames from 'classnames';
 
@@ -9,12 +9,13 @@ import { ITransaction } from '~/interfaces/transaction.interface';
 import { ICategory } from '~/interfaces/category.interface';
 import { amountFormater } from '~/utils/amountFormater';
 import { format } from 'fecha';
-import TransactionsService from '~/services/transactions.service';
+import { getContrastColor } from '~/utils/functions/getContrastColor';
 
 interface ItemProps {
   transaction: ITransaction,
   category: ICategory | null
   categories: ICategory[]
+  hendleChangeCategory: (id: number, categoryId: number | null) => Promise<number | null>
 }
 
 const Item: FC<ItemProps> = ({
@@ -23,11 +24,8 @@ const Item: FC<ItemProps> = ({
   },
   category,
   categories,
+  hendleChangeCategory,
 }) => {
-  const { editCategoryInTransaction } = TransactionsService;
-  const hendleChangeCategory = useCallback((newCategory: number | null) => {
-    editCategoryInTransaction(id, newCategory);
-  }, [ editCategoryInTransaction, id ]);
   const [ selectCategory, setSelectCategory ] = useState(category?.id || 0);
   const categoryColor = useMemo(
     () => categories.find(
@@ -35,20 +33,6 @@ const Item: FC<ItemProps> = ({
     )?.color,
     [ categories, selectCategory ],
   );
-
-  const getContrastColor = useCallback((background: string | undefined): string => {
-    if (!background) {
-      return '#000000';
-    }
-
-    const r = parseInt(background.substr(1, 2), 16);
-    const g = parseInt(background.substr(3, 2), 16);
-    const b = parseInt(background.substr(5, 2), 16);
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    const textColor = brightness > 128 ? '#000000' : '#ffffff';
-
-    return textColor;
-  }, []);
 
   const formattedDate = useMemo(() => format(new Date(date), 'MM/DD/YYYY'), [ date ]);
   const tooltipDate = useMemo(() => format(new Date(date), 'MM/DD/YYYY hh:mm:ss'), [ date ]);
@@ -71,9 +55,10 @@ const Item: FC<ItemProps> = ({
             name=""
             id=""
             value={ selectCategory }
-            onChange={ (e) => {
-              hendleChangeCategory(+e.target.value || null);
-              setSelectCategory(+e.target.value);
+            onChange={ async (e) => {
+              const newCategory = await hendleChangeCategory(id, +e.target.value || null);
+              console.log(newCategory);
+              setSelectCategory(newCategory || 0);
             } }
           >
             {categories.map((categoryItem) => (

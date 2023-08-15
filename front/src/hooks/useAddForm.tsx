@@ -31,6 +31,9 @@ const useAddForm: IUseAddForm = (defaultName = '', defaultColor = '#4c44e4') => 
       case 'name':
         setName(value);
         break;
+      case 'select':
+        setName(value);
+        break;
       case 'description':
         setDescription(value);
         break;
