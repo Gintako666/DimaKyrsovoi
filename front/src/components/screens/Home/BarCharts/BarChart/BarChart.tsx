@@ -41,7 +41,7 @@ const BarChart: React.FC<Props> = ({ data }) => {
           },
 
         },
-        onClick: (event, legendItem, legend) => {
+        onClick: (_event, legendItem, legend) => {
           const hidden = !legend.chart.getDatasetMeta(legendItem.datasetIndex[0]).hidden;
           legendItem.datasetIndex.forEach((i: number) => {
             legend.chart.getDatasetMeta(i).hidden = hidden;
