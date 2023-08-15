@@ -35,8 +35,6 @@ const Transactions: FC = memo(() => {
     [ selectFilter ],
   );
 
-  console.log(selectFilter, transactionsFilter);
-
   const reqParam = useMemo(() => ({ withUncategorized: true }), [ ]);
   const {
     data: categoriesData,

@@ -57,7 +57,6 @@ const Item: FC<ItemProps> = ({
             value={ selectCategory }
             onChange={ async (e) => {
               const newCategory = await hendleChangeCategory(id, +e.target.value || null);
-              console.log(newCategory);
               setSelectCategory(newCategory || 0);
             } }
           >

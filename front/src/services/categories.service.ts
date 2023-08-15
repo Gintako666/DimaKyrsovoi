@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { directus } from '~/contexts/user';
 
 import { ICategory } from '~/interfaces/category.interface';

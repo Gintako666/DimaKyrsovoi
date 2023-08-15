@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { directus } from '~/contexts/user';
 import { DataToChart, PieChartData } from '~/interfaces/chart.interface';
 import { ITransaction } from '~/interfaces/transaction.interface';
