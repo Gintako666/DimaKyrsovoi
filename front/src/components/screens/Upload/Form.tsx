@@ -33,6 +33,11 @@ const Form: FC = () => {
           inputName,
         );
 
+        formData.append(
+          'fileName',
+          inputName,
+        );
+
         await uploadFile(formData);
 
         setSelectedFile(null);

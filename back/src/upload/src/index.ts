@@ -124,6 +124,7 @@ const settings = [
 export default defineEndpoint(async (router, { services, getSchema }) => {
   router.post('/', upload.single('file'), async (req: Request, res:Response) => {
     const { file } = req;
+    const { fileName } = req.body;
     const { ItemsService } = services;
     const schema = await getSchema();
 
@@ -169,7 +170,7 @@ export default defineEndpoint(async (router, { services, getSchema }) => {
       });
 
       const newFile = await fileService.createOne({
-        name: file.originalname,
+        name: fileName,
       });
 
       const items = await transactionService.createMany(
