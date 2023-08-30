@@ -1,5 +1,5 @@
 import {
-  Dispatch, FC, FormEvent, SetStateAction,
+  FC, FormEvent, useContext,
 } from 'react';
 
 import AddForm from '~/components/shared/AddForm/AddForm';
@@ -9,14 +9,15 @@ import useAddForm from '~/hooks/useAddForm';
 import CategoriesService from '~/services/categories.service';
 
 import { ICategory } from '~/interfaces/category.interface';
+import { CategoriesContext } from '~/contexts/category.context';
 
 interface FormProps {
   category: ICategory;
-  setEditedCategory: Dispatch<SetStateAction<ICategory | null>>;
   onSubmit: () => void
 }
 
-const Form: FC<FormProps> = ({ category, setEditedCategory, onSubmit }) => {
+const Form: FC<FormProps> = ({ category, onSubmit }) => {
+  const { setOpenPopup, setCategories } = useContext(CategoriesContext);
   const { name, color, handleChange } = useAddForm(
     category.name,
     category.color,
@@ -39,7 +40,15 @@ const Form: FC<FormProps> = ({ category, setEditedCategory, onSubmit }) => {
 
       await editCategory(editedCategory);
 
-      setEditedCategory(editedCategory);
+      setCategories((prev) => prev?.map((categoryItem) => {
+        if (categoryItem.id === editedCategory.id) {
+          return editedCategory;
+        }
+
+        return categoryItem;
+      }) || null);
+
+      setOpenPopup(false);
     }
 
     onSubmit();

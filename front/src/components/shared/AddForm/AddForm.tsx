@@ -16,6 +16,7 @@ interface AddFormProps {
   description?: string;
   color?: string;
   onChange: IHandleChange;
+  select?: string[]
 }
 
 const AddForm: FC<AddFormProps> = ({
@@ -27,6 +28,7 @@ const AddForm: FC<AddFormProps> = ({
   description,
   color,
   onChange,
+  select,
 }) => {
   const modifiedClassName = handleClassName(
     !!modifier,
@@ -37,7 +39,7 @@ const AddForm: FC<AddFormProps> = ({
   return (
     <div className={ `${ modifiedClassName } add-form` }>
       {typeof name === 'string' && (
-        <Name type={ type } name={ name } onChange={ onChange } />
+        <Name type={ type } name={ name } onChange={ onChange } select={ select } />
       )}
       {typeof description === 'string' && (
         <Description
@@ -50,7 +52,7 @@ const AddForm: FC<AddFormProps> = ({
         <Color type={ type } color={ color } onChange={ onChange } />
       )}
       {button && (
-        <button type="submit" className="add-form__button button">
+        <button type="submit" disabled={ !name } className="add-form__button button">
           Save
         </button>
       )}
@@ -64,6 +66,7 @@ AddForm.defaultProps = {
   name: undefined,
   description: undefined,
   color: undefined,
+  select: undefined,
 };
 
 export default AddForm;

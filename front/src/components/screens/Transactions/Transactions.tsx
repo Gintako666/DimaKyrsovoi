@@ -11,35 +11,42 @@ import useFetchData from '~/hooks/useFetchData';
 import CategoriesService from '~/services/categories.service';
 import TransactionsService from '~/services/transactions.service';
 
+import { getCategoriesListForBraedCrumbs } from '~/utils/functions/getCategoriesListForBraedCrumbs';
 import TransactionsTableItems from './TransactionsTableItems/TransactionsTableItems';
 
 const Transactions: FC = memo(() => {
   const router = useRouter();
   const [ selectFilter, setSelectFilter ] = useState(
-    router.query.filter || 'all',
+    router.query.filter || '0',
   );
 
-  const { getCategories } = CategoriesService;
+  const { getAllCategories } = CategoriesService;
   const { getTransactions } = TransactionsService;
 
   const transactionsFilter = useMemo(
     () => ({
-      filter: {
+      filter: selectFilter === 'all' ? {} : {
         category:
-          (router.query.filter === '0' && { _null: true })
-          || (router.query.filter && { _eq: router.query.filter }),
+          (selectFilter === '0' && { _null: true })
+          || (selectFilter && { _eq: selectFilter }),
       },
       sort: 'date',
     }),
-    [ router.query.filter ],
+    [ selectFilter ],
   );
 
+  const reqParam = useMemo(() => ({ withUncategorized: true }), [ ]);
   const {
     data: categoriesData,
     isLoading: categoriesLoading,
     error: categoriesError,
-  } = useFetchData(getCategories, true);
-  const categories = categoriesData?.data;
+  } = useFetchData(getAllCategories, reqParam);
+  const categories = categoriesData?.data.map((categoryItem) => ({
+    ...categoryItem,
+    name: getCategoriesListForBraedCrumbs(categoryItem, categoriesData?.data)
+      .map((item) => item.name)
+      .join(' -> '),
+  }));
 
   const {
     data: transactionsData,
@@ -68,7 +75,7 @@ const Transactions: FC = memo(() => {
                 const { value } = e.target;
                 setSelectFilter(value);
                 router.push({
-                  query: value === 'all' ? {} : { filter: value },
+                  query: value === '0' ? {} : { filter: value },
                 });
               } }
               value={ selectFilter }

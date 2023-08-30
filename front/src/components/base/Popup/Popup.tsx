@@ -7,6 +7,7 @@ import Transition from '~/components/base/Transition/Transition';
 import useScrollLock from '~/hooks/useScrollLock';
 
 import handleClassName from '~/utils/className.util';
+import classNames from 'classnames';
 import Body from './Body';
 
 interface PopupProps {
@@ -14,12 +15,13 @@ interface PopupProps {
   modifier?: string;
   children: ReactNode;
   button: ReactNode;
+  buttonClassName?: string;
   isActive?: boolean;
   setIsActive?: Dispatch<SetStateAction<boolean>>
 }
 
 const Popup: FC<PopupProps> = ({
-  className, modifier, children, button, isActive, setIsActive,
+  className, modifier, children, button, buttonClassName, isActive, setIsActive,
 }) => {
   const { isScrollLocked, setIsScrollLocked } = useScrollLock();
 
@@ -51,9 +53,15 @@ const Popup: FC<PopupProps> = ({
 
   return (
     <div className={ `${ modifiedClassName } popup` }>
-      <button type="button" className="popup__button" onClick={ handleClick }>
+      {button && (
+      <button
+        type="button"
+        className={ classNames('popup__button', buttonClassName) }
+        onClick={ handleClick }
+      >
         {button}
       </button>
+      )}
       <Transition condition={ condition } className="popup">
         <Body onClick={ handleDisablePopup }>{children}</Body>
       </Transition>
@@ -65,6 +73,7 @@ Popup.defaultProps = {
   modifier: undefined,
   isActive: undefined,
   setIsActive: undefined,
+  buttonClassName: '',
 };
 
 export default Popup;

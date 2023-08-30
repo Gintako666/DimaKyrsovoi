@@ -54,7 +54,11 @@ const Form: FC = () => {
 
   return (
     <form action="#" className="upload__form" onSubmit={ handleSubmit }>
-      <AddForm className="upload" type="file" button={ false } name={ inputName } onChange={ handleChange } />
+      {/* <select name="" id="">
+        <option value="PaiPal">PaiPal</option>
+        <option value="Bank">Bank</option>
+      </select> */}
+      <AddForm select={ [ 'PayPal', 'Bank' ] } className="upload" type="file" button={ false } name={ inputName } onChange={ handleChange } />
       <UploadFile
         selectedFile={ selectedFile }
         setSelectedFile={ setSelectedFile }

@@ -36,6 +36,7 @@
         &__name {
           @apply font-medium text-base rounded-lg p-1;
 
+          width: 100%;
           outline: none;
 
           // -moz-appearance:none; /* Firefox */

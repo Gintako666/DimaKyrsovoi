@@ -40,8 +40,9 @@
     &_name {
       @apply flex items-center h-9;
 
-      span {
-        @apply flex justify-center items-center h-full text-base;
+      span,
+      select {
+        @apply flex justify-center items-center h-full text-base pl-1;
 
         flex: 0 0 em(25, 14);
         border-top-left-radius: rem(4);

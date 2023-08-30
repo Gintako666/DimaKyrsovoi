@@ -13,10 +13,7 @@ import BarCharts from './BarCharts/BarCharts';
 
 const Home: FC = () => {
   const [ dataFromServer, setDataFromServer ] = useState<{
-    chartData: {
-      earningsData: DataToChart,
-      lossesData: DataToChart,
-    },
+    chartData: DataToChart,
     cards: ICard[],
     pieChartsData: {
       incomingData: PieChartData | null,
@@ -32,19 +29,15 @@ const Home: FC = () => {
   useEffect(() => {
     if (data) {
       const {
-        earningsData,
-        lossesData,
+        monthlyData,
         incomingTotal,
         outgoingTotal,
         categoriesPerMonthOutgoing,
         categoriesPerMonthIncoming,
-      } = data.data;
+      } = data;
 
       setDataFromServer({
-        chartData: {
-          earningsData,
-          lossesData,
-        },
+        chartData: monthlyData,
         cards: [
           {
             name: 'Incoming',
@@ -75,8 +68,7 @@ const Home: FC = () => {
         outgoingData={ dataFromServer.pieChartsData.outgoingData }
       />
       <BarCharts
-        earningsData={ dataFromServer.chartData.earningsData }
-        lossesData={ dataFromServer.chartData.lossesData }
+        chartData={ dataFromServer.chartData }
       />
     </>
   );
