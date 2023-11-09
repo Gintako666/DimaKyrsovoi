@@ -15,6 +15,7 @@ export const directus = new Directus(process.env.NEXT_PUBLIC_BACK_URI, {
     staticToken: '',
   },
 });
+
 const getCurrentUserData = async () => directus.users.me.read();
 const UserContext = React.createContext();
 

@@ -3,7 +3,7 @@ import Layout from '~/components/layout/Layout';
 import HomePage from '~/components/screens/Home/Home';
 
 const Home: NextPage = () => (
-  <Layout title="Dashboard" className="home">
+  <Layout className="home">
     <HomePage />
   </Layout>
 );

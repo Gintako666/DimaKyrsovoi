@@ -1,0 +1,26 @@
+{
+  "env": {
+    "browser": false,
+    "es2022": true
+  },
+  "extends": ["airbnb"],
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": 13,
+    "sourceType": "module"
+  },
+  "plugins": [],
+  "rules": {
+    "brace-style": [2, "allman"],
+    "linebreak-style": "off",
+    "object-curly-spacing": ["error", "always"],
+    "import/no-extraneous-dependencies": "off",
+    "import/no-relative-packages": "off",
+    "camelcase": "off",
+
+    /* WARNINGS */
+
+    "template-curly-spacing": ["warn", "always"],
+    "array-bracket-spacing": ["warn", "always"]
+  }
+}

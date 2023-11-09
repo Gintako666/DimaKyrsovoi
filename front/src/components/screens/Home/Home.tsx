@@ -4,73 +4,27 @@ import Loader from '~/components/shared/Loader/Loader';
 
 import useFetchData from '~/hooks/useFetchData';
 
-import TransactionsService from '~/services/transactions.service';
-import { DataToChart, PieChartData } from '~/interfaces/chart.interface';
-import LastDays from './LastDays/LastDays';
-import PieCharts from './PieCharts/PieCharts';
-import { ICard } from './LastDays/card.interface';
-import BarCharts from './BarCharts/BarCharts';
+import TaskService from '~/services/task.service';
 
 const Home: FC = () => {
-  const [ dataFromServer, setDataFromServer ] = useState<{
-    chartData: DataToChart,
-    cards: ICard[],
-    pieChartsData: {
-      incomingData: PieChartData | null,
-      outgoingData: PieChartData | null,
-    }
-  }>();
-  const { getTransactionSummary } = TransactionsService;
+  const { getTasks } = TaskService;
   const {
     data,
-    isLoading: transactionsLoading,
-  } = useFetchData(getTransactionSummary);
+    isLoading,
+  } = useFetchData(getTasks);
 
   useEffect(() => {
-    if (data) {
-      const {
-        monthlyData,
-        incomingTotal,
-        outgoingTotal,
-        categoriesPerMonthOutgoing,
-        categoriesPerMonthIncoming,
-      } = data;
-
-      setDataFromServer({
-        chartData: monthlyData,
-        cards: [
-          {
-            name: 'Incoming',
-            number: incomingTotal,
-          },
-          {
-            name: 'Outgoing',
-            number: outgoingTotal,
-          },
-        ],
-        pieChartsData: {
-          incomingData: (incomingTotal && categoriesPerMonthIncoming) || null,
-          outgoingData: (outgoingTotal && categoriesPerMonthOutgoing) || null,
-        },
-      });
-    }
+    console.log(data);
   }, [ data ]);
 
-  if (transactionsLoading || !dataFromServer) {
+  if (data && isLoading) {
     return <Loader />;
   }
 
   return (
-    <>
-      <LastDays cards={ dataFromServer.cards } />
-      <PieCharts
-        incomingData={ dataFromServer.pieChartsData.incomingData }
-        outgoingData={ dataFromServer.pieChartsData.outgoingData }
-      />
-      <BarCharts
-        chartData={ dataFromServer.chartData }
-      />
-    </>
+    <div>
+      {data && data.data.map((item) => item.name)}
+    </div>
   );
 };
 

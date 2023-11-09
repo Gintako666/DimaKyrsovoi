@@ -2,8 +2,7 @@ import { FC } from 'react';
 
 import { Inter } from 'next/font/google';
 import handleClassName from '~/utils/className.util';
-import Meta from './Meta';
-import Header from './Header/Header';
+import { useUser } from '~/contexts/user';
 
 const inter = Inter({
   subsets: [
@@ -12,28 +11,27 @@ const inter = Inter({
 });
 
 interface LayoutProps {
-  title: string;
   className: string;
   header?: boolean;
   children: JSX.Element;
 }
 
 const Layout: FC<LayoutProps> = ({
-  title,
   className,
   header,
   children,
 }) => {
+  const { profileData } = useUser();
   const modifiedClassName = handleClassName(!!header, 'wrapper', 'header');
 
   return (
-    <>
-      <Meta title={ title } />
-      <div className={ `${ modifiedClassName } ${ inter.className }` }>
-        {header && <Header />}
-        <main className={ `${ className }-page` }>{children}</main>
-      </div>
-    </>
+    <div className={ `${ modifiedClassName } ${ inter.className }` }>
+      <header>
+        {profileData && profileData.email}
+
+      </header>
+      <main className={ `${ className }-page` }>{children}</main>
+    </div>
   );
 };
 
