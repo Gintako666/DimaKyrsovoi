@@ -409,18 +409,24 @@ relations:
       on_delete: NO ACTION
 data:
   task:
-    '1':
-      id: 1
-      user_created: ac594ab3-d6f1-4ad1-8535-05207df56d37
-      user_updated: null
-      name: sfsfsdf
-      status: 1
-    '2':
-      id: 2
+    '3':
+      id: 3
       user_created: ac594ab3-d6f1-4ad1-8535-05207df56d37
       user_updated: ac594ab3-d6f1-4ad1-8535-05207df56d37
-      name: '2'
+      name: my task 1
       status: 3
+    '4':
+      id: 4
+      user_created: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      user_updated: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      name: my task 2
+      status: 1
+    '5':
+      id: 5
+      user_created: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      user_updated: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      name: my task 3
+      status: 2
   task_status:
     '1':
       id: 1
@@ -929,6 +935,96 @@ data:
       validation: null
       presets: null
       fields: id,status,name,icon,color,options,trigger
+    '25':
+      id: 25
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: task
+      action: read
+      permissions: {}
+      validation: {}
+      presets: null
+      fields: '*'
+    '26':
+      id: 26
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: task
+      action: create
+      permissions: {}
+      validation: {}
+      presets: null
+      fields: '*'
+    '27':
+      id: 27
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: task
+      action: delete
+      permissions: {}
+      validation: {}
+      presets: null
+      fields: '*'
+    '28':
+      id: 28
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: task
+      action: update
+      permissions: {}
+      validation: {}
+      presets: null
+      fields: '*'
+    '29':
+      id: 29
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: task
+      action: share
+      permissions: {}
+      validation: {}
+      presets: null
+      fields: '*'
+    '30':
+      id: 30
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: task_status
+      action: create
+      permissions: {}
+      validation: {}
+      presets: null
+      fields: '*'
+    '31':
+      id: 31
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: task_status
+      action: read
+      permissions: {}
+      validation: {}
+      presets: null
+      fields: '*'
+    '32':
+      id: 32
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: task_status
+      action: update
+      permissions: {}
+      validation: {}
+      presets: null
+      fields: '*'
+    '33':
+      id: 33
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: task_status
+      action: delete
+      permissions: {}
+      validation: {}
+      presets: null
+      fields: '*'
+    '34':
+      id: 34
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: task_status
+      action: share
+      permissions: {}
+      validation: {}
+      presets: null
+      fields: '*'
   directus_presets:
     '3':
       id: 3
@@ -960,6 +1056,22 @@ data:
       user: ac594ab3-d6f1-4ad1-8535-05207df56d37
       role: null
       collection: task_status
+      search: null
+      layout: null
+      layout_query:
+        tabular:
+          limit: 25
+      layout_options: null
+      refresh_interval: null
+      filter: null
+      icon: bookmark
+      color: null
+    '6':
+      id: 6
+      bookmark: null
+      user: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      role: null
+      collection: task
       search: null
       layout: null
       layout_query:
@@ -1010,6 +1122,26 @@ data:
         like Gecko) Chrome/119.0.0.0 Safari/537.36
       share: null
       origin: http://localhost:3000
+    kvzS9XHq-aAEqhBHOClPtKQNhNtZOb8wsGSyM_fc-yg3Zjx8kMeyCTQnBBjHERa6:
+      token: kvzS9XHq-aAEqhBHOClPtKQNhNtZOb8wsGSyM_fc-yg3Zjx8kMeyCTQnBBjHERa6
+      user: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      expires: '2023-11-20T14:47:02.414Z'
+      ip: 172.21.0.1
+      user_agent: >-
+        Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
+        like Gecko) Chrome/119.0.0.0 Safari/537.36
+      share: null
+      origin: http://127.0.0.1:8085
+    j1-i_njg3E4zsaqrOvPBJY2QJPnCy4ebsCxZ5MOFXRRK00zuPWzpRkzpsRFCVAwL:
+      token: j1-i_njg3E4zsaqrOvPBJY2QJPnCy4ebsCxZ5MOFXRRK00zuPWzpRkzpsRFCVAwL
+      user: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      expires: '2023-11-20T14:52:57.706Z'
+      ip: 172.21.0.1
+      user_agent: >-
+        Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
+        like Gecko) Chrome/119.0.0.0 Safari/537.36
+      share: null
+      origin: http://127.0.0.1:3022
   directus_settings: {}
   directus_users:
     ac594ab3-d6f1-4ad1-8535-05207df56d37:
@@ -1030,8 +1162,32 @@ data:
       status: active
       role: 66b1450b-3237-4eaf-9285-89441f00855c
       token: null
-      last_access: '2023-11-10T09:08:46.452Z'
-      last_page: /content/task_status
+      last_access: '2023-11-13T14:52:57.717Z'
+      last_page: /settings/roles/
+      provider: default
+      external_identifier: null
+      auth_data: null
+      email_notifications: true
+    e2fbfb06-fb35-422d-803b-35a80b748523:
+      id: e2fbfb06-fb35-422d-803b-35a80b748523
+      first_name: User
+      last_name: User
+      email: User
+      password: >-
+        $argon2id$v=19$m=65536,t=3,p=4$07wV/fAVbQEqDN9EMuidWg$SCpGtSWnxkcIlH10FHN0Ah8fu+2Gg157i2se8cMGrpI
+      location: null
+      title: null
+      description: null
+      tags: null
+      avatar: null
+      language: null
+      theme: auto
+      tfa_secret: null
+      status: active
+      role: null
+      token: null
+      last_access: null
+      last_page: null
       provider: default
       external_identifier: null
       auth_data: null
@@ -1054,7 +1210,7 @@ data:
       status: active
       role: 97458997-6137-4242-ba76-0f2263f54ee9
       token: null
-      last_access: '2023-11-10T08:50:46.594Z'
+      last_access: '2023-11-13T14:52:29.458Z'
       last_page: null
       provider: default
       external_identifier: null
