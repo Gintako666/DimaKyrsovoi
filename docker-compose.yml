@@ -37,7 +37,7 @@ services:
       SECRET: '8e1fa5a6-daf2-4cfc-99a0-b9b538ac0d82'
 
       ADMIN_EMAIL: 'admin@directus.com'
-      ADMIN_PASSWORD: '4JWI2(5MaF|'
+      ADMIN_PASSWORD: '123123'
 
       DB_CLIENT: 'pg'
       DB_HOST: 'database'

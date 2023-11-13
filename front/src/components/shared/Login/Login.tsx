@@ -1,9 +1,8 @@
 import { FC, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import FullScreen from '~/components/base/FullScreen/FullScreen';
-
 import { useUser } from '~/contexts/user';
+
 import Form from './Form';
 
 const Login: FC = () => {
@@ -20,9 +19,7 @@ const Login: FC = () => {
   }, [ router, isLoginPage, isLoggedIn ]);
 
   return (
-    <FullScreen className="login">
-      <Form />
-    </FullScreen>
+    <Form />
   );
 };
 

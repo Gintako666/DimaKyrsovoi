@@ -1,9 +1,0 @@
-@import "BarChart/BarChart";
-
-.bar-charts {
-  &__charts {
-    display: grid;
-    gap: 0.125rem;
-    grid-template-columns: 1fr;
-  }
-}

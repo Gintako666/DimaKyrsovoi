@@ -24,22 +24,50 @@ export const UserProvider = ({ children }) => {
   const [ isLoggedIn, setLoggedIn ] = useState(false);
   const [ profileData, setProfileData ] = useState(null);
 
+  const createUser = useCallback(async (email, password) => {
+    const newUser = await directus.users.createOne({
+      email, password,
+    });
+
+    return newUser;
+  }, []);
+
   const login = useCallback(
     async (email, password) => {
       setLoading(true);
 
-      return directus.auth.login({
-        email, password,
-      })
-        .then(async () => {
-          setProfileData(
-            await getCurrentUserData(),
-          );
-          setLoggedIn(true);
-        })
-        .finally(() => {
-          setLoading(false);
+      try {
+        const currentUser = await directus.auth.login({
+          email, password,
         });
+
+        setProfileData(
+          await getCurrentUserData(),
+        );
+
+        setLoggedIn(true);
+
+        return currentUser;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+
+      return null;
+
+      // return directus.auth.login({
+      //   email, password,
+      // })
+      //   .then(async () => {
+      //     setProfileData(
+      //       await getCurrentUserData(),
+      //     );
+      //     setLoggedIn(true);
+      //   })
+      //   .finally(() => {
+      //     setLoading(false);
+      //   });
     },
     [ ],
   );
@@ -84,13 +112,14 @@ export const UserProvider = ({ children }) => {
   );
 
   const value = useMemo(() => ({
-    isLoading, isLoggedIn, profileData, login, logout, directus,
+    isLoading, isLoggedIn, profileData, login, logout, directus, createUser,
   }), [
     isLoading,
     isLoggedIn,
     profileData,
     login,
     logout,
+    createUser,
     // directus,
   ]);
 

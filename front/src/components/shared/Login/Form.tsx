@@ -4,8 +4,6 @@ import {
 
 import { useUser } from '~/contexts/user';
 
-import handleClassName from '~/utils/className.util';
-
 const Form: FC = () => {
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -74,36 +72,22 @@ const Form: FC = () => {
     }
   };
 
-  // Get modifier className
-  interface IGetModifierClassName {
-    (isActive: boolean, className: string): string;
-  }
-  const getModifierClassName: IGetModifierClassName = (isActive, className) => handleClassName(isActive, className, 'err');
-
   return (
-    <form action="#" className="login__form" onSubmit={ handleSubmit }>
-      <h1 className="login__title">Login</h1>
+    <form action="#" onSubmit={ handleSubmit }>
+      <h1>Login</h1>
       <input
-        className={ `login__input ${ getModifierClassName(
-          isUsernameErr,
-          'login__input_username',
-        ) }` }
         type="text"
         placeholder="Username"
         value={ username }
         onChange={ handleChange }
       />
       <input
-        className={ `login__input ${ getModifierClassName(
-          isPasswordErr,
-          'login__input_password',
-        ) }` }
         type="password"
         placeholder="Password"
         value={ password }
         onChange={ handleChange }
       />
-      <button className="login__submit" type="submit">
+      <button type="submit">
         Login
       </button>
     </form>

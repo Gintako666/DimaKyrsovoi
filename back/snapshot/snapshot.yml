@@ -1,10 +1,436 @@
 version: 1
 directus: 12.1.2
 vendor: postgres
-collections: []
-fields: []
-relations: []
+collections:
+  - collection: task
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: task
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+    schema:
+      name: task
+  - collection: task_status
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: task_status
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+    schema:
+      name: task_status
+fields:
+  - collection: task
+    field: id
+    type: integer
+    meta:
+      collection: task
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: task
+      data_type: integer
+      default_value: nextval('task_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: task
+    field: name
+    type: string
+    meta:
+      collection: task
+      conditions: null
+      display: null
+      display_options: null
+      field: name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: name
+      table: task
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: task
+    field: status
+    type: integer
+    meta:
+      collection: task
+      conditions: null
+      display: null
+      display_options: null
+      field: status
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 5
+      special:
+        - m2o
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: status
+      table: task
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: task_status
+      foreign_key_column: id
+  - collection: task
+    field: user_created
+    type: uuid
+    meta:
+      collection: task
+      conditions: null
+      display: user
+      display_options: null
+      field: user_created
+      group: null
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar.$thumbnail}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      sort: 2
+      special:
+        - user-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_created
+      table: task
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: task
+    field: user_updated
+    type: uuid
+    meta:
+      collection: task
+      conditions: null
+      display: user
+      display_options: null
+      field: user_updated
+      group: null
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar.$thumbnail}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      sort: 3
+      special:
+        - user-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_updated
+      table: task
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: task_status
+    field: id
+    type: integer
+    meta:
+      collection: task_status
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: task_status
+      data_type: integer
+      default_value: nextval('task_status_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: task_status
+    field: name
+    type: string
+    meta:
+      collection: task_status
+      conditions: null
+      display: null
+      display_options: null
+      field: name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: name
+      table: task_status
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: task_status
+    field: task
+    type: alias
+    meta:
+      collection: task_status
+      conditions: null
+      display: null
+      display_options: null
+      field: task
+      group: null
+      hidden: false
+      interface: list-o2m
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 3
+      special:
+        - o2m
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+relations:
+  - collection: task
+    field: status
+    related_collection: task_status
+    meta:
+      junction_field: null
+      many_collection: task
+      many_field: status
+      one_allowed_collections: null
+      one_collection: task_status
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: task
+      sort_field: null
+    schema:
+      table: task
+      column: status
+      foreign_key_table: task_status
+      foreign_key_column: id
+      constraint_name: task_status_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: task
+    field: user_created
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: task
+      many_field: user_created
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: task
+      column: user_created
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: task_user_created_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: task
+    field: user_updated
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: task
+      many_field: user_updated
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: task
+      column: user_updated
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: task_user_updated_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
 data:
+  task:
+    '1':
+      id: 1
+      user_created: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      user_updated: null
+      name: sfsfsdf
+      status: 1
+    '2':
+      id: 2
+      user_created: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      user_updated: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      name: '2'
+      status: 3
+  task_status:
+    '1':
+      id: 1
+      name: pending
+    '2':
+      id: 2
+      name: in process
+    '3':
+      id: 3
+      name: completed
   directus_files: {}
   directus_folders: {}
   directus_migrations:
@@ -272,8 +698,278 @@ data:
       version: 20230721A
       name: Require Shares Fields
       timestamp: '2023-09-13T09:43:07.464Z'
-  directus_permissions: {}
-  directus_presets: {}
+  directus_permissions:
+    '1':
+      id: 1
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_files
+      action: create
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '2':
+      id: 2
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_files
+      action: read
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '3':
+      id: 3
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_files
+      action: update
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '4':
+      id: 4
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_files
+      action: delete
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '5':
+      id: 5
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_dashboards
+      action: create
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '6':
+      id: 6
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_dashboards
+      action: read
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '7':
+      id: 7
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_dashboards
+      action: update
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '8':
+      id: 8
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_dashboards
+      action: delete
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '9':
+      id: 9
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_panels
+      action: create
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '10':
+      id: 10
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_panels
+      action: read
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '11':
+      id: 11
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_panels
+      action: update
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '12':
+      id: 12
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_panels
+      action: delete
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '13':
+      id: 13
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_folders
+      action: create
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '14':
+      id: 14
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_folders
+      action: read
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '15':
+      id: 15
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_folders
+      action: update
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '16':
+      id: 16
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_folders
+      action: delete
+      permissions: {}
+      validation: null
+      presets: null
+      fields: null
+    '17':
+      id: 17
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_users
+      action: read
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '18':
+      id: 18
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_users
+      action: update
+      permissions:
+        id:
+          _eq: $CURRENT_USER
+      validation: null
+      presets: null
+      fields: >-
+        first_name,last_name,email,password,location,title,description,avatar,language,theme,tfa_secret
+    '19':
+      id: 19
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_roles
+      action: read
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '20':
+      id: 20
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_shares
+      action: read
+      permissions:
+        _or:
+          - role:
+              _eq: $CURRENT_ROLE
+          - role:
+              _null: true
+      validation: null
+      presets: null
+      fields: '*'
+    '21':
+      id: 21
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_shares
+      action: create
+      permissions: {}
+      validation: null
+      presets: null
+      fields: '*'
+    '22':
+      id: 22
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_shares
+      action: update
+      permissions:
+        user_created:
+          _eq: $CURRENT_USER
+      validation: null
+      presets: null
+      fields: '*'
+    '23':
+      id: 23
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_shares
+      action: delete
+      permissions:
+        user_created:
+          _eq: $CURRENT_USER
+      validation: null
+      presets: null
+      fields: '*'
+    '24':
+      id: 24
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      collection: directus_flows
+      action: read
+      permissions:
+        trigger:
+          _eq: manual
+      validation: null
+      presets: null
+      fields: id,status,name,icon,color,options,trigger
+  directus_presets:
+    '3':
+      id: 3
+      bookmark: null
+      user: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      role: null
+      collection: directus_users
+      search: null
+      layout: cards
+      layout_query:
+        cards:
+          sort:
+            - email
+          limit: 25
+          page: 1
+      layout_options:
+        cards:
+          icon: account_circle
+          title: '{{ first_name }} {{ last_name }}'
+          subtitle: '{{ email }}'
+          size: 4
+      refresh_interval: null
+      filter: null
+      icon: bookmark
+      color: null
+    '5':
+      id: 5
+      bookmark: null
+      user: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      role: null
+      collection: task_status
+      search: null
+      layout: null
+      layout_query:
+        tabular:
+          limit: 25
+      layout_options: null
+      refresh_interval: null
+      filter: null
+      icon: bookmark
+      color: null
   directus_roles:
     66b1450b-3237-4eaf-9285-89441f00855c:
       id: 66b1450b-3237-4eaf-9285-89441f00855c
@@ -284,7 +980,36 @@ data:
       enforce_tfa: false
       admin_access: true
       app_access: true
-  directus_sessions: {}
+    97458997-6137-4242-ba76-0f2263f54ee9:
+      id: 97458997-6137-4242-ba76-0f2263f54ee9
+      name: User
+      icon: supervised_user_circle
+      description: null
+      ip_access: null
+      enforce_tfa: false
+      admin_access: false
+      app_access: true
+  directus_sessions:
+    9hrL3weQKWp6qSYkuGP36bDqzEHtg1qQYD3PMND75QTnv_1YzP0iehWfWP5o0Hw6:
+      token: 9hrL3weQKWp6qSYkuGP36bDqzEHtg1qQYD3PMND75QTnv_1YzP0iehWfWP5o0Hw6
+      user: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      expires: '2023-11-17T09:06:15.441Z'
+      ip: 172.21.0.1
+      user_agent: >-
+        Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
+        like Gecko) Chrome/119.0.0.0 Safari/537.36
+      share: null
+      origin: http://127.0.0.1:8085
+    JlpBDyfR0JrhUg7s8n9C3chQu61en9Tjg5IpZdmAOWx7mdNlDghHlP1ZjJ-uADje:
+      token: JlpBDyfR0JrhUg7s8n9C3chQu61en9Tjg5IpZdmAOWx7mdNlDghHlP1ZjJ-uADje
+      user: ac594ab3-d6f1-4ad1-8535-05207df56d37
+      expires: '2023-11-17T09:08:46.449Z'
+      ip: 172.21.0.1
+      user_agent: >-
+        Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
+        like Gecko) Chrome/119.0.0.0 Safari/537.36
+      share: null
+      origin: http://localhost:3000
   directus_settings: {}
   directus_users:
     ac594ab3-d6f1-4ad1-8535-05207df56d37:
@@ -293,7 +1018,7 @@ data:
       last_name: User
       email: admin@directus.com
       password: >-
-        $argon2id$v=19$m=65536,t=3,p=4$Ukc8pZdLz/k0/eGZqRjxzQ$yLVla0+Mn4+Mew2wTdDdzVaDgAFaWMU1XY0maR7NAE8
+        $argon2id$v=19$m=65536,t=3,p=4$B2aem0zex3AKn5tOoMeF3g$3BAQT0YNhq7BxH/W7w3d4jExIDTHFZwpoOg4tdLJWNs
       location: null
       title: null
       description: null
@@ -305,7 +1030,31 @@ data:
       status: active
       role: 66b1450b-3237-4eaf-9285-89441f00855c
       token: null
-      last_access: null
+      last_access: '2023-11-10T09:08:46.452Z'
+      last_page: /content/task_status
+      provider: default
+      external_identifier: null
+      auth_data: null
+      email_notifications: true
+    f9442875-613a-4f83-b2f2-3ade0e9068af:
+      id: f9442875-613a-4f83-b2f2-3ade0e9068af
+      first_name: user@gmail.com
+      last_name: user@gmail.com
+      email: user@gmail.com
+      password: >-
+        $argon2id$v=19$m=65536,t=3,p=4$WzwNCmTfB1Mk+roGVLWbXg$tuwrzUScMyHFo4W4C0eJ8kddfg8dy29mRKMDd9+ipjg
+      location: null
+      title: null
+      description: null
+      tags: null
+      avatar: null
+      language: null
+      theme: auto
+      tfa_secret: null
+      status: active
+      role: 97458997-6137-4242-ba76-0f2263f54ee9
+      token: null
+      last_access: '2023-11-10T08:50:46.594Z'
       last_page: null
       provider: default
       external_identifier: null
