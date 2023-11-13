@@ -4,8 +4,6 @@ version: "2.2"
 services:
   database:
     image: postgis/postgis:13-master
-    # Required when running on platform other than amd64, like Apple M1/M2:
-    # platform: linux/amd64
     volumes:
       - ./back/database:/var/lib/postgresql/data
     networks:
@@ -29,9 +27,6 @@ services:
 
   back:
     image: directus/directus:10.5.2
-    # build:
-    #   context: ./back
-    #   dockerfile: ./Dockerfile
     environment:
       KEY: '256a641f-244f-4a1b-a946-b054e4fb183c'
       SECRET: '8e1fa5a6-daf2-4cfc-99a0-b9b538ac0d82'
@@ -53,15 +48,6 @@ services:
       PUBLIC_URL: ${BACK_URI}
 
       EXTENSIONS_AUTO_RELOAD: ${EXTENSIONS_AUTO_RELOAD}
-
-      # BACKUP_FTP_HOST: ${BACKUP_FTP_HOST}
-      # BACKUP_FTP_PORT: ${BACKUP_FTP_PORT:-21}
-      # BACKUP_FTP_USER: ${BACKUP_FTP_USER}
-      # BACKUP_FTP_PASS: ${BACKUP_FTP_PASS}
-      # BACKUP_FTP_PATH: ${BACKUP_FTP_PATH:-/backups}
-      # BACKUP_FTP_SECURE: ${BACKUP_FTP_SECURE}
-      # ROLLING_BACKUPS: ${ROLLING_BACKUPS:-20}
-      # BACKUP_CRON: ${BACKUP_CRON}
 
       CORS_ENABLED: true
       CORS_ORIGIN: ${FRONT_URI},http://127.0.0.1:3000,http://localhost:3000
@@ -91,19 +77,19 @@ services:
     extra_hosts:
       - 'host.docker.internal:host-gateway'
 
-  # front:
-  #   build: front/
-  #   environment:
-  #     NEXT_PUBLIC_BACK_URI: ${BACK_URI}
-  #     NEXT_PUBLIC_API_INTERNAL_URI: http://back:8055
-  #     NEXT_PUBLIC_API_TOKEN: WuNaWPWkqvnApNVb_FcK7PMN90V7mcJk
-  #   ports:
-  #     - 127.0.0.1:${FRONT_PORT:-3009}:3000
-  #   networks:
-  #     - webappnetwork
-  #   depends_on:
-  #     back:
-  #       condition: service_healthy
+  front:
+    build: front/
+    environment:
+      NEXT_PUBLIC_BACK_URI: ${BACK_URI}
+      NEXT_PUBLIC_API_INTERNAL_URI: http://back:8055
+      NEXT_PUBLIC_API_TOKEN: WuNaWPWkqvnApNVb_FcK7PMN90V7mcJk
+    ports:
+      - 127.0.0.1:${FRONT_PORT:-3009}:3000
+    networks:
+      - webappnetwork
+    depends_on:
+      back:
+        condition: service_healthy
 
 networks:
   webappnetwork:
